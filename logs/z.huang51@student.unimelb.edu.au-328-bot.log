@@ -1,0 +1,8 @@
+
+=============================== Log Started [2018-08-14 15:44:28 AUS Eastern Standard Time] ===============================
+[2018-08-14 15:44:30,202:         agent.DSBot]:     INFO - Requesting initial marketplace information.
+[2018-08-14 15:44:31,878:         agent.DSBot]:     INFO - Received initial marketplace information.
+[2018-08-14 15:44:31,878:         agent.DSBot]:     INFO - Start converting market
+[2018-08-14 15:44:31,878:         agent.DSBot]:     INFO - Currently logging market: [('id', 659), ('minimum', 25), ('maximum', 1000), ('tick', 5), ('name', 'Widget'), ('item', 'widget'), ('description', 'Widget')]
+[2018-08-14 15:44:31,881:         agent.DSBot]:     INFO - Added market
+[2018-08-14 15:44:31,882:         agent.DSBot]:     INFO - Finished Adding markets, the current list of markets are: [<__main__.MyMarkets object at 0x00000195660F5B70>]

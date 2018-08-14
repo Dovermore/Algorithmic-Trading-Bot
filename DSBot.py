@@ -25,6 +25,17 @@ class BotType(Enum):
     MARKET_MAKER = 0
     REACTIVE = 1
 
+class OrderStatus(Enum):
+    MADE = 1
+    PENDING = 2
+    ACCEPTED = 3
+    COMPLETED = 4
+    REJECTED = -1
+    CANCEL = 0
+
+ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
+
+ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
 
 class DSBot(Agent):
 
@@ -86,7 +97,11 @@ class MyOrder(Order):
     This class should be implemented to have a better storage of current and past orders. And packing and sending
     orders will also be better implemented in this class, also interact with MyMarkets class
     """
-    pass
+    #need to use __init__ and super()
+    def __init__(self, price, units, order_type, order_side, market_id):
+        ref = ORDER_TYPE_TO_CHAR[order_type]+" "+ORDER_SIDE_TO_CHAR[order_side]+" "+time.time()
+        super().__init__(price, units, order_type, order_side, market_id, ref=ref)
+        self._status = OrderStatus(1)
 
 
 class MyMarkets:
