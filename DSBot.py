@@ -100,7 +100,9 @@ class MyOrder(Order):
     """
     #need to use __init__ and super()
     def __init__(self, price, units, order_type, order_side, market_id):
-        ref = ORDER_TYPE_TO_CHAR[order_type]+" "+ORDER_SIDE_TO_CHAR[order_side]+" "+time.time()
+        # now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
+        # now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
+        ref = ORDER_TYPE_TO_CHAR[order_type]+" "+ORDER_SIDE_TO_CHAR[order_side]+" "+str(now)
         super().__init__(price, units, order_type, order_side, market_id, ref=ref)
         self._status = OrderStatus(1)
 
