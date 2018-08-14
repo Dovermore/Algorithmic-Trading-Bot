@@ -7,7 +7,7 @@ from fmclient import Agent, OrderSide, Order, OrderType
 import time
 
 # Group details
-GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "4567": "Name 2"}
+GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price"}
 
 # ------ Add a variable called DS_REWARD_CHARGE -----
 # Dependent on actual task
