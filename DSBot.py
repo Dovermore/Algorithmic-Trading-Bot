@@ -25,6 +25,7 @@ class BotType(Enum):
     MARKET_MAKER = 0
     REACTIVE = 1
 
+# Defining another enumeration for the status of orders
 class OrderStatus(Enum):
     MADE = 1
     PENDING = 2
@@ -33,8 +34,8 @@ class OrderStatus(Enum):
     REJECTED = -1
     CANCEL = 0
 
+# Dictionary to store letters in representation of a certain OrderType and OrderSide for reference of orders
 ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
-
 ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
 
 class DSBot(Agent):
