@@ -1,0 +1,10 @@
+################################################
+# This is the git ignore file for this project #
+# specifically for logs and pycharm files      #
+################################################
+
+# Ignore log files
+logs/*
+
+# Ignore pycharm temp files
+.idea/*
