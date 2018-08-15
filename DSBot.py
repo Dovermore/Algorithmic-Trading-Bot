@@ -72,7 +72,7 @@ class DSBot(Agent):
         :param market_id:  Id of the corresponding market
         :return: No return. Only processes to be executed.
         """
-        self.inform("reveived order book from %d" % market_id)
+        self.inform("received order book from %d" % market_id)
 
         for order in order_book:
             pass
@@ -136,8 +136,13 @@ class MyOrder:
             self.status = OrderStatus["PENDING"]
             self.sent_order.send_order()
 
+        # found a more profitable trade, cancel previous to make new
+        elif self.status == OrderStatus["ACCEPTED"]:
+            pass  
+
     def cancel_sent_order(self):
         # if self.status in []
+        pass
 
     def compare_order(self, other_order):
         if self.ref == other_order.ref:
