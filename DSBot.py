@@ -4,7 +4,7 @@ This is a template for Project 1, Task 1 (Induced demand-supply)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-from time import strftime, localtime
+import time
 
 # Group details
 GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086": "Lee Jun Da"}
@@ -39,6 +39,8 @@ class OrderStatus(Enum):
 ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
 ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
 SEPARATION = "-"        # for most string separation
+TIME_FORMATTER = "%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
+                 SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S"
 
 class DSBot(Agent):
 
@@ -48,7 +50,8 @@ class DSBot(Agent):
         self._market_id = -1
         self._role = Role(0)
         self._bot_type = BotType(0)
-        self._all_markets = []
+        # For storing all markets available
+        self._all_markets = {}
 
     def run(self):
         self.initialise()
@@ -56,8 +59,8 @@ class DSBot(Agent):
 
     def initialised(self):
         for market_id, market_dict in self.markets.items():
-            self._all_markets.append(MyMarkets(market_dict, self))
-            self.inform("Added market")
+            self._all_markets[market_id] = (MyMarkets(market_dict, self))
+            self.inform("Added market with id %d" % market_id)
         self.inform("Finished Adding markets, the current list of markets are: " + repr(self._all_markets))
         pass
     # ------ End of Constructor and initialisation methods -----
@@ -69,11 +72,16 @@ class DSBot(Agent):
         :param market_id:  Id of the corresponding market
         :return: No return. Only processes to be executed.
         """
+        self.inform("reveived order book from %d" % market_id)
+
+        for order in order_book:
+            pass
         pass
 
     def received_marketplace_info(self, marketplace_info):
         pass
 
+    # --- start nico ---
     def received_completed_orders(self, orders, market_id=None):
         pass
 
@@ -93,9 +101,10 @@ class DSBot(Agent):
     def _print_trade_opportunity(self, other_order):
         self.inform("[" + str(self.role()) + str(other_order))
     # ------ End of Helper and trivial methods -----
+    # --- end nico ---
 
 
-class MyOrder(Order):
+class MyOrder:
     """
     This class should be implemented to have a better storage of current and past orders. And packing and sending
     orders will also be better implemented in this class, also interact with MyMarkets class
@@ -106,11 +115,33 @@ class MyOrder(Order):
         # 1: now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
         # 2: now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
         # 3: now = strftime("%H:%M:%S", localtime())
-        now = time.strftime("%y-%m-%d-%H-%M-%S", time.localtime(time.time()))  # year-month-day-hour-minute-second
+        now = time.strftime(TIME_FORMATTER, time.localtime())  # year-month-day-hour-minute-second
         ref = ORDER_TYPE_TO_CHAR[order_type]+SEPARATION+ORDER_SIDE_TO_CHAR[order_side]+SEPARATION+str(now)
-        super().__init__(price, units, order_type, order_side, market_id, ref=ref)
-        self._status = OrderStatus(1)
+        self.price = price
+        self.units = units
+        self.order_type = order_type
+        self.order_side = order_side
+        self.market_id = market_id
+        self.ref = ref
+        self.status = OrderStatus["MADE"]
+        self.sent_order = None
+        # self.cancel_order = None
 
+    def make_order(self):
+        return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
+
+    def send_order(self):
+        if self.status == OrderStatus["MADE"]:
+            self.sent_order = self.make_order()
+            self.status = OrderStatus["PENDING"]
+            self.sent_order.send_order()
+
+    def cancel_sent_order(self):
+        # if self.status in []
+
+    def compare_order(self, other_order):
+        if self.ref == other_order.ref:
+            return True
 
 class MyMarkets:
     """
