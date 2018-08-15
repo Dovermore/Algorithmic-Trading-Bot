@@ -4,7 +4,7 @@ This is a template for Project 1, Task 1 (Induced demand-supply)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-import time
+from time import strftime, localtime
 
 # Group details
 GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086": "Lee Jun Da"}
@@ -105,9 +105,9 @@ class MyOrder(Order):
         # 1 is too simple, 2 is too complex. The time format should be compact and easy to parse
         # 1: now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
         # 2: now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
+        # 3: now = strftime("%H:%M:%S", localtime())
         now = time.strftime("%y-%m-%d-%H-%M-%S", time.localtime(time.time()))  # year-month-day-hour-minute-second
         ref = ORDER_TYPE_TO_CHAR[order_type]+SEPARATION+ORDER_SIDE_TO_CHAR[order_side]+SEPARATION+str(now)
-
         super().__init__(price, units, order_type, order_side, market_id, ref=ref)
         self._status = OrderStatus(1)
 
