@@ -25,6 +25,7 @@ class BotType(Enum):
     MARKET_MAKER = 0
     REACTIVE = 1
 
+
 # Defining another enumeration for the status of orders
 class OrderStatus(Enum):
     MADE = 1
@@ -37,6 +38,7 @@ class OrderStatus(Enum):
 # Dictionary to store letters in representation of a certain OrderType and OrderSide for reference of orders
 ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
 ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
+SEPARATION = "-"        # for most string separation
 
 class DSBot(Agent):
 
@@ -98,11 +100,14 @@ class MyOrder(Order):
     This class should be implemented to have a better storage of current and past orders. And packing and sending
     orders will also be better implemented in this class, also interact with MyMarkets class
     """
-    #need to use __init__ and super()
+    # need to use __init__ and super()
     def __init__(self, price, units, order_type, order_side, market_id):
-        # now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
-        # now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
-        ref = ORDER_TYPE_TO_CHAR[order_type]+" "+ORDER_SIDE_TO_CHAR[order_side]+" "+str(now)
+        # 1 is too simple, 2 is too complex. The time format should be compact and easy to parse
+        # 1: now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
+        # 2: now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
+        now = time.strftime("%y-%m-%d-%H-%M-%S", time.localtime(time.time()))  # year-month-day-hour-minute-second
+        ref = ORDER_TYPE_TO_CHAR[order_type]+SEPARATION+ORDER_SIDE_TO_CHAR[order_side]+SEPARATION+str(now)
+
         super().__init__(price, units, order_type, order_side, market_id, ref=ref)
         self._status = OrderStatus(1)
 
@@ -116,6 +121,7 @@ class MyMarkets:
         if logger_agent:
             logger_agent.inform("Start converting market")
             logger_agent.inform("Currently logging market: "+repr(list(market_dict.items())))
+        # These are only given property getter no other handles, for they are not supposed to be changed
         self.dict = market_dict
         self._time = time.time()
         self._id = market_dict["id"]
@@ -161,11 +167,12 @@ class MyMarkets:
     def verify_order(self, order):
         pass
 
+
 if __name__ == "__main__":
     FM_ACCOUNT = "bullish-delight"
     FM_EMAIL = "z.huang51@student.unimelb.edu.au"
     FM_PASSWORD = "908525"
-    MARKETPLACE_ID = 328  # replace this with the marketplace id
+    MARKETPLACE_ID = 352  # replace this with the marketplace id
 
     ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL, FM_PASSWORD, MARKETPLACE_ID)
     ds_bot.run()
