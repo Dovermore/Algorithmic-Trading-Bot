@@ -60,9 +60,22 @@ class DSBot(Agent):
     def initialised(self):
         for market_id, market_dict in self.markets.items():
             self._all_markets[market_id] = (MyMarkets(market_dict, self))
+            self._market_id = market_id
             self.inform("Added market with id %d" % market_id)
         self.inform("Finished Adding markets, the current list of markets are: " + repr(self._all_markets))
-        pass
+
+        # --- Role of Bot ----
+        cash_info = self.holdings["cash"]
+        units_info = self.holdings["markets"][self._market_id]
+        self.inform(cash_info)
+        self.inform(units_info)
+        if cash_info["cash"] == 0:
+            self._role = Role(1)
+            self.inform("Bot is a seller")
+        else:
+            self._role = Role(0)
+            self.inform("Bot is a buyer")
+
     # ------ End of Constructor and initialisation methods -----
 
     def received_order_book(self, order_book, market_id):
