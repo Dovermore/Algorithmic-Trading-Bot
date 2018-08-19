@@ -64,18 +64,7 @@ class DSBot(Agent):
             self.inform("Added market with id %d" % market_id)
         self.inform("Finished Adding markets, the current list of markets are: " + repr(self._all_markets))
 
-        # --- Role of Bot ----
-        cash_info = self.holdings["cash"]
-        units_info = self.holdings["markets"][self._market_id]
-        self.inform(cash_info)
-        self.inform(units_info)
-        if cash_info["cash"] == 0:
-            self._role = Role(1)
-            self.inform("Bot is a seller")
-        else:
-            self._role = Role(0)
-            self.inform("Bot is a buyer")
-
+        self._role = self.role()
     # ------ End of Constructor and initialisation methods -----
 
     def received_order_book(self, order_book, market_id):
@@ -103,7 +92,17 @@ class DSBot(Agent):
 
     # ------ Helper and trivial methods -----
     def role(self):
-        return self._role
+        cash_info = self.holdings["cash"]
+        units_info = self.holdings["markets"][self._market_id]
+        self.inform(cash_info)
+        self.inform(units_info)
+        if cash_info["cash"] == 0:
+            self.inform("Bot is a seller")
+            return Role(1)
+        else:
+            self.inform("Bot is a buyer")
+            return Role(0)
+
 
     def order_accepted(self, order):
         pass
