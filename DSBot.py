@@ -48,7 +48,6 @@ class DSBot(Agent):
     def __init__(self, account, email, password, marketplace_id):
         super().__init__(account, email, password, marketplace_id, name="DSBot")
         self._market_id = -1
-        self._role = Role(0)
         self._bot_type = BotType(0)
         # For storing all markets available
         self._all_markets = {}
@@ -105,9 +104,13 @@ class DSBot(Agent):
 
 
     def order_accepted(self, order):
+        self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
+        #Need to update MyOrder status
         pass
 
     def order_rejected(self, info, order):
+        self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
+        # Need to update MyOrder status
         pass
 
     def _print_trade_opportunity(self, other_order):
@@ -123,10 +126,6 @@ class MyOrder:
     """
     # need to use __init__ and super()
     def __init__(self, price, units, order_type, order_side, market_id):
-        # 1 is too simple, 2 is too complex. The time format should be compact and easy to parse
-        # 1: now = time.strftime("%H:%M", time.localtime(time.time()))  e.g. '20:25'
-        # 2: now = time.ctime(int(time.time()))                         e.g. 'Tue Aug 14 20:26:43 2018'
-        # 3: now = strftime("%H:%M:%S", localtime())
         now = time.strftime(TIME_FORMATTER, time.localtime())  # year-month-day-hour-minute-second
         ref = ORDER_TYPE_TO_CHAR[order_type]+SEPARATION+ORDER_SIDE_TO_CHAR[order_side]+SEPARATION+str(now)
         self.price = price
