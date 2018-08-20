@@ -75,9 +75,21 @@ class DSBot(Agent):
         """
         self.inform("received order book from %d" % market_id)
 
+        # Task spec specify bot need to be either reactive or market maker, not both
+        # depending on the type of bot, make orders when appropriate.
+        # When the bid-ask spread is large, print can buy at Lowest sell price or sell at highest buy price
+
         for order in order_book:
-            pass
+            if order.side == OrderSide.SELL:
+                print(order.price)   # determine which is lowest SELL price
+                print("tosell")
+            elif order.side == OrderSide.BUY:
+                print(order)         # determine which is highest BUY price
+                print("tobuy")
+            # Create bid-ask spread and check for depth of order
+            # Depending on role, choose to buy or sell at relevant price
         pass
+
 
     def received_marketplace_info(self, marketplace_info):
         pass
