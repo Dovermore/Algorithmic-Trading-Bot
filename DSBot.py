@@ -142,6 +142,10 @@ class DSBot(Agent):
 
     # --- start nico ---
     def received_completed_orders(self, orders, market_id=None):
+        for order in orders:
+            if order.mine:
+                self.status = OrderStatus["COMPLETE"]
+                self.inform("Order with ref " + order.ref + "was completed in market" + str(market_id))
         pass
 
     def received_holdings(self, holdings):
@@ -162,12 +166,12 @@ class DSBot(Agent):
 
     def order_accepted(self, order):
         self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        self.status = OrderStatus("ACCEPTED")
+        self.status = OrderStatus["ACCEPTED"]
         pass
 
     def order_rejected(self, info, order):
         self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        self.status = OrderStatus("REJECTED")
+        self.status = OrderStatus["REJECTED"]
         pass
 
     def _print_trade_opportunity(self, other_order):
