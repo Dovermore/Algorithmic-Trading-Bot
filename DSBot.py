@@ -85,16 +85,10 @@ class DSBot(Agent):
 
         best_ask = None
         best_bid = None
-        pending = False
 
         for order in order_book:
             if order.mine:
-                pending = True
-
-            if pending:
                 self.status = OrderStatus["PENDING"]
-            elif not pending:
-                self.status = OrderStatus['CANCELLED']
 
             price = order.price
             units = order.units
@@ -126,11 +120,18 @@ class DSBot(Agent):
         only starting from below, above are all for getting the bid-ask spread 
         and determining whether our order is still in the order_book
         """
+        # Reactive Bot
+        if self._bot_type == BotType["REACTIVE"]:
+            # Bot is a buyer
+            if self._role == Role["BUYER"]:
+                if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
+                    my_order = MyOrder(100, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+                    my_order.send_order()
+                pass
 
-        if self.status == None or self.status == OrderStatus["CANCELLED"]:
-            self.status = OrderStatus["MAKING"]
-            my_order = MyOrder(100, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-            my_order.send_order()
+            # Bot is a seller
+            if self._role == Role["SELLER"]:
+                pass
 
         self.inform(self.status)
         # Create bid-ask spread and check for depth of order
@@ -161,12 +162,12 @@ class DSBot(Agent):
 
     def order_accepted(self, order):
         self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        # Need to update MyOrder status
+        self.status = OrderStatus("ACCEPTED")
         pass
 
     def order_rejected(self, info, order):
         self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        # Need to update MyOrder status
+        self.status = OrderStatus("REJECTED")
         pass
 
     def _print_trade_opportunity(self, other_order):
