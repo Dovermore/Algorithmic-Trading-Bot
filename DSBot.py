@@ -195,16 +195,16 @@ class MyOrder:
         # self.cancel_order = None
 
     def make_order(self):
-        print("making Order")
+        ds_bot.inform("Making Order")
         return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
 
     def send_order(self):
         if ds_bot.status == OrderStatus["MAKING"]:
             self.to_be_sent_order = self.make_order()
-            print('sending order')
+            ds_bot.inform("Sending Order")
             ds_bot.status = OrderStatus["PENDING"]
             ds_bot.send_order(self.to_be_sent_order)
-            print('sent order')
+            ds_bot.inform('Sent Order')
         # found a more profitable trade, cancel previous to make new
         elif ds_bot.status == OrderStatus["ACCEPTED"]:
             pass
@@ -284,5 +284,5 @@ if __name__ == "__main__":
     junda_pass = "888086"
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL, FM_PASSWORD, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, junda, junda_pass, MARKETPLACE_ID)
     ds_bot.run()
