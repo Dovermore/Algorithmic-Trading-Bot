@@ -116,8 +116,8 @@ class DSBot(Agent):
                         best_bid = (price, units)
 
         try:
-            bid_ask_spread = best_ask - best_bid
-            self.inform(bid_ask_spread)
+            bid_ask_spread = best_ask[0] - best_bid[0]
+            self.inform("Spread is: " + str(bid_ask_spread))
         except TypeError:
             self.inform("no bid ask spread available")
 
@@ -195,16 +195,16 @@ class MyOrder:
         # self.cancel_order = None
 
     def make_order(self):
-        ds_bot.inform("Making Order")
+        ds_bot.inform("Making Order with ref" + self.ref)
         return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
 
     def send_order(self):
         if ds_bot.status == OrderStatus["MAKING"]:
             self.to_be_sent_order = self.make_order()
-            ds_bot.inform("Sending Order")
+            ds_bot.inform("Sending Order with ref" + self.ref)
             ds_bot.status = OrderStatus["PENDING"]
             ds_bot.send_order(self.to_be_sent_order)
-            ds_bot.inform('Sent Order')
+            ds_bot.inform('Sent Order with ref' + self.ref)
         # found a more profitable trade, cancel previous to make new
         elif ds_bot.status == OrderStatus["ACCEPTED"]:
             pass
