@@ -121,6 +121,12 @@ class DSBot(Agent):
         except TypeError:
             self.inform("no bid ask spread available")
 
+        """
+        insert role and type of bot here to make orders 
+        only starting from below, above are all for getting the bid-ask spread 
+        and determining whether our order is still in the order_book
+        """
+
         if self.status == None or self.status == OrderStatus["CANCELLED"]:
             self.status = OrderStatus["MAKING"]
             my_order = MyOrder(100, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
@@ -278,5 +284,5 @@ if __name__ == "__main__":
     junda_pass = "888086"
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, junda, junda_pass, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL, FM_PASSWORD, MARKETPLACE_ID)
     ds_bot.run()
