@@ -79,13 +79,37 @@ class DSBot(Agent):
         # depending on the type of bot, make orders when appropriate.
         # When the bid-ask spread is large, print can buy at Lowest sell price or sell at highest buy price
 
+        best_ask = None
+        best_bid = None
+
         for order in order_book:
+            price = order.price
+            units = order.units
             if order.side == OrderSide.SELL:
-                print(order.price)   # determine which is lowest SELL price
-                print("tosell")
+                # determine which is lowest SELL price
+                if best_ask == None:
+                    best_ask = (price, units)
+                else:
+                    if price < best_ask[0]:
+                        best_ask = (price, units)
+
             elif order.side == OrderSide.BUY:
-                print(order.price)         # determine which is highest BUY price
-                print("tobuy")
+                # determine which is highest BUY price
+                if best_bid == None:
+                    best_bid = (price, units)
+                else:
+                    if price > best_bid[0]:
+                        best_bid = (price, units)
+
+        try:
+            bid_ask_spread = best_ask - best_bid
+            self.inform(bid_ask_spread)
+        except TypeError:
+            self.inform("no bid ask spread available")
+
+        my_order = MyOrder(100,1,OrderType.LIMIT,OrderSide.BUY,market_id)
+        my_order.send_order()
+
 
 
 
@@ -148,7 +172,6 @@ class MyOrder:
         self.order_side = order_side
         self.market_id = market_id
         self.ref = ref
-        print('hi')
         self.status = OrderStatus["MADE"]
         self.sent_order = None
         # self.cancel_order = None
@@ -160,12 +183,11 @@ class MyOrder:
 
     def send_order(self):
         if self.status == OrderStatus["MADE"]:
-            self.sent_order = self.make_order()
+            self.to_be_sent_order = self.make_order()
             print('sending order')
             self.status = OrderStatus["PENDING"]
-
+            ds_bot.send_order(self.to_be_sent_order)
             print('sent order')
-
         # found a more profitable trade, cancel previous to make new
         elif self.status == OrderStatus["ACCEPTED"]:
             pass  
