@@ -13,7 +13,6 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086":
 # Dependent on actual task
 DS_REWARD_CHARGE = 500
 
-
 # Enum for the roles of the bot
 class Role(Enum):
     BUYER = 0
@@ -52,6 +51,7 @@ class DSBot(Agent):
         # For storing all markets available
         self._all_markets = {}
 
+
     def run(self):
         self.initialise()
         self.start()
@@ -84,11 +84,13 @@ class DSBot(Agent):
                 print(order.price)   # determine which is lowest SELL price
                 print("tosell")
             elif order.side == OrderSide.BUY:
-                print(order)         # determine which is highest BUY price
+                print(order.price)         # determine which is highest BUY price
                 print("tobuy")
+
+
+
             # Create bid-ask spread and check for depth of order
             # Depending on role, choose to buy or sell at relevant price
-        pass
 
 
     def received_marketplace_info(self, marketplace_info):
@@ -146,18 +148,23 @@ class MyOrder:
         self.order_side = order_side
         self.market_id = market_id
         self.ref = ref
+        print('hi')
         self.status = OrderStatus["MADE"]
         self.sent_order = None
         # self.cancel_order = None
 
     def make_order(self):
+        print("making Order")
         return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
+
 
     def send_order(self):
         if self.status == OrderStatus["MADE"]:
             self.sent_order = self.make_order()
+            print('sending order')
             self.status = OrderStatus["PENDING"]
-            self.sent_order.send_order()
+
+            print('sent order')
 
         # found a more profitable trade, cancel previous to make new
         elif self.status == OrderStatus["ACCEPTED"]:
@@ -170,6 +177,8 @@ class MyOrder:
     def compare_order(self, other_order):
         if self.ref == other_order.ref:
             return True
+        pass
+
 
 class MyMarkets:
     """
@@ -230,8 +239,10 @@ class MyMarkets:
 if __name__ == "__main__":
     FM_ACCOUNT = "bullish-delight"
     FM_EMAIL = "z.huang51@student.unimelb.edu.au"
+    junda = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD = "908525"
+    junda_pass = "888086"
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL, FM_PASSWORD, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, junda, junda_pass, MARKETPLACE_ID)
     ds_bot.run()
