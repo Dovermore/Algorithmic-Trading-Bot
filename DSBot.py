@@ -13,6 +13,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086":
 # Dependent on actual task
 DS_REWARD_CHARGE = 500
 
+
 # Enum for the roles of the bot
 class Role(Enum):
     BUYER = 0
@@ -27,19 +28,21 @@ class BotType(Enum):
 
 # Defining another enumeration for the status of orders
 class OrderStatus(Enum):
-    MADE = 1
+    MAKING = 1
     PENDING = 2
     ACCEPTED = 3
     COMPLETED = 4
     REJECTED = -1
-    CANCEL = 0
+    CANCELLED = 0
+
 
 # Dictionary to store letters in representation of a certain OrderType and OrderSide for reference of orders
 ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
 ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
-SEPARATION = "-"        # for most string separation
+SEPARATION = "-"  # for most string separation
 TIME_FORMATTER = "%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
                  SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S"
+
 
 class DSBot(Agent):
 
@@ -50,7 +53,7 @@ class DSBot(Agent):
         self._bot_type = BotType(0)
         # For storing all markets available
         self._all_markets = {}
-
+        self.status = None
 
     def run(self):
         self.initialise()
@@ -64,6 +67,7 @@ class DSBot(Agent):
         self.inform("Finished Adding markets, the current list of markets are: " + repr(self._all_markets))
 
         self._role = self.role()
+
     # ------ End of Constructor and initialisation methods -----
 
     def received_order_book(self, order_book, market_id):
@@ -81,10 +85,20 @@ class DSBot(Agent):
 
         best_ask = None
         best_bid = None
+        pending = False
 
         for order in order_book:
+            if order.mine:
+                pending = True
+
+            if pending:
+                self.status = OrderStatus["PENDING"]
+            elif not pending:
+                self.status = OrderStatus['CANCELLED']
+
             price = order.price
             units = order.units
+
             if order.side == OrderSide.SELL:
                 # determine which is lowest SELL price
                 if best_ask == None:
@@ -107,15 +121,14 @@ class DSBot(Agent):
         except TypeError:
             self.inform("no bid ask spread available")
 
-        my_order = MyOrder(100,1,OrderType.LIMIT,OrderSide.BUY,market_id)
-        my_order.send_order()
+        if self.status == None or self.status == OrderStatus["CANCELLED"]:
+            self.status = OrderStatus["MAKING"]
+            my_order = MyOrder(100, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+            my_order.send_order()
 
-
-
-
-            # Create bid-ask spread and check for depth of order
-            # Depending on role, choose to buy or sell at relevant price
-
+        self.inform(self.status)
+        # Create bid-ask spread and check for depth of order
+        # Depending on role, choose to buy or sell at relevant price
 
     def received_marketplace_info(self, marketplace_info):
         pass
@@ -140,10 +153,9 @@ class DSBot(Agent):
             self.inform("Bot is a buyer")
             return Role(0)
 
-
     def order_accepted(self, order):
         self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        #Need to update MyOrder status
+        # Need to update MyOrder status
         pass
 
     def order_rejected(self, info, order):
@@ -162,17 +174,17 @@ class MyOrder:
     This class should be implemented to have a better storage of current and past orders. And packing and sending
     orders will also be better implemented in this class, also interact with MyMarkets class
     """
+
     # need to use __init__ and super()
     def __init__(self, price, units, order_type, order_side, market_id):
         now = time.strftime(TIME_FORMATTER, time.localtime())  # year-month-day-hour-minute-second
-        ref = ORDER_TYPE_TO_CHAR[order_type]+SEPARATION+ORDER_SIDE_TO_CHAR[order_side]+SEPARATION+str(now)
+        ref = ORDER_TYPE_TO_CHAR[order_type] + SEPARATION + ORDER_SIDE_TO_CHAR[order_side] + SEPARATION + str(now)
         self.price = price
         self.units = units
         self.order_type = order_type
         self.order_side = order_side
         self.market_id = market_id
         self.ref = ref
-        self.status = OrderStatus["MADE"]
         self.sent_order = None
         # self.cancel_order = None
 
@@ -180,17 +192,16 @@ class MyOrder:
         print("making Order")
         return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
 
-
     def send_order(self):
-        if self.status == OrderStatus["MADE"]:
+        if ds_bot.status == OrderStatus["MAKING"]:
             self.to_be_sent_order = self.make_order()
             print('sending order')
-            self.status = OrderStatus["PENDING"]
+            ds_bot.status = OrderStatus["PENDING"]
             ds_bot.send_order(self.to_be_sent_order)
             print('sent order')
         # found a more profitable trade, cancel previous to make new
-        elif self.status == OrderStatus["ACCEPTED"]:
-            pass  
+        elif ds_bot.status == OrderStatus["ACCEPTED"]:
+            pass
 
     def cancel_sent_order(self):
         # if self.status in []
@@ -207,10 +218,11 @@ class MyMarkets:
     Market class that can parse market from dictionary form to a class form and provide extra-functionality to support
     putting orders into market.
     """
-    def __init__(self, market_dict, logger_agent = None):
+
+    def __init__(self, market_dict, logger_agent=None):
         if logger_agent:
             logger_agent.inform("Start converting market")
-            logger_agent.inform("Currently logging market: "+repr(list(market_dict.items())))
+            logger_agent.inform("Currently logging market: " + repr(list(market_dict.items())))
         # These are only given property getter no other handles, for they are not supposed to be changed
         self.dict = market_dict
         self._time = time.time()
