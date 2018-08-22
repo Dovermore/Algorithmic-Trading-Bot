@@ -87,7 +87,10 @@ class DSBot(Agent):
         best_bid = None
 
         for order in order_book:
+            self.inform(type(order))
+            self.inform("The ref is:", order.ref)
             if order.mine:
+                self.inform("The ref is:", order.ref)
                 self.status = OrderStatus["PENDING"]
 
             price = order.price
@@ -130,19 +133,20 @@ class DSBot(Agent):
             if self._role == Role["BUYER"]:
                 if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
                     my_order = MyOrder(bid_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                    my_order.send_order()
+                    my_order.send_order(self)
                 pass
 
             # Bot is a seller
             if self._role == Role["SELLER"]:
                 if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
                     my_order = MyOrder(ask_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                    my_order.send_order()
+                    my_order.send_order(self)
                 pass
 
         self.inform(self.status)
         # Create bid-ask spread and check for depth of order
         # Depending on role, choose to buy or sell at relevant price
+
 
     def received_marketplace_info(self, marketplace_info):
         pass
@@ -206,19 +210,21 @@ class MyOrder:
         self.sent_order = None
         # self.cancel_order = None
 
-    def make_order(self):
-        ds_bot.inform("Making Order with ref" + self.ref)
+    def make_order(self, agent=None):
+        if agent:
+            agent.inform("Making Order with ref" + self.ref)
         return Order(self.price, self.units, self.order_type, self.order_side, self.market_id, ref=self.ref)
 
-    def send_order(self):
-        if ds_bot.status == OrderStatus["MAKING"]:
+
+    def send_order(self, agent):
+        if agent.status == OrderStatus["MAKING"]:
             self.to_be_sent_order = self.make_order()
-            ds_bot.inform("Sending Order with ref" + self.ref)
-            ds_bot.status = OrderStatus["PENDING"]
-            ds_bot.send_order(self.to_be_sent_order)
-            ds_bot.inform('Sent Order with ref' + self.ref)
+            agent.inform("Sending Order with ref" + self.ref)
+            agent.status = OrderStatus["PENDING"]
+            agent.send_order(self.to_be_sent_order)
+            agent.inform('Sent Order with ref' + self.ref)
         # found a more profitable trade, cancel previous to make new
-        elif ds_bot.status == OrderStatus["ACCEPTED"]:
+        elif agent.status == OrderStatus["ACCEPTED"]:
             pass
 
     def cancel_sent_order(self):
