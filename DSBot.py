@@ -87,17 +87,14 @@ class DSBot(Agent):
         best_bid = None
 
         for order in order_book:
-            self.inform(type(order))
-            self.inform("The ref is:", order.ref)
             if order.mine:
-                self.inform("The ref is:", order.ref)
                 self.status = OrderStatus["PENDING"]
 
             price = order.price
             units = order.units
 
             if order.side == OrderSide.SELL:
-                # determine which is lowest SELL price
+                # determine which is lowest ASK price
                 if best_ask == None:
                     best_ask = (price, units)
                 else:
@@ -105,7 +102,7 @@ class DSBot(Agent):
                         best_ask = (price, units)
 
             elif order.side == OrderSide.BUY:
-                # determine which is highest BUY price
+                # determine which is highest BID price
                 if best_bid == None:
                     best_bid = (price, units)
                 else:
@@ -127,21 +124,20 @@ class DSBot(Agent):
         only starting from below, above are all for getting the bid-ask spread 
         and determining whether our order is still in the order_book
         """
-        # Reactive Bot
-        if self._bot_type == BotType["REACTIVE"]:
-            # Bot is a buyer
-            if self._role == Role["BUYER"]:
-                if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
-                    my_order = MyOrder(bid_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                    my_order.send_order(self)
-                pass
 
-            # Bot is a seller
-            if self._role == Role["SELLER"]:
-                if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
-                    my_order = MyOrder(ask_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                    my_order.send_order(self)
-                pass
+        # Bot is a buyer
+        if self._role == Role["BUYER"]:
+            if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
+                my_order = MyOrder(bid_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+                my_order.send_order(self)
+            pass
+
+        # Bot is a seller
+        if self._role == Role["SELLER"]:
+            if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
+                my_order = MyOrder(ask_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+                my_order.send_order(self)
+            pass
 
         self.inform(self.status)
         # Create bid-ask spread and check for depth of order
@@ -160,7 +156,13 @@ class DSBot(Agent):
         pass
 
     def received_holdings(self, holdings):
-        pass
+        cash_holdings = holdings["cash"]
+        print("Total cash: " + str(cash_holdings["cash"]) +
+              " available cash: " + str(cash_holdings["available_cash"]))
+        for market_id, market_holding in holdings["markets"].items():
+            print("Market ID " + str(market_id) + ": total units: " +
+                  str(market_holding["units"]) + ", available units: " + str(market_holding["available_units"]))
+
 
     # ------ Helper and trivial methods -----
     def role(self):
@@ -186,10 +188,15 @@ class DSBot(Agent):
         pass
 
     def _print_trade_opportunity(self, other_order):
-        self.inform("[" + str(self.role()) + str(other_order))
+        if self._role == Role(0):
+            self.inform("My Role is " + str(self.role()) +
+                        ". Current best trade opportunity would be buying at $" + str(other_order/100))
+        pass
     # ------ End of Helper and trivial methods -----
     # --- end nico ---
 
+    def _reactive_orders_price(self, price):
+        pass
 
 class MyOrder:
     """
@@ -300,7 +307,7 @@ if __name__ == "__main__":
     junda = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD = "908525"
     junda_pass = "888086"
-    MARKETPLACE_ID = 352  # replace this with the marketplace id
+    MARKETPLACE_ID = 260  # replace this with the marketplace id
 
     ds_bot = DSBot(FM_ACCOUNT, junda, junda_pass, MARKETPLACE_ID)
     ds_bot.run()
