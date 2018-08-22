@@ -195,7 +195,7 @@ class DSBot(Agent):
 
     def _market_maker_orders_price(self, best_ask, best_bid):
         """
-        When the bot is a market maker, creates the order of class MyOrder
+        When the bot is a market maker, creates the order with class MyOrder
         """
         order_price = 0
         self.inform("best ask is: " + str(best_ask))
@@ -228,12 +228,12 @@ class DSBot(Agent):
             # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
             elif best_ask > DS_REWARD_CHARGE:
                 order_price = best_ask
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
                 my_order.send_order(self)
             # Best ask price is 1 tick more than DS_REWARD_CHARGE
             else:
                 order_price = DS_REWARD_CHARGE + self._all_markets[self._market_id]._tick
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
                 my_order.send_order(self)
 
     def _reactive_orders_price(self, price):
