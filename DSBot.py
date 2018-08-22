@@ -115,6 +115,10 @@ class DSBot(Agent):
         except TypeError:
             self.inform("no bid ask spread available")
 
+        # calculate appropriate price to be bid or ask based on available bid-ask spread
+        bid_price = None
+        ask_price = None
+
         """
         insert role and type of bot here to make orders 
         only starting from below, above are all for getting the bid-ask spread 
@@ -125,12 +129,15 @@ class DSBot(Agent):
             # Bot is a buyer
             if self._role == Role["BUYER"]:
                 if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
-                    my_order = MyOrder(100, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+                    my_order = MyOrder(bid_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
                     my_order.send_order()
                 pass
 
             # Bot is a seller
             if self._role == Role["SELLER"]:
+                if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
+                    my_order = MyOrder(ask_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
+                    my_order.send_order()
                 pass
 
         self.inform(self.status)
