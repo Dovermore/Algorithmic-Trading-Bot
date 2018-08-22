@@ -86,8 +86,12 @@ class DSBot(Agent):
         best_ask = None
         best_bid = None
 
+        # Variable used to check whether our order was completed
+        order_currently_pending = False
+
         for order in order_book:
             if order.mine:
+                order_currently_pending = True
                 self.status = OrderStatus["PENDING"]
 
             price = order.price
@@ -115,6 +119,11 @@ class DSBot(Agent):
         except TypeError:
             self.inform("no bid ask spread available")
 
+        # If our order was not in the order book, but it was on the last iteration (therefore complete or cancelled)
+        if not order_currently_pending:
+            self.status = OrderStatus["COMPLETED"]
+            self.inform("Order was completed in market " + str(self._market_id))
+
         # calculate appropriate price to be bid or ask based on available bid-ask spread
         bid_price = None
         ask_price = None
@@ -124,20 +133,13 @@ class DSBot(Agent):
         only starting from below, above are all for getting the bid-ask spread 
         and determining whether our order is still in the order_book
         """
-
-        # Bot is a buyer
-        if self._role == Role["BUYER"]:
-            if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
-                my_order = MyOrder(bid_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                my_order.send_order(self)
-            pass
-
-        # Bot is a seller
-        if self._role == Role["SELLER"]:
-            if (self.status is None) or (self.status == OrderStatus["CANCELLED"]):
-                my_order = MyOrder(ask_price, 1, OrderType.LIMIT, OrderSide.BUY, market_id)
-                my_order.send_order(self)
-            pass
+        # Bot is a market maker
+        if self._bot_type == BotType["MARKET_MAKER"]:
+            # Check that no order is currently pending
+            if (self.status is None) or self.status != OrderStatus["PENDING"]:
+                self.status = OrderStatus["MAKING"]
+                self.inform("We can make an order")
+                self._market_maker_orders_price(best_ask[0], best_bid[0])
 
         self.inform(self.status)
         # Create bid-ask spread and check for depth of order
@@ -149,10 +151,6 @@ class DSBot(Agent):
 
     # --- start nico ---
     def received_completed_orders(self, orders, market_id=None):
-        for order in orders:
-            if order.mine:
-                self.status = OrderStatus["COMPLETE"]
-                self.inform("Order with ref " + order.ref + "was completed in market" + str(market_id))
         pass
 
     def received_holdings(self, holdings):
@@ -178,12 +176,12 @@ class DSBot(Agent):
             return Role(0)
 
     def order_accepted(self, order):
-        self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
-        self.status = OrderStatus["ACCEPTED"]
+        self.inform("Order was accepted in market " + str(self._market_id))
+        self.status = OrderStatus["PENDING"]
         pass
 
     def order_rejected(self, info, order):
-        self.inform("Order with ref " + str(order.ref) + "was accepted in market " + str(self._market_id))
+        self.inform("Order was accepted in market " + str(self._market_id))
         self.status = OrderStatus["REJECTED"]
         pass
 
@@ -194,6 +192,49 @@ class DSBot(Agent):
         pass
     # ------ End of Helper and trivial methods -----
     # --- end nico ---
+
+    def _market_maker_orders_price(self, best_ask, best_bid):
+        """
+        When the bot is a market maker, creates the order of class MyOrder
+        """
+        order_price = 0
+        self.inform("best ask is: " + str(best_ask))
+        self.inform("best bid is: " + str(best_bid))
+        # Bot is a buyer
+        if self._role == Role["BUYER"]:
+            # Check if we can set a bid which beats the current best bid
+            if best_bid + self._all_markets[self._market_id]._tick < DS_REWARD_CHARGE:
+                order_price = best_bid + self._all_markets[self._market_id]._tick
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
+            # Check if current best bid is profitable, but increasing the bid makes it unprofitable
+            elif best_bid < DS_REWARD_CHARGE:
+                order_price = best_bid
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
+            # Best buy price is 1 tick less than DS_REWARD_CHARGE
+            else:
+                order_price = DS_REWARD_CHARGE - self._all_markets[self._market_id]._tick
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
+
+        # Bot is a seller
+        if self._role == Role["SELLER"]:
+            # Check if we can set an ask which beats the current best ask
+            if best_ask - self._all_markets[self._market_id]._tick > DS_REWARD_CHARGE:
+                order_price = best_ask - self._all_markets[self._market_id]._tick
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
+                my_order.send_order(self)
+            # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
+            elif best_ask > DS_REWARD_CHARGE:
+                order_price = best_ask
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
+            # Best ask price is 1 tick more than DS_REWARD_CHARGE
+            else:
+                order_price = DS_REWARD_CHARGE + self._all_markets[self._market_id]._tick
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
 
     def _reactive_orders_price(self, price):
         pass
@@ -226,10 +267,10 @@ class MyOrder:
     def send_order(self, agent):
         if agent.status == OrderStatus["MAKING"]:
             self.to_be_sent_order = self.make_order()
-            agent.inform("Sending Order with ref" + self.ref)
+            agent.inform("Sending Order with ref " + self.ref)
             agent.status = OrderStatus["PENDING"]
             agent.send_order(self.to_be_sent_order)
-            agent.inform('Sent Order with ref' + self.ref)
+            agent.inform('Sent Order with ref ' + self.ref)
         # found a more profitable trade, cancel previous to make new
         elif agent.status == OrderStatus["ACCEPTED"]:
             pass
