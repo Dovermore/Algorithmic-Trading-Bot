@@ -203,7 +203,7 @@ class DSBot(Agent):
         # Bot is a buyer
         if self._role == Role["BUYER"]:
             if best_bid is None:
-                order_price = DS_REWARD_CHARGE/2
+                order_price = int(DS_REWARD_CHARGE/2)
             # Check if we can set a bid which beats the current best bid
             elif best_bid[0] + self._all_markets[self._market_id]._tick < DS_REWARD_CHARGE:
                 order_price = best_bid[0] + self._all_markets[self._market_id]._tick
@@ -219,7 +219,7 @@ class DSBot(Agent):
         # Bot is a seller
         if self._role == Role["SELLER"]:
             if best_ask is None:
-                order_price = DS_REWARD_CHARGE * 1.5
+                order_price = int(DS_REWARD_CHARGE *1.5)
             # Check if we can set an ask which beats the current best ask
             elif best_ask[0] - self._all_markets[self._market_id]._tick > DS_REWARD_CHARGE:
                 order_price = best_ask[0] - self._all_markets[self._market_id]._tick
@@ -262,7 +262,7 @@ class MyOrder:
 
     def send_order(self, agent):
         if agent.status == OrderStatus["MAKING"]:
-            self.sent_order = self.make_order()
+            self.sent_order = self.make_order(agent)
             agent.inform("Sending Order with ref " + self.ref)
             agent.status = OrderStatus["PENDING"]
             agent.send_order(self.sent_order)
