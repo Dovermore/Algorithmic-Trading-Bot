@@ -204,46 +204,33 @@ class DSBot(Agent):
         if self._role == Role["BUYER"]:
             if best_bid is None:
                 order_price = DS_REWARD_CHARGE/2
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
-                my_order.send_order(self)
             # Check if we can set a bid which beats the current best bid
             elif best_bid[0] + self._all_markets[self._market_id]._tick < DS_REWARD_CHARGE:
                 order_price = best_bid[0] + self._all_markets[self._market_id]._tick
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
-                my_order.send_order(self)
             # Check if current best bid is profitable, but increasing the bid makes it unprofitable
             elif best_bid[0] < DS_REWARD_CHARGE:
                 order_price = best_bid[0]
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
-                my_order.send_order(self)
             # Best buy price is 1 tick less than DS_REWARD_CHARGE
             else:
                 order_price = DS_REWARD_CHARGE - self._all_markets[self._market_id]._tick
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
-                my_order.send_order(self)
+            my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+            my_order.send_order(self)
 
         # Bot is a seller
         if self._role == Role["SELLER"]:
             if best_ask is None:
-                print('HI')
                 order_price = DS_REWARD_CHARGE * 1.5
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
-                my_order.send_order(self)
             # Check if we can set an ask which beats the current best ask
-            if best_ask[0] - self._all_markets[self._market_id]._tick > DS_REWARD_CHARGE:
+            elif best_ask[0] - self._all_markets[self._market_id]._tick > DS_REWARD_CHARGE:
                 order_price = best_ask[0] - self._all_markets[self._market_id]._tick
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
-                my_order.send_order(self)
             # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
             elif best_ask[0] > DS_REWARD_CHARGE:
                 order_price = best_ask[0]
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
-                my_order.send_order(self)
             # Best ask price is 1 tick more than DS_REWARD_CHARGE
             else:
                 order_price = DS_REWARD_CHARGE + self._all_markets[self._market_id]._tick
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
-                my_order.send_order(self)
+            my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
+            my_order.send_order(self)
 
     def _reactive_orders_price(self, price):
         pass
