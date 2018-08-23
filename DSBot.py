@@ -26,6 +26,13 @@ class BotType(Enum):
     REACTIVE = 1
 
 
+# Defining enumeration for the status of the bot
+class BotStatus(Enum):
+    UNABLE_UNITS_MAX = -1
+    UNABLE_CASH_NONE = 0
+    ACTIVE = 1
+
+
 # Defining another enumeration for the status of orders
 class OrderStatus(Enum):
     MAKING = 1
@@ -54,6 +61,7 @@ class DSBot(Agent):
         # For storing all markets available
         self._all_markets = {}
         self.status = None
+        self._bot_status = BotStatus["ACTIVE"]
 
     def run(self):
         self.initialise()
@@ -160,12 +168,33 @@ class DSBot(Agent):
         pass
 
     def received_holdings(self, holdings):
+        """
+        Read current holdings of account to make sure trade is possible
+        :param holdings: Holdings of the account (Cash, Available Cash, Units, Available units)
+        :return: return holdings of account
+        """
         cash_holdings = holdings["cash"]
-        print("Total cash: " + str(cash_holdings["cash"]) +
-              " available cash: " + str(cash_holdings["available_cash"]))
+        self.inform("Total cash: " + str(cash_holdings["cash"]) +
+                    " available cash: " + str(cash_holdings["available_cash"]))
         for market_id, market_holding in holdings["markets"].items():
-            print("Market ID " + str(market_id) + ": total units: " +
-                  str(market_holding["units"]) + ", available units: " + str(market_holding["available_units"]))
+            self.inform("Market ID " + str(market_id) + ": total units: " +
+                        str(market_holding["units"]) + ", available units: " + str(market_holding["available_units"]))
+
+        if self.role == Role["SELLER"]:
+            if market_holding["available_units"] == 0:
+                self._bot_status = BotStatus["UNABLE_UNITS_MAX"]
+                self.inform("Role-Seller: No more available units, unable to continue trade")
+            else:
+                self._bot_status = BotStatus["ACTIVE"]
+
+        if self._role == Role["BUYER"]:
+            if cash_holdings["available_cash"] == 0:
+                self._bot_status = BotStatus["UNABLE_CASH_ZERO"]
+                self.inform("Role-Buyer: No more available cash, unable to continue trade")
+            elif market_holding["units"] == 5:
+                self._bot_status = BotStatus["UNABLE_UNITS_MAX"]
+            else:
+                self._bot_status = BotStatus["ACTIVE"]
 
 
     # ------ Helper and trivial methods -----
@@ -192,12 +221,22 @@ class DSBot(Agent):
         pass
 
     def _print_trade_opportunity(self, other_order):
-        if self._role == Role(0):
-            self.inform("My Role is " + str(self.role()) +
-                        ". Current best trade opportunity would be buying at $" + str(other_order/100))
-        pass
-    # ------ End of Helper and trivial methods -----
-    # --- end nico ---
+        """
+        Depending on our role and our bottype, print trade opportunity accordingly
+        :param other_order: trade opportunities seen
+        :return: self.inform() - let user know there is a good trade opportunity
+        """
+        self.inform("My Role is " + str(self._role) +
+                    ". Current best trade opportunity would be buying at $" + str(other_order / 100))
+        if self._bot_status == BotStatus["UNABLE_UNITS_MAX"] or self._bot_status == BotStatus["UNABLE_CASH_ZERO"]:
+            if self._role == Role["BUYER"]:
+                if self._bot_status == BotStatus["UNABLE_UNITS_MAX"]:
+                    self.inform("Buyer has already bought 5 units.")
+                elif self._bot_status == BotStatus["UNABLE_CASH_ZERO"]:
+                    self.inform("Buyer has no more available cash left.")
+            elif self._role == Role["SELLER"]:
+                self.inform("Seller has no more available units left.")
+
 
     def _market_maker_orders(self, best_ask, best_bid):
         """
