@@ -274,32 +274,39 @@ class DSBot(Agent):
 
         self._print_trade_opportunity(order_price)
 
-        if self.bot_status == BotStatus["ACTIVE"]:
+        if self.bot_status == BotStatus["ACTIVE"] and order_price is not None:
             my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
             my_order.send_order(self)
 
     def _reactive_orders(self, best_ask, best_bid):
+        """
+        When bot is set to reactive, make orders using this
+        :param best_ask: Best ask price by the market
+        :param best_bid: Best bid price by the market
+        :return: makes order according to role
+        """
+        order_price = None
+        order_side = None
         if self._role == Role["BUYER"]:
+            order_side = OrderSide.BUY
             if best_ask is None:
                 pass
             elif best_ask[0] < DS_REWARD_CHARGE:
                 order_price = best_ask[0]
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
-                my_order.send_order(self)
 
         elif self._role == Role["SELLER"]:
+            order_side = OrderSide.SELL
             if best_bid is None:
                 pass
             elif best_bid[0] > DS_REWARD_CHARGE:
                 order_price = best_bid[0]
-                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
-                my_order.send_order(self)
 
         self._print_trade_opportunity(order_price)
 
-        if self.bot_status == BotStatus["ACTIVE"]:
+        if self.bot_status == BotStatus["ACTIVE"] and order_price is not None:
             my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
             my_order.send_order(self)
+
 
 class MyOrder:
     """
