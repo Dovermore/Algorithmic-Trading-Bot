@@ -281,11 +281,10 @@ class MyOrder:
             agent.send_order(self.to_be_sent_order)
             agent.inform('Sent Order with ref' + self.ref)
         # found a more profitable trade, cancel previous to make new
-        elif agent.status == OrderStatus["ACCEPTED"]:
-            pass
+        elif agent.status == OrderStatus["PENDING"]:
+
 
     def cancel_sent_order(self):
-        # if self.status in []
         pass
 
     def compare_order(self, other_order):
