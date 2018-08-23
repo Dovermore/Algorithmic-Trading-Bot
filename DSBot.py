@@ -43,7 +43,6 @@ class OrderStatus(Enum):
     CANCELLED = 0
 
 
-
 # Dictionary to store letters in representation of a certain OrderType and OrderSide for reference of orders
 ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
 ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
@@ -140,6 +139,7 @@ class DSBot(Agent):
                 self.status = OrderStatus["MAKING"]
                 self.inform("We can make a market-making order")
                 self._market_maker_orders_price(best_ask[0], best_bid[0])
+                print(market_id)
 
         if self._bot_type == BotType["REACTIVE"]:
             if self.status != OrderStatus["PENDING"]:
@@ -219,6 +219,8 @@ class DSBot(Agent):
 
         self.inform("My Role is " + str(self._role) +
                     ". Current best trade opportunity would be buying at $" + str(other_order / 100))
+        if self._bot_status == BotStatus["ACTIVE"] and self.status == OrderStatus["PENDING"]:
+            self.inform("Already have pending order in the Order Book.")
         if self._bot_status == BotStatus["UNABLE_UNITS_MAX"] or self._bot_status == BotStatus["UNABLE_CASH_ZERO"]:
             if self._role == Role["BUYER"]:
                 if self._bot_status == BotStatus["UNABLE_UNITS_MAX"]:
@@ -230,41 +232,45 @@ class DSBot(Agent):
     # ------ End of Helper and trivial methods -----
     # --- end nico ---
 
-    def _market_maker_orders_price(self, best_ask, best_bid, order_type):
+    def _market_maker_orders_price(self, best_ask, best_bid):
         """
         When the bot is a market maker, creates the order with class MyOrder
         """
         order_price = 0
         self.inform("best ask is: " + str(best_ask))
         self.inform("best bid is: " + str(best_bid))
+        tick_size = int(self._all_markets[self._market_id]._tick)
+        print(tick_size)
         # Bot is a buyer
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
             # Check if we can set a bid which beats the current best bid
-            if best_bid + MyMarkets.tick < DS_REWARD_CHARGE:
-                order_price = best_bid + MyMarkets.tick
+            if best_bid + tick_size < DS_REWARD_CHARGE:
+                order_price = best_bid + tick_size
             # Check if current best bid is profitable, but increasing the bid makes it unprofitable
             elif best_bid < DS_REWARD_CHARGE:
                 order_price = best_bid
             # Best buy price is 1 tick less than DS_REWARD_CHARGE
             else:
-                order_price = DS_REWARD_CHARGE - MyMarkets.tick
+                order_price = DS_REWARD_CHARGE - tick_size
 
         # Bot is a seller
         if self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             # Check if we can set an ask which beats the current best ask
-            if best_ask - MyMarkets.tick > DS_REWARD_CHARGE:
-                order_price = best_ask - MyMarkets.tick
+            if best_ask - tick_size > DS_REWARD_CHARGE:
+                order_price = best_ask - tick_size
             # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
             elif best_ask > DS_REWARD_CHARGE:
                 order_price = best_ask
             # Best ask price is 1 tick more than DS_REWARD_CHARGE
             else:
-                order_price = DS_REWARD_CHARGE + MyMarkets.tick
+                order_price = DS_REWARD_CHARGE + tick_size
 
-        my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
-        my_order.send_order(self)
+        self._print_trade_opportunity(order_price)
+        if self._bot_status == BotStatus["ACTIVE"]:
+            my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
+            my_order.send_order(self)
 
     def _reactive_orders_price(self, best_bid, best_ask, order_type):
         """
@@ -277,7 +283,7 @@ class DSBot(Agent):
         # Bot is a buyer
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
-            
+
 
         # Bot is a seller
         if self._role == Role["SELLER"]:
