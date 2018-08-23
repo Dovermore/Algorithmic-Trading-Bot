@@ -136,10 +136,16 @@ class DSBot(Agent):
         # Bot is a market maker
         if self._bot_type == BotType["MARKET_MAKER"]:
             # Check that no order is currently pending
-            if (self.status is None) or self.status != OrderStatus["PENDING"]:
+            if self.status != OrderStatus["PENDING"]:
                 self.status = OrderStatus["MAKING"]
-                self.inform("We can make an order")
-                self._market_maker_orders_price(best_ask, best_bid)
+                self.inform("We can make a market_maker order")
+                self._market_maker_orders(best_ask, best_bid)
+
+        elif self._bot_type == BotType["REACTIVE"]:
+            if self.status != OrderStatus["PENDING"]:
+                self.status = OrderStatus["MAKING"]
+                self.inform("We can make a reactive order")
+                self._reactive_orders(best_ask, best_bid)
 
         self.inform(self.status)
         # Create bid-ask spread and check for depth of order
@@ -193,11 +199,10 @@ class DSBot(Agent):
     # ------ End of Helper and trivial methods -----
     # --- end nico ---
 
-    def _market_maker_orders_price(self, best_ask, best_bid):
+    def _market_maker_orders(self, best_ask, best_bid):
         """
         When the bot is a market maker, creates the order with class MyOrder
         """
-        order_price = 0
         self.inform("best ask is: " + str(best_ask))
         self.inform("best bid is: " + str(best_bid))
         # Bot is a buyer
@@ -232,8 +237,22 @@ class DSBot(Agent):
             my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
             my_order.send_order(self)
 
-    def _reactive_orders_price(self, price):
-        pass
+    def _reactive_orders(self, best_ask, best_bid):
+        if self._role == Role["BUYER"]:
+            if best_ask is None:
+                pass
+            elif best_ask[0] < DS_REWARD_CHARGE:
+                order_price = best_ask[0]
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.BUY, self._market_id)
+                my_order.send_order(self)
+
+        if self._role == Role["SELLER"]:
+            if best_bid is None:
+                pass
+            elif best_bid[0] > DS_REWARD_CHARGE:
+                order_price = best_bid[0]
+                my_order = MyOrder(order_price, 1, OrderType.LIMIT, OrderSide.SELL, self._market_id)
+                my_order.send_order(self)
 
 class MyOrder:
     """
