@@ -138,8 +138,7 @@ class DSBot(Agent):
             if (self.status is None) or self.status != OrderStatus["PENDING"]:
                 self.status = OrderStatus["MAKING"]
                 self.inform("We can make a market-making order")
-                self._market_maker_orders_price(best_ask[0], best_bid[0])
-                print(market_id)
+                self._market_maker_orders_price(best_ask, best_bid)
 
         if self._bot_type == BotType["REACTIVE"]:
             if self.status != OrderStatus["PENDING"]:
@@ -164,6 +163,7 @@ class DSBot(Agent):
         :param holdings: Holdings of the account (Cash, Available Cash, Units, Available units)
         :return: return holdings of account
         """
+        """
         cash_holdings = holdings["cash"]
         self.inform("Total cash: " + str(cash_holdings["cash"]) +
                     " available cash: " + str(cash_holdings["available_cash"]))
@@ -186,6 +186,8 @@ class DSBot(Agent):
                 self._bot_status = BotStatus["UNABLE_UNITS_MAX"]
             else:
                 self._bot_status = BotStatus["ACTIVE"]
+        """
+        pass
 
     # ------ Helper and trivial methods -----
     def role(self):
@@ -206,7 +208,7 @@ class DSBot(Agent):
         pass
 
     def order_rejected(self, info, order):
-        self.inform("Order was accepted in market " + str(self._market_id))
+        self.inform("Order was rejected in market " + str(self._market_id))
         self.status = OrderStatus["REJECTED"]
         pass
 
@@ -232,10 +234,11 @@ class DSBot(Agent):
     # ------ End of Helper and trivial methods -----
     # --- end nico ---
 
-    def _market_maker_orders_price(self, best_ask, best_bid):
+    def _market_maker_orders_price(self, best_ask = None, best_bid = None):
         """
         When the bot is a market maker, creates the order with class MyOrder
         """
+
         order_price = 0
         self.inform("best ask is: " + str(best_ask))
         self.inform("best bid is: " + str(best_bid))
@@ -244,33 +247,40 @@ class DSBot(Agent):
         # Bot is a buyer
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
-            # Check if we can set a bid which beats the current best bid
-            if best_bid + tick_size < DS_REWARD_CHARGE:
-                order_price = best_bid + tick_size
-            # Check if current best bid is profitable, but increasing the bid makes it unprofitable
-            elif best_bid < DS_REWARD_CHARGE:
-                order_price = best_bid
-            # Best buy price is 1 tick less than DS_REWARD_CHARGE
-            else:
-                order_price = DS_REWARD_CHARGE - tick_size
+            try:
+                # Check if we can set a bid which beats the current best bid
+                if best_bid[0] + tick_size < DS_REWARD_CHARGE:
+                    order_price = best_bid[0] + tick_size
+                # Check if current best bid is profitable, but increasing the bid makes it unprofitable
+                elif best_bid[0] < DS_REWARD_CHARGE:
+                    order_price = best_bid[0]
+                # Best buy price is 1 tick less than DS_REWARD_CHARGE
+                else:
+                    order_price = DS_REWARD_CHARGE - tick_size
+            except TypeError:
+                order_price = DS_REWARD_CHARGE/2
 
         # Bot is a seller
         if self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             # Check if we can set an ask which beats the current best ask
-            if best_ask - tick_size > DS_REWARD_CHARGE:
-                order_price = best_ask - tick_size
-            # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
-            elif best_ask > DS_REWARD_CHARGE:
-                order_price = best_ask
-            # Best ask price is 1 tick more than DS_REWARD_CHARGE
-            else:
-                order_price = DS_REWARD_CHARGE + tick_size
+            try:
+                if best_ask[0] - tick_size > DS_REWARD_CHARGE:
+                    order_price = best_ask[0] - tick_size
+                # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
+                elif best_ask[0] > DS_REWARD_CHARGE:
+                    order_price = best_ask[0]
+                # Best ask price is 1 tick more than DS_REWARD_CHARGE
+                else:
+                    order_price = DS_REWARD_CHARGE + tick_size
+            except TypeError:
+                order_price = DS_REWARD_CHARGE * 1.5
 
-        self._print_trade_opportunity(order_price)
-        if self._bot_status == BotStatus["ACTIVE"]:
-            my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
-            my_order.send_order(self)
+        #self._print_trade_opportunity(order_price)
+        print('hi')
+        my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
+        print('bye')
+        my_order.send_order(self)
 
     def _reactive_orders_price(self, best_bid, best_ask, order_type):
         """
@@ -411,7 +421,7 @@ if __name__ == "__main__":
     junda = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD = "908525"
     junda_pass = "888086"
-    MARKETPLACE_ID = 260  # replace this with the marketplace id
+    MARKETPLACE_ID = 352  # replace this with the marketplace id
 
     ds_bot = DSBot(FM_ACCOUNT, junda, junda_pass, MARKETPLACE_ID)
     ds_bot.run()
