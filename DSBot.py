@@ -233,7 +233,10 @@ class DSBot(Agent):
 
     def _market_maker_orders(self, best_ask, best_bid):
         """
-        When the bot is a market maker, creates the order with class MyOrder
+        When bot is set to market maker, this function creates the appropriate order
+        :param best_ask: Best ask price by the market
+        :param best_bid: Best bid price by the market
+        :return: no return
         """
         self.inform("best ask is: " + str(best_ask))
         self.inform("best bid is: " + str(best_bid))
