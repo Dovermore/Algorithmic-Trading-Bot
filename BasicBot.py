@@ -33,13 +33,6 @@ class BotType(Enum):
     REACTIVE = 1
 
 
-# Defining enumeration for the status of the bot
-class BotStatus(Enum):
-    UNABLE_UNITS_MAX = -1
-    UNABLE_CASH_NONE = 0
-    ACTIVE = 1
-
-
 # Status of current order if there is any
 class OrderStatus(Enum):
     INACTIVE = 0       # None/Completed/Rejected/Canceled
@@ -57,8 +50,6 @@ class DSBot(Agent):
         self._bot_type = None
 
         self._role = None
-
-        self.bot_status = BotStatus["ACTIVE"]
 
         # This member variable take advantage of only one order at a time
         self.active_order = None
@@ -299,29 +290,62 @@ class DSBot(Agent):
         else:
             self.error_inform("Order rejected from INACTIVE state!!!")
 
-    def _print_trade_opportunity(self, other_order):
+    def _print_trade_opportunity(self, other_order, show=False):
         """
         Depending on our role and our bottype, print trade opportunity accordingly
         :param other_order: trade opportunities seen
         :return: self.inform() - let user know there is a good trade opportunity
         """
-        if self.bot_status == BotStatus["ACTIVE"]:
+        if other_order:
             return self.inform("My Role is " + str(self._role) +
                                ". Current best trade opportunity would be buying at $"
                                + str(other_order / 100))
-        elif self.bot_status == BotStatus["UNABLE_UNITS_MAX"] \
-                or self.bot_status == BotStatus["UNABLE_CASH_ZERO"]:
-            if self._role == Role["BUYER"]:
-                if self.bot_status == BotStatus["UNABLE_UNITS_MAX"]:
-                    status = "Buyer has already bought 5 units."
-                elif self.bot_status == BotStatus["UNABLE_CASH_ZERO"]:
-                    status = "Buyer has no more available cash left."
-            elif self._role == Role["SELLER"]:
-                status = "Seller has no more available units left."
-            return self.inform("My Role is " + str(self._role) +
-                               ". Current best trade opportunity would be buying at $"
-                               + str(other_order / 100) + ". " + status)
 
+    def verify_order(self, order, market):
+        """
+        order needs to be verified
+        :param order:
+        :param market:
+        :return:
+        """
+        pass
+
+    def cancel_sent_order(self):
+        """
+        CANCELS my order that is existing in the order book
+        :return: order ready to be cancelled
+        """
+        cancel_order = copy.copy(self.active_order)  # TODO dont know why copy not working, copied example from the guide
+        cancel_order.type = OrderType.CANCEL
+        cancel_order.ref = "order cancel"   # needs to implement something here
+        return cancel_order
+
+    def make_send_order(self,order_price, order_side):
+        """
+        MAKES and SENDS order
+        :param order_price: price made after decision
+        :param order_side: buyer or seller
+        :return: sends order
+        """
+        self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
+        self.send_order(self.active_order)
+        self.order_status = OrderStatus["PENDING"]
+
+    # TODO is this part necessary? verify and making order is separated by the print opportunity
+    # logic is after verifying order, knowing that we don't have enough cash or has bought maximum units
+    # send message regarding opportunity, but not make order
+    # OR can make into one function to process all 3 things together
+    def send_update_active_order(self):
+        """
+        VERIFY --- PRINT --- MAKE --- SEND
+        :return:
+        """
+        self.verify_order(self.active_order, self.markets[self._market_id])
+        self.send_order(self.active_order)
+        self.order_status = OrderStatus["PENDING"]
+
+    # TODO may need to put in a variable that counts how many iterations has the order been in the order book,
+    # TODO maybe set a certain price point  where we think is better or certain number of iterations then CANCEL and make new order
     def _market_maker_orders(self, best_ask, best_bid):
         """
         When bot is set to market maker, this function creates the appropriate order
@@ -365,19 +389,14 @@ class DSBot(Agent):
             else:
                 order_price = DS_REWARD_CHARGE + tick_size
 
-        # needs to verify order
+        # TODO put verify order here
         self._print_trade_opportunity(order_price)
 
         if order_price:
-            self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
-            self.send_order(self.active_order)
-            self.order_status = OrderStatus["PENDING"]
+            self.make_send_order(order_price, order_side)
 
-    def send_update_active_order(self):
-        self.verify_order(self.active_order, self.markets[self._market_id])
-        self.send_order(self.active_order)
-        self.order_status = OrderStatus["PENDING"]
-
+    # TODO next few iterations the order is still in, cancel order and make new
+    # or maybe a put in order book if bot_type is reactive but still have order in the orderbook, cancel and wait for next opportunity
     def _reactive_orders(self, best_ask, best_bid, show=False):
         """
         When bot is set to reactive, make orders using this
@@ -389,28 +408,27 @@ class DSBot(Agent):
         """
         order_price = None
         order_side = None
+
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
             if best_ask is None:
-                pass
+                self.inform("No orders can be made! Will continue wait for orders...")
             elif best_ask[0] < DS_REWARD_CHARGE:
                 order_price = best_ask[0]
+                self.inform("Found an order!!! Making order now...")
 
         elif self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             if best_bid is None:
-                pass
+                self.inform("No orders can be made! Will continue wait for orders...")
             elif best_bid[0] > DS_REWARD_CHARGE:
                 order_price = best_bid[0]
+                self.inform("Found an order!!! Making order now...")
 
-        # needs to verify order
+        # TODO put verify order here
         self._print_trade_opportunity(order_price)
         if order_price:
-            self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
-            self.send_order(self.active_order)
-
-    def verify_order(self, order, market):
-
+            self.make_send_order(order_price, order_side)
 
     def warning_inform(self, msg):
         """
