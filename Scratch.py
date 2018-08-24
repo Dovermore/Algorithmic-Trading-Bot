@@ -1,2 +1,3 @@
-import time
-print(time.strftime("%y-%m", time.localtime()))
+a = "a"
+rep = 50
+print("".join([a] * 50))
