@@ -116,6 +116,8 @@ class DSBot(Agent):
             if not self.order_status == OrderStatus["ACCEPTED"]:
                 self.warning_inform("The order status didn't get updated to "
                                     "ACCEPTED in received_order_book")
+            else:
+                self._reactive_check(mine_orders[0])
 
         elif len(mine_orders) > 1:
             self.warning_inform("More than one active order!!!!!")
@@ -126,6 +128,24 @@ class DSBot(Agent):
             self.warning_inform("Order completed in pending state!")
             self.inform("Order was completed in market " +
                         str(self._market_id))
+
+    def _to_cancel_order(self):
+        """
+        Cancels previous order
+        """
+        cancel_order = copy.copy(self.active_order)
+        cancel_order.type = OrderType.CANCEL
+        self.send_order(cancel_order)
+        self.order_status = OrderStatus["INACTIVE"]
+
+    def _reactive_check(self):
+        """
+        If REACTIVE bot, if order is still in the order book, need to cancel
+        :param order: my order that is in the order book
+        """
+        if self._bot_type == BotType["REACTIVE"]:
+            self.inform("Reactive order still in the Order Book")
+            self._to_cancel_order()
 
     def get_bid_ask_spread(self, best_bid, best_ask, show=False):
         """
@@ -156,6 +176,8 @@ class DSBot(Agent):
         """
         self.line_break_inform()
 
+        # TODO should verify order here if it is able to be put into next iteration
+        # TODO this does not allow for active orders to be cancelled to be made new orders
         # If there are currently no active orders
         if self.order_status == OrderStatus["INACTIVE"]:
             self.inform("Currently no active orders")
@@ -212,6 +234,11 @@ class DSBot(Agent):
             self.inform("Market ID " + str(market_id) + ": total units: " +
                         str(market_holding["units"]) + ", available units: "
                         + str(market_holding["available_units"]))
+        cash_info = self.holdings["cash"]
+        units_info = self.holdings["markets"][self._market_id]
+        self.inform(cash_info)
+        self.inform(units_info)
+
 
     # ------ Helper and trivial methods -----
     def get_role(self):
@@ -301,48 +328,69 @@ class DSBot(Agent):
                                ". Current best trade opportunity would be buying at $"
                                + str(other_order / 100))
 
-    def verify_order(self, order, market):
+    def verify_order(self, price):
         """
-        order needs to be verified
-        :param order:
-        :param market:
+        verified on the holdings and also previous price if order can be made
+        :param price:
         :return:
         """
-        pass
+        if self._check_previous_order_price(price):
+            self._print_trade_opportunity(price)
 
-    def cancel_sent_order(self):
-        """
-        CANCELS my order that is existing in the order book
-        :return: order ready to be cancelled
-        """
-        cancel_order = copy.copy(self.active_order)  # TODO dont know why copy not working, copied example from the guide
-        cancel_order.type = OrderType.CANCEL
-        cancel_order.ref = "order cancel"   # needs to implement something here
-        return cancel_order
+            if self._available_cash_units():
+                if self._bot_type == BotType["MARKET_MAKER"]:
+                    self._to_cancel_order()
+                    return True
+                else:
+                    return True
+            else:
+                return False
 
-    def make_send_order(self,order_price, order_side):
+    def _available_cash_units(self):
+        """
+        Check if enough cash or units to make purchase or sale
+        :return: True if enough, False if not enough
+        """
+        available_cash = self.holdings["cash"]["available_cash"]
+        available_units = self.holdings["markets"][self._market_id]["available_units"]
+        self.inform(available_cash)
+        self.inform(available_units)
+        if self._role == Role["BUYER"] and not available_units < 5:
+            self.warning_inform("Have bought 5 units, additional units are not profitable")
+            return False
+        elif self._role == Role["SELLER"] and not available_units > 0:
+            self.warning_inform("Do not have anymore units to trade")
+            return False
+        else:
+            return True
+
+    def _check_previous_order_price(self, order_price):
+        """
+        Check if order price to be made is better or worse than the previous order
+        :param order_price: order price to be made
+        :return: True if criteria met, False if criteria not met
+        """
+        if self.active_order:
+            previous_price = self.active_order.price
+            if self._role == Role["BUYER"]:
+                return True if previous_price > order_price else False
+            elif self._role == Role["SELLER"]:
+                return True if previous_price > order_price else False
+        else:
+            return True
+
+    def make_send_order(self, order_price, order_side):
         """
         MAKES and SENDS order
         :param order_price: price made after decision
         :param order_side: buyer or seller
         :return: sends order
         """
-        self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
-        self.send_order(self.active_order)
-        self.order_status = OrderStatus["PENDING"]
 
-    # TODO is this part necessary? verify and making order is separated by the print opportunity
-    # logic is after verifying order, knowing that we don't have enough cash or has bought maximum units
-    # send message regarding opportunity, but not make order
-    # OR can make into one function to process all 3 things together
-    def send_update_active_order(self):
-        """
-        VERIFY --- PRINT --- MAKE --- SEND
-        :return:
-        """
-        self.verify_order(self.active_order, self.markets[self._market_id])
-        self.send_order(self.active_order)
-        self.order_status = OrderStatus["PENDING"]
+        if self.verify_order():
+            self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
+            self.send_order(self.active_order)
+            self.order_status = OrderStatus["PENDING"]
 
     # TODO may need to put in a variable that counts how many iterations has the order been in the order book,
     # TODO maybe set a certain price point  where we think is better or certain number of iterations then CANCEL and make new order
@@ -389,9 +437,6 @@ class DSBot(Agent):
             else:
                 order_price = DS_REWARD_CHARGE + tick_size
 
-        # TODO put verify order here
-        self._print_trade_opportunity(order_price)
-
         if order_price:
             self.make_send_order(order_price, order_side)
 
@@ -425,8 +470,6 @@ class DSBot(Agent):
                 order_price = best_bid[0]
                 self.inform("Found an order!!! Making order now...")
 
-        # TODO put verify order here
-        self._print_trade_opportunity(order_price)
         if order_price:
             self.make_send_order(order_price, order_side)
 
@@ -464,5 +507,5 @@ if __name__ == "__main__":
 
     MARKETPLACE_ID = 260  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID)
     ds_bot.run()
