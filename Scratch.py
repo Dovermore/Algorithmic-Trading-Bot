@@ -1,17 +1,15 @@
-class A:
-    def __init__(self, val):
-        self.val = val
+### Only for debugging
+import inspect
+### ENd Only for debugging
 
-    def __lt__(self, other):
-        return self.val < other.val
 
-    def __gt__(self, other):
-        return self.val > other.val
+def _func_name_printer(func):
+    print(func.__name__)
+    return func
 
-    def __eq__(self, other):
-        return self.val == other.val
+@ _func_name_printer
+def myname_is_a():
+    return 1
 
-lst = [A(1), A(5), A(2)]
-sorted(lst)
-print([x.val for x in lst])
-print([x.val for x in sorted(lst)])
+
+print(myname_is_a())
