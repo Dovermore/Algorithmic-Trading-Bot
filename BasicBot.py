@@ -63,7 +63,8 @@ class DSBot(Agent):
 
         # This member variable take advantage of only one order at a time
         self.active_order = None
-        self.order_status = OrderStatus
+        self.order_status = OrderStatus # For the active_order
+
         self.inactive_order = []
 
         # self.markets stores all market info
@@ -86,6 +87,8 @@ class DSBot(Agent):
         """
         Process the order book and return useful values of order_book
         :param order_book: List of Order objects to be processed
+        :param all_orders: optional to return full list of order instead
+                           of just best
         :return: list of mine orders
                  best bid order
                  best ask order
@@ -145,7 +148,8 @@ class DSBot(Agent):
         :param show: True if want to show detail of best bid/ask orders
         """
         if show:
-
+            # TODO print best bid and ask
+            pass
         # Both bid and ask exist
         if best_bid is not None and best_ask is not None:
             bid_ask_spread = best_ask.price - best_bid.price
@@ -218,19 +222,22 @@ class DSBot(Agent):
                     " available cash: " + str(cash_holdings["available_cash"]))
         for market_id, market_holding in holdings["markets"].items():
             self.inform("Market ID " + str(market_id) + ": total units: " +
-                        str(market_holding["units"]) + ", available units: " + str(market_holding["available_units"]))
+                        str(market_holding["units"]) + ", available units: " +
+                        str(market_holding["available_units"]))
 
         if self._role == Role["SELLER"]:
             if market_holding["available_units"] == 0:
                 self.bot_status = BotStatus["UNABLE_UNITS_MAX"]
-                self.inform("Role-Seller: No more available units, unable to continue trade")
+                self.inform("Role-Seller: No more available units, "
+                            "unable to continue trade")
             else:
                 self.bot_status = BotStatus["ACTIVE"]
 
         if self._role == Role["BUYER"]:
             if cash_holdings["available_cash"] == 0:
                 self.bot_status = BotStatus["UNABLE_CASH_ZERO"]
-                self.inform("Role-Buyer: No more available cash, unable to continue trade")
+                self.inform("Role-Buyer: No more available cash, unable to "
+                            "continue trade")
             elif market_holding["units"] == 5:
                 self.bot_status = BotStatus["UNABLE_UNITS_MAX"]
             else:
@@ -406,6 +413,7 @@ class DSBot(Agent):
             my_order.send_order(self)
 
     def verify_order(self, order, market):
+
 
 
     def warning_inform(self, msg):
