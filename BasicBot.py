@@ -133,7 +133,7 @@ class DSBot(Agent):
         """
         Cancels previous order
         """
-        cancel_order = copy.copy(self.active_order)
+        cancel_order = self.active_order
         cancel_order.type = OrderType.CANCEL
         self.send_order(cancel_order)
         self.order_status = OrderStatus["INACTIVE"]
