@@ -47,7 +47,7 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id, name="DSBot")
 
         # TBD later
-        self._bot_type = None
+        self._bot_type = BotType(0)
 
         self._role = None
 
@@ -117,11 +117,12 @@ class DSBot(Agent):
                 self.warning_inform("The order status didn't get updated to "
                                     "ACCEPTED in received_order_book")
             else:
-                self._reactive_check(mine_orders[0])
+                self._reactive_check()
 
         elif len(mine_orders) > 1:
             self.warning_inform("More than one active order!!!!!")
         elif self.order_status == OrderStatus["ACCEPTED"]:
+            self.order_status = OrderStatus["INACTIVE"]
             self.inform("Order was completed in market " +
                         str(self._market_id))
         elif self.order_status == OrderStatus["PENDING"]:
@@ -206,7 +207,6 @@ class DSBot(Agent):
         bid_ask_spread = self.get_bid_ask_spread(best_bid, best_ask)
 
         self.take_action(best_ask, best_bid)
-
         self.inform(self.order_status)
         # Create bid-ask spread and check for depth of order
         # Depending on role, choose to buy or sell at relevant price
@@ -334,17 +334,17 @@ class DSBot(Agent):
         :param price:
         :return:
         """
-        if self._check_previous_order_price(price):
-            self._print_trade_opportunity(price)
+        self._print_trade_opportunity(price)
 
-            if self._available_cash_units():
-                if self._bot_type == BotType["MARKET_MAKER"]:
-                    self._to_cancel_order()
-                    return True
-                else:
-                    return True
-            else:
-                return False
+        if self._available_cash_units():
+            #if self._bot_type == BotType["MARKET_MAKER"]:
+            #    self._to_cancel_order()
+            #    return True
+            #else:
+            #    return True
+            return True
+        else:
+            return False
 
     def _available_cash_units(self):
         """
@@ -353,8 +353,8 @@ class DSBot(Agent):
         """
         available_cash = self.holdings["cash"]["available_cash"]
         available_units = self.holdings["markets"][self._market_id]["available_units"]
-        self.inform(available_cash)
-        self.inform(available_units)
+        self.inform("Available cash: " + str(available_cash))
+        self.inform("Available units: " + str(available_units))
         if self._role == Role["BUYER"] and not available_units < 5:
             self.warning_inform("Have bought 5 units, additional units are not profitable")
             return False
@@ -386,14 +386,15 @@ class DSBot(Agent):
         :param order_side: buyer or seller
         :return: sends order
         """
-
-        if self.verify_order():
+        if self.verify_order(order_price):
             self.active_order = Order(order_price, ORDER_UNIT, OrderType.LIMIT, order_side, self._market_id)
             self.send_order(self.active_order)
+            self.inform("Sent " + str(order_side) + " with ref " + str(self.active_order.ref))
             self.order_status = OrderStatus["PENDING"]
 
     # TODO may need to put in a variable that counts how many iterations has the order been in the order book,
     # TODO maybe set a certain price point  where we think is better or certain number of iterations then CANCEL and make new order
+    # -- Could do this by also counting the number of orders in front of ours (not applicable to reactive bot)
     def _market_maker_orders(self, best_ask, best_bid):
         """
         When bot is set to market maker, this function creates the appropriate order
@@ -413,11 +414,11 @@ class DSBot(Agent):
                 order_price = int(DS_REWARD_CHARGE/2)
             # Check if we can set a bid which beats the current best bid
             elif best_bid.price + tick_size < DS_REWARD_CHARGE:
-                order_price = best_bid[0] + tick_size
+                order_price = best_bid.price + tick_size
             # Check if current best bid is profitable,
             # but increasing the bid makes it unprofitable
-            elif best_bid[0] < DS_REWARD_CHARGE:
-                order_price = best_bid[0]
+            elif best_bid.price < DS_REWARD_CHARGE:
+                order_price = best_bid.price
             # Best buy price is 1 tick less than DS_REWARD_CHARGE
             else:
                 order_price = DS_REWARD_CHARGE - tick_size
@@ -428,11 +429,11 @@ class DSBot(Agent):
             if best_ask is None:
                 order_price = int(DS_REWARD_CHARGE * 1.5)
             # Check if we can set an ask which beats the current best ask
-            elif best_ask[0] - tick_size > DS_REWARD_CHARGE:
-                order_price = best_ask[0] - tick_size
+            elif best_ask.price - tick_size > DS_REWARD_CHARGE:
+                order_price = best_ask.price - tick_size
             # Check if current best ask is profitable, but decreasing the ask makes it unprofitable
-            elif best_ask[0] > DS_REWARD_CHARGE:
-                order_price = best_ask[0]
+            elif best_ask.price > DS_REWARD_CHARGE:
+                order_price = best_ask.price
             # Best ask price is 1 tick more than DS_REWARD_CHARGE
             else:
                 order_price = DS_REWARD_CHARGE + tick_size
@@ -458,16 +459,16 @@ class DSBot(Agent):
             order_side = OrderSide.BUY
             if best_ask is None:
                 self.inform("No orders can be made! Will continue wait for orders...")
-            elif best_ask[0] < DS_REWARD_CHARGE:
-                order_price = best_ask[0]
+            elif best_ask.price < DS_REWARD_CHARGE:
+                order_price = best_ask.price
                 self.inform("Found an order!!! Making order now...")
 
         elif self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             if best_bid is None:
                 self.inform("No orders can be made! Will continue wait for orders...")
-            elif best_bid[0] > DS_REWARD_CHARGE:
-                order_price = best_bid[0]
+            elif best_bid.price > DS_REWARD_CHARGE:
+                order_price = best_bid.price
                 self.inform("Found an order!!! Making order now...")
 
         if order_price:
@@ -505,7 +506,7 @@ if __name__ == "__main__":
     FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD_JD = "888086"
 
-    MARKETPLACE_ID = 260  # replace this with the marketplace id
+    MARKETPLACE_ID = 352  # replace this with the marketplace id
 
     ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID)
     ds_bot.run()
