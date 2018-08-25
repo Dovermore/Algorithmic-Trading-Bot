@@ -4,7 +4,8 @@ This is a template for Project 1, Task 1 (Induced demand-supply)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-import time
+import copy
+import time, datetime
 
 # Group details
 GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086": "Lee Jun Da"}
@@ -18,8 +19,22 @@ ORDER_UNIT = 1
 
 # Dictionary to store letters in representation of a certain OrderType
 # and OrderSide for reference of orders
-ORDER_TYPE_TO_CHAR = {OrderType.LIMIT: "L", OrderType.CANCEL: "M"}
-ORDER_SIDE_TO_CHAR = {OrderSide.BUY: "B", OrderSide.SELL: "S"}
+ORDER_TYPE_TO_CHAR = {
+    OrderType.LIMIT: "L",
+    OrderType.CANCEL: "M"
+}
+ORDER_SIDE_TO_CHAR = {
+    OrderSide.BUY: "B",
+    OrderSide.SELL: "S"
+}
+ORDER_AVAILABILITY_TEMPLATE = {
+    "profit": None,           # Amount of profit made by completing this order
+    "cash_available": None,   # Is cash enough to place this order
+    "unit_available": None,   # Is unit enough to place this order
+}
+SEPARATION = "-"  # for most string separation
+TIME_FORMATTER = "%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
+                 SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S"
 
 
 # Enum for the roles of the bot
@@ -34,17 +49,11 @@ class BotType(Enum):
     REACTIVE = 1
 
 
-# Defining enumeration for the status of the bot
-class BotStatus(Enum):
-    UNABLE_UNITS_MAX = -1
-    UNABLE_CASH_NONE = 0
-    ACTIVE = 1
-
-
 # Status of current order if there is any
 class OrderStatus(Enum):
     INACTIVE = 0       # None/Completed/Rejected/Canceled
-    PENDING  = 1
+    MADE = 0
+    PENDING = 1
     ACCEPTED = 2
 
 
@@ -59,11 +68,10 @@ class DSBot(Agent):
 
         self._role = None
 
-        self.bot_status = BotStatus["ACTIVE"]
-
         # This member variable take advantage of only one order at a time
         self.active_order = None
-        self.order_status = OrderStatus # For the active_order
+        self.order_status = OrderStatus["INACTIVE"]
+        self.order_availability = copy(ORDER_AVAILABILITY_TEMPLATE)
 
         self.inactive_order = []
 
@@ -129,6 +137,7 @@ class DSBot(Agent):
             if not self.order_status == OrderStatus["ACCEPTED"]:
                 self.warning_inform("The order status didn't get updated to "
                                     "ACCEPTED in received_order_book")
+
         elif len(mine_orders) > 1:
             self.warning_inform("More than one active order!!!!!")
         elif self.order_status == OrderStatus["ACCEPTED"]:
@@ -197,7 +206,7 @@ class DSBot(Agent):
 
         self.take_action(best_ask, best_bid)
 
-        self.inform(self.order_status)
+        self.inform("Current order status is: " + str(self.order_status))
         # Create bid-ask spread and check for depth of order
         # Depending on role, choose to buy or sell at relevant price
 
@@ -214,8 +223,8 @@ class DSBot(Agent):
     def received_holdings(self, holdings):
         """
         Read current holdings of account to make sure trade is possible
-        :param holdings: Holdings of the account (Cash, Available Cash, Units, Available units)
-        :return: return holdings of account
+        :param holdings: Holdings of the account (Cash, Available Cash, Units,
+               Available units)
         """
         cash_holdings = holdings["cash"]
         self.inform("Total cash: " + str(cash_holdings["cash"]) +
@@ -224,24 +233,8 @@ class DSBot(Agent):
             self.inform("Market ID " + str(market_id) + ": total units: " +
                         str(market_holding["units"]) + ", available units: " +
                         str(market_holding["available_units"]))
-
-        if self._role == Role["SELLER"]:
-            if market_holding["available_units"] == 0:
-                self.bot_status = BotStatus["UNABLE_UNITS_MAX"]
-                self.inform("Role-Seller: No more available units, "
-                            "unable to continue trade")
-            else:
-                self.bot_status = BotStatus["ACTIVE"]
-
-        if self._role == Role["BUYER"]:
-            if cash_holdings["available_cash"] == 0:
-                self.bot_status = BotStatus["UNABLE_CASH_ZERO"]
-                self.inform("Role-Buyer: No more available cash, unable to "
-                            "continue trade")
-            elif market_holding["units"] == 5:
-                self.bot_status = BotStatus["UNABLE_UNITS_MAX"]
-            else:
-                self.bot_status = BotStatus["ACTIVE"]
+        # self.holdings = holdings The holdings don't need to be set,
+        # supposingly automatically
 
     # ------ Helper and trivial methods -----
     def get_role(self):
@@ -256,84 +249,99 @@ class DSBot(Agent):
             self.inform("Bot is a buyer")
             return Role(0)
 
-    @staticmethod
-    def str_market(market):
-        """
-        This is a staticmethod that returns the string representation of detail
-        of a market
-        :param market: Dictionary of a market to be turned into string
-        """
-        try:
-            return ("Market: %d\n"
-                    "       Minimum: %3d\n"
-                    "       Maximum: %3d\n"
-                    "       Tick   : %3d\n"
-                    "       Name   : %s\n"
-                    "       Item   : %s\n"
-                    "       Describ: %s\n" % \
-                    (market["id"], market["minimum"], market["maximum"],
-                     market["tick"], market["name"], market["item"],
-                     market["description"]))
-        except Exception as e:
-            return e
-
-    @staticmethod
-    def str_order(order):
-        """
-        This function prints the detail of sever returned orders
-        :param order: object of Order class of fmclient
-        """
-        try:
-            if order is not None:
-                return ("Order Detail\n" \
-                        "      Price: %d\n" \
-                        "      Units: %d\n" \
-                        "      Type:  %s\n" \
-                        "      Side:  %s\n" \
-                        "      Ref:   %s\n" \
-                        "      Id:    %d\n"
-                        % (order.price,
-                           order.units,
-                           ORDER_TYPE_TO_CHAR[order.type],
-                           ORDER_SIDE_TO_CHAR[order.side],
-                           order.ref if order.ref else "No Ref",
-                           order.id if order.id else -1))
-            else:
-                return ("Order Detail\n"
-                        "      Order is None")
-        except Exception as e:
-            return e
-
     def order_accepted(self, order):
         self.inform("Order was accepted in market " + str(self._market_id))
-        self.order_status = OrderStatus["PENDING"]
-        pass
+        if self.order_status == OrderStatus["PENDING"]:
+            self.order_status = OrderStatus["ACCEPTED"]
+        else:
+            self.error_inform("Order ACCEPTED from INACTIVE state!!!")
 
     def order_rejected(self, info, order):
         self.inform("Order was rejected in market " + str(self._market_id))
-        self.order_status = OrderStatus["REJECTED"]
-        pass
+        if self.order_status == OrderStatus["PENDING"]:
+            self.inactive_order.append(self.active_order)
+            self.active_order = None
+            self.order_status = OrderStatus["INACTIVE"]
+        else:
+            self.error_inform("Order REJECTED from INACTIVE state!!!")
 
-    def _print_trade_opportunity(self, other_order):
+    def _print_trade_opportunity(self, other_order, show=False):
         """
         Depending on our role and our bottype, print trade opportunity accordingly
         :param other_order: trade opportunities seen
         :return: self.inform() - let user know there is a good trade opportunity
         """
-        if self.bot_status == BotStatus["ACTIVE"]:
-            return self.inform("My Role is " + str(self._role) + ". Current best trade opportunity would be buying at $"
+        if other_order:
+            return self.inform("My Role is " + str(self._role) +
+                               ". Current best trade opportunity would "
+                               "be buying at $"
                                + str(other_order / 100))
-        elif self.bot_status == BotStatus["UNABLE_UNITS_MAX"] or self.bot_status == BotStatus["UNABLE_CASH_ZERO"]:
-            if self._role == Role["BUYER"]:
-                if self.bot_status == BotStatus["UNABLE_UNITS_MAX"]:
-                    status = "Buyer has already bought 5 units."
-                elif self.bot_status == BotStatus["UNABLE_CASH_ZERO"]:
-                    status = "Buyer has no more available cash left."
-            elif self._role == Role["SELLER"]:
-                status = "Seller has no more available units left."
-            return self.inform("My Role is " + str(self._role) + ". Current best trade opportunity would be buying at $"
-                               + str(other_order / 100) + ". " + status)
 
+    def cancel_sent_order(self):
+        """
+        CANCELS my order that is existing in the order book
+        :return: order ready to be cancelled
+        """
+        # RESOLVED: Copy library not imported, and use hardcopy
+        # instead of softcopy
+        cancel_order = copy.deepcopy(self.active_order)
+        cancel_order.type = OrderType.CANCEL
+        cancel_order.ref = "order cancel"   # needs to implement something here
+        return cancel_order
+
+    @staticmethod
+    def _make_order_ref(market_id, order_price, order_side,
+                        order_unit=ORDER_UNIT, order_type=OrderType.LIMIT):
+        ref = ORDER_SIDE_TO_CHAR[order_side] + SEPARATION
+        ref += str(market_id) + SEPARATION
+        ref += str(order_price) + SEPARATION
+        ref += str(order_side) + SEPARATION
+        ref += str(order_unit) + SEPARATION
+        ref += time.strftime(TIME_FORMATTER, time.localtime())
+        ref += ORDER_TYPE_TO_CHAR[order_type] + SEPARATION
+        return ref
+
+    def _make_order(self, order_price, order_side, order_unit=ORDER_UNIT,
+                        order_type=OrderType.LIMIT):
+        """
+        MAKES and SENDS order
+        :param order_price: price made after decision
+        :param order_side: buyer or seller
+        :param order_unit: (Optional, not available) Traded units
+        :param order_type: (Optional, not available) Type of order
+        :return: sends order
+        """
+        ref = self._make_order_ref(self._market_id, order_price, order_side)
+        self.active_order = Order(order_price, order_unit, order_type,
+                                  order_side, self._market_id, ref=ref)
+        self.order_status = OrderStatus["MADE"]
+
+    def verify_active_order(self):
+        """
+        Verify current active order (against current market)and return a
+        dictionary containing the information
+        :return: a dictionary containing order information
+        """
+
+        pass
+
+    # TODO is this part necessary? verify and making order is separated by the print opportunity
+    # logic is after verifying order, knowing that we don't have enough cash or has bought maximum units
+    # send message regarding opportunity, but not make order
+    # OR can make into one function to process all 3 things together
+    def _send_update_active_order(self):
+        """
+        VERIFY --- PRINT --- MAKE --- SEND
+        :return:
+        """
+        self.verify_active_order(self.active_order, self.markets[self._market_id])
+        self.send_order(self.active_order)
+        self.order_status = OrderStatus["PENDING"]
+
+    # TODO may need to put in a variable that counts how many iterations has the order been in the order book,
+    # TODO maybe set a certain price point  where we think is better or certain number of iterations then CANCEL and make new order
+    # TODO #### READ #### Split your inner function to two functions:
+    # TODO _mm_sell_profit, _mm_buy_profit.This will definitely help
     def _market_maker_orders(self, best_ask, best_bid):
         """
         When bot is set to market maker, this function creates the appropriate order
@@ -377,57 +385,64 @@ class DSBot(Agent):
             else:
                 order_price = DS_REWARD_CHARGE + tick_size
 
+        # TODO put verify order here
         self._print_trade_opportunity(order_price)
 
-        if self.bot_status == BotStatus["ACTIVE"] and order_price is not None:
-            my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
-            my_order.send_order(self)
+        if order_price:
+            self.make_send_order(order_price, order_side)
 
-    def _reactive_orders(self, best_ask, best_bid):
+    # TODO #### READ #### Split your inner function to two functions:
+    # TODO _reactive_sell_profit, _reactive_buy_profit. It will definitely help
+    # TODO next few iterations the order is still in, cancel order and make new
+    # or maybe a put in order book if bot_type is reactive but still have
+    # order in the orderbook, cancel and wait for next opportunity
+    def _reactive_orders(self, best_ask, best_bid, show=False):
         """
         When bot is set to reactive, make orders using this
         :param best_ask: Best ask price by the market
         :param best_bid: Best bid price by the market
+        :param trade: If the order will actually be carried out
+        :param show: If print trade opportunity
         :return: makes order according to role
         """
         order_price = None
         order_side = None
+
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
             if best_ask is None:
-                pass
+                self.inform("No orders can be made!"
+                            "Will continue wait for orders...")
             elif best_ask[0] < DS_REWARD_CHARGE:
                 order_price = best_ask[0]
+                self.inform("Found an order!!! Making order now...")
 
         elif self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             if best_bid is None:
-                pass
+                self.inform("No orders can be made!"
+                            "Will continue wait for orders...")
             elif best_bid[0] > DS_REWARD_CHARGE:
                 order_price = best_bid[0]
+                self.inform("Found an order!!! Making order now...")
 
+        # TODO put verify order here
         self._print_trade_opportunity(order_price)
-
-        if self.bot_status == BotStatus["ACTIVE"] and order_price is not None:
-            my_order = MyOrder(order_price, 1, OrderType.LIMIT, order_side, self._market_id)
-            my_order.send_order(self)
-
-    def verify_order(self, order, market):
-
-
+        if order_price:
+            self.make_send_order(order_price, order_side)
 
     def warning_inform(self, msg):
         """
         INFORM warning message
         """
-        self.inform("WARNING!!\n"
+        self.inform("***WARNING***\n"
                     "       %s" % msg)
 
     def error_inform(self, msg):
         """
         INFORM error message
         """
-        self.inform("ERROR!!!!!!!!!\n"
+        self.inform("@@@ERROR@@@\n"
                     "       %s" % msg)
 
     def line_break_inform(self, char="-", rep=79):
@@ -437,6 +452,54 @@ class DSBot(Agent):
         :param rep: The number of repetition char would be repeated
         """
         self.inform("".join([char] * rep))
+
+    @staticmethod
+    def str_market(market):
+        """
+        This is a staticmethod that returns the string representation of detail
+        of a market
+        :param market: Dictionary of a market to be turned into string
+        """
+        try:
+            return ("Market: %d\n"
+                    "       Minimum: %3d\n"
+                    "       Maximum: %3d\n"
+                    "       Tick   : %3d\n"
+                    "       Name   : %s\n"
+                    "       Item   : %s\n"
+                    "       Describ: %s\n" % \
+                    (market["id"], market["minimum"], market["maximum"],
+                     market["tick"], market["name"], market["item"],
+                     market["description"]))
+        except Exception as e:
+            return e
+
+    @staticmethod
+    def str_order(order):
+        """
+        This function return string representation of the detail of orders
+        :param order: object of Order class of fmclient
+        """
+        try:
+            if order is not None:
+                return ("Order Detail\n" \
+                        "      Price: %d\n" \
+                        "      Units: %d\n" \
+                        "      Type:  %s\n" \
+                        "      Side:  %s\n" \
+                        "      Ref:   %s\n" \
+                        "      Id:    %d\n"
+                        % (order.price,
+                           order.units,
+                           ORDER_TYPE_TO_CHAR[order.type],
+                           ORDER_SIDE_TO_CHAR[order.side],
+                           order.ref if order.ref else "No Ref",
+                           order.id if order.id else -1))
+            else:
+                return ("Order Detail\n"
+                        "      Order is None")
+        except Exception as e:
+            return e
 
 
 if __name__ == "__main__":
