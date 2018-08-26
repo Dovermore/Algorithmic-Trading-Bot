@@ -147,7 +147,7 @@ class DSBot(Agent):
         if len(mine_orders) == 1:
             if not self.order_status == OrderStatus["ACCEPTED"]:
                 if self.order_status == OrderStatus["CANCEL"]:
-                    self._warning_inform("Cancel order was not done correctly")
+                    self._warning_inform("Cancel order did not go through")
                 else:
                     self._warning_inform("The order status didn't get updated to "
                                          "ACCEPTED in received_order_book")
@@ -419,6 +419,7 @@ class DSBot(Agent):
                                  OrderStatus["ACCEPTED"]]:
             self.inform("Able to cancel order")
             cancel_order = copy.copy(self.active_order)
+            print(cancel_order)
             cancel_order.type = OrderType.CANCEL
             cancel_order.ref = self._make_order_ref(
                 self._market_id, self.active_order.price,
