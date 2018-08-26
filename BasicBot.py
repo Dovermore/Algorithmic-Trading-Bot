@@ -44,6 +44,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price",
 # ------ Add a variable called DS_REWARD_CHARGE -----
 # Dependent on actual task
 DS_REWARD_CHARGE = 500
+MAX_REWARD_UNIT = 5
 
 # The unit to place order
 ORDER_UNIT = 1
@@ -118,7 +119,8 @@ class DSBot(Agent):
 
         self._market_id = None
 
-        # Additional information
+        # Additional information, not particularly useful, but helps with
+        # Verifying when calling `received_holdings`.
         self.mine_orders = None
 
     def run(self):
@@ -787,14 +789,16 @@ class DSBot(Agent):
                 units = self.holdings["markets"][self._market_id]["units"]
                 # After purchasing the networth is larger
                 net_current = units * DS_REWARD_CHARGE
-                net_after = (min(5, units + order.units) * DS_REWARD_CHARGE -
-                             order.price * order.units)
+                net_after = (min(MAX_REWARD_UNIT, units + order.units) *
+                             DS_REWARD_CHARGE - order.price * order.units)
                 self.inform("BuyOrder: NetCurrent:%dx%d=%d, "
                             "NetAfter=min(%d, %d+%d)x%d-%dx%d=%d"
-                            % (units, DS_REWARD_CHARGE, net_current, 5, units,
-                               order.units, DS_REWARD_CHARGE,
-                               order.price, order.units, net_after))
-                if (units * DS_REWARD_CHARGE < (min(5, units + order.units)) *
+                            % (units, DS_REWARD_CHARGE, net_current,
+                               MAX_REWARD_UNIT, units, order.units,
+                               DS_REWARD_CHARGE, order.price, order.units,
+                               net_after))
+                if (units * DS_REWARD_CHARGE < (min(MAX_REWARD_UNIT,
+                                                    units + order.units)) *
                         DS_REWARD_CHARGE - order.price * order.units):
                     return True
             # Selling at a higher price
