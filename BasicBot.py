@@ -9,11 +9,16 @@ import time
 
 # <For debugging only>
 import inspect
-import  sys
+import sys
 
 
-# Used for visualisation of function call as stacks, that it's easier to trace
-# through functions
+INIT_STACK = 12
+STACK_DIF = 5 * 2
+BASE_LEN = 79
+
+
+# Used for visualisation of function call as stacks, that it's easier to
+# trace through functions
 def get_stack_size():
     """
     Get stack size for caller's frame.
@@ -100,24 +105,52 @@ class DSBot(Agent):
         self._role = None
 
         # This member variable take advantage of only one order at a time
+        # --------------------------------------------------------------------
+        # Stores active order currently in the order book
         self.active_order = None
         self.order_status = OrderStatus.INACTIVE
         self.order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
+        # Tracking number of cycles that Market Maker Order has been
+        # accepted but not traded
         self.mm_order_cycle = 0
-        self.order_units = 0
+
         self.inactive_order = []
 
-        # self.markets stores all market info
         self._market_id = None
 
         # Additional information
         self.mine_orders = None
 
     def run(self):
+        """
+        Kick starts the bot
+        """
         self.initialise()
         self.start()
 
+    def _get_role(self):
+        """
+        Set the role of bot based on cash holdings (positive: BUYER, otherwise
+        seller)
+        """
+        # self._line_break_inform(inspect.stack()[0][3],
+        #                         length=79 + 32 - get_stack_size() * 6)
+        cash_holdings = self.holdings["cash"]
+        unit_holdings = self.holdings["markets"][self._market_id]
+        self.inform(cash_holdings)
+        self.inform(unit_holdings)
+        if cash_holdings["cash"] <= 0:
+            self.inform("Bot is a seller")
+            return Role.SELLER
+        else:
+            self.inform("Bot is a buyer")
+            return Role.BUYER
+
     def initialised(self):
+        """
+        Initialise by looking at the requirements of the market
+        and gets the role of the bot based on holdings from the start
+        """
         self.inform("Initialised, examining markets available")
         for market_id, market_dict in self.markets.items():
             self.inform(self._str_market(market_dict))
@@ -147,7 +180,8 @@ class DSBot(Agent):
                 self._exception_inform(e, inspect.stack()[0][3])
 
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         # Get own order
         mine_orders = [order for order in order_book if order.mine is True]
 
@@ -177,7 +211,8 @@ class DSBot(Agent):
         :param best_ask:    Best ask price provided
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if len(mine_orders) == 1:
             if self.order_status != OrderStatus.ACCEPTED:
                 if self.order_status == OrderStatus.CANCEL:
@@ -186,7 +221,8 @@ class DSBot(Agent):
                     self.warning("The order status didn't get updated "
                                  "to ACCEPTED in received_order_book")
             else:
-                cancel_order = self._check_accepted_order(mine_orders[0])
+                cancel_order = self._check_accepted_order(mine_orders[0],
+                                                          best_bid, best_ask)
                 if cancel_order is not None:
                     self.send_order(cancel_order)
                     self.order_status = OrderStatus.CANCEL
@@ -227,14 +263,15 @@ class DSBot(Agent):
             return False
         return None
 
-    def _check_accepted_order(self, order):
+    def _check_accepted_order(self, order, best_bid, best_ask):
         """
         Check the status of last accepted order and potentially cancel based
         on status
-        :return The canceled order if there is one
+        :return The canceled order if there is one else None
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         try:
             if self._order_weak_equal(self.active_order, order) is not True:
                 self.error("The accepted_order %s is different "
@@ -247,10 +284,21 @@ class DSBot(Agent):
                 self.inform("Reactive order still in the Order Book")
                 return self._cancel_sent_order()
             elif self._bot_type == BotType.MARKET_MAKER:
+                # The number of iterations exceeds magic number, cancel order
                 if self.mm_order_cycle >= MAGIC_MM_CANCEL_CYCLE:
                     return self._cancel_sent_order()
+                else:
+                    order = self._mm_buyer_order(best_bid if self._role ==
+                                                 Role.BUYER else best_ask)
+                    # If the order found based on new booking is different,
+                    # it means there will be better market making orders to
+                    # place than current one
+                    if (self._order_weak_equal(self.active_order, order)
+                            is not True):
+                        return self._cancel_sent_order()
+                return None
         except Exception as e:
-            return self._exception_inform(e, inspect.stack()[0][3])
+            self._exception_inform(e, inspect.stack()[0][3])
 
     def _get_bid_ask_spread(self, best_bid, best_ask, show=False):
         """
@@ -261,7 +309,8 @@ class DSBot(Agent):
         :param show: True if want to show detail of best bid/ask orders
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if show:
             self.inform("Best bid:")
             self.inform(self.str_order(best_bid))
@@ -282,12 +331,13 @@ class DSBot(Agent):
 
     def _take_action(self, best_ask, best_bid):
         """
-        Take action based on best_ask and best_bid and market info.
+        Take trade action based on best_ask and best_bid and market info.
         :param best_bid: Order object of best bid
         :param best_ask: Order object of best bid
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
 
         # If there are currently no active orders
         if self.order_status == OrderStatus.INACTIVE:
@@ -305,6 +355,7 @@ class DSBot(Agent):
                 self.stop = True
             if self.order_status == OrderStatus.MADE:
                 self._send_update_active_order()
+                pass
 
     def received_order_book(self, order_book, market_id):
         """
@@ -315,7 +366,8 @@ class DSBot(Agent):
         :return: No return. Only processes to be executed.
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         self.inform("received order book from %d" % market_id)
 
         try:
@@ -324,6 +376,8 @@ class DSBot(Agent):
 
             mine_orders, best_bid, best_ask = \
                 self._process_order_book(order_book)
+            self.mine_orders = mine_orders
+
             # Show some information about current bid ask spread
             self._get_bid_ask_spread(best_bid, best_ask)
 
@@ -362,17 +416,22 @@ class DSBot(Agent):
                Available units)
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         cash_holdings = holdings["cash"]
         self.inform("Total cash: " + str(cash_holdings["cash"]) +
                     " available cash: " + str(cash_holdings["available_cash"]))
         if cash_holdings["cash"] > cash_holdings["available_cash"]:
             self.inform("Total cash %d != available cash")
             if self.order_status != OrderStatus.ACCEPTED:
-                self.warning("Order %s status is %s while "
-                             "cash is not consistent"
+                str_mine_orders = ""
+                for mine_order in self.mine_orders:
+                    str_mine_orders += str(mine_order) + " ;; "
+                self.warning("Order %s status is %s while cash is not "
+                             "consistent. And mine_orders has %s"
                              % (str(self.active_order),
-                                str(self.order_status)))
+                                str(self.order_status),
+                                str_mine_orders))
 
         unit_holdings = holdings["markets"][self._market_id]
         # for market_id, market_holding in holdings["markets"].items():
@@ -385,28 +444,14 @@ class DSBot(Agent):
         if cash_holdings["units"] > cash_holdings["available_units"]:
             self.inform("Total units %d != available units")
             if self.order_status != OrderStatus.ACCEPTED:
-                self.warning("Order %s status is %s while "
-                             "unit is not consistent"
+                str_mine_orders = ""
+                for mine_order in self.mine_orders:
+                    str_mine_orders += str(mine_order) + " ;; "
+                self.warning("Order %s status is %s while unit is not "
+                             "consistent. And mine_orders has %s "
                              % (str(self.active_order),
-                                str(self.order_status)))
-
-    def _get_role(self):
-        """
-        Set the role of bot based on cash holdings (positive: BUYER, otherwise
-        seller)
-        """
-        # self._line_break_inform(inspect.stack()[0][3],
-        #                         length=79 + 32 - get_stack_size() * 6)
-        cash_holdings = self.holdings["cash"]
-        unit_holdings = self.holdings["markets"][self._market_id]
-        self.inform(cash_holdings)
-        self.inform(unit_holdings)
-        if cash_holdings["cash"] <= 0:
-            self.inform("Bot is a seller")
-            return Role.SELLER
-        else:
-            self.inform("Bot is a buyer")
-            return Role.BUYER
+                                str(self.order_status),
+                                str_mine_orders))
 
     def order_accepted(self, order):
         """
@@ -415,9 +460,10 @@ class DSBot(Agent):
         :return:
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         self.inform("Order was accepted in market " + str(self._market_id))
-        self.order_units += 1
+
         if order.type == OrderType.LIMIT:
             if self._order_weak_equal(self.active_order, order) is True:
                 if not self.order_status == OrderStatus.PENDING:
@@ -457,7 +503,8 @@ class DSBot(Agent):
 
     def order_rejected(self, info, order):
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         self.inform("Order was rejected in market " + str(self._market_id))
         self.warning("Rejection info: %s", str(info))
 
@@ -509,7 +556,8 @@ class DSBot(Agent):
         :param other_order: The other order on market to trade with
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         try:
             # Process best BUY, SELL order --> collect information -->
             # If valid order --> print
@@ -537,13 +585,13 @@ class DSBot(Agent):
                              else True)
                 if order.side == OrderSide.SELL:
                     information = (":unit_available" if
-                                   order_availability["unit_available"]
-                                   else "unit_unavailable")
+                                   order_availability[":unit_available"]
+                                   else ":unit_unavailable")
                 else:
                     information = (":cash_available" if
-                                   order_availability["cash_available"]
-                                   else "cash_unavailable")
-                information = "status" + (":trade" if can_trade else
+                                   order_availability[":cash_available"]
+                                   else ":cash_unavailable")
+                information = "status" + (":have_trade" if can_trade else
                                           ":no_trade") + information
                 self.inform(information)
 
@@ -561,7 +609,8 @@ class DSBot(Agent):
         :return: the cancel_order created
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         # First check order status before canceling
         if self.order_status in [OrderStatus.PENDING,
                                  OrderStatus.ACCEPTED]:
@@ -609,7 +658,8 @@ class DSBot(Agent):
         :return:            The made order, None if error happens
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         ref = self._make_order_ref(self._market_id, order_price, order_side)
         order = Order(order_price, order_unit, order_type,
                       order_side, self._market_id, ref=ref)
@@ -624,7 +674,8 @@ class DSBot(Agent):
                             other_order is None
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if other_order and isinstance(other_order, Order):
             side = (OrderSide.SELL if other_order.side == OrderSide.BUY
                     else OrderSide.BUY)
@@ -633,7 +684,8 @@ class DSBot(Agent):
 
     def _make_cancel_order(self, order):
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if order is not None and isinstance(order, Order):
             if order.type != OrderType.CANCEL:
                 self.warning("Making CANCEL order for CANCEL order %s"
@@ -650,7 +702,8 @@ class DSBot(Agent):
         :param order: The order to be updated
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if self.order_status not in [OrderStatus.INACTIVE,
                                      OrderStatus.CANCEL]:
             self.error("Old order is still in %s state" %
@@ -667,7 +720,8 @@ class DSBot(Agent):
         :return:
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
 
         order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
         if order and isinstance(order, Order):
@@ -704,7 +758,8 @@ class DSBot(Agent):
         MAKE --> VERIFY --> PRINT(with verified message) --> SEND
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         self.order_availability = self._verify_order(self.active_order)
         if self.order_status != OrderStatus.MADE:
             self.warning("Active order with order status %s is sent"
@@ -723,7 +778,8 @@ class DSBot(Agent):
         :return: True if profitable false if not, None if order is invalid
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
         if order and isinstance(order, Order):
             # Buying at a lower price
             if order.side == OrderSide.BUY:
@@ -757,57 +813,71 @@ class DSBot(Agent):
         :param other_order: The best order of same side to compare with
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
-
-        tick_size = self.markets[self._market_id]["tick"]
-
-        minimum = self.markets[self._market_id]["minimum"]
-        maximum = self.markets[self._market_id]["maximum"]
-        tick = self.markets[self._market_id]["tick"]
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
 
         # Bot is a buyer
         if self._role == Role.BUYER:
-            order_side = OrderSide.BUY
-            if other_order is None:
-                order_price = ((DS_REWARD_CHARGE - minimum) //
-                               tick // 2 * tick) + minimum
-            # Check if we can set a bid which beats the current best bid
-            elif other_order.price + tick_size < DS_REWARD_CHARGE:
-                order_price = other_order.price + tick_size
-            # Check if current best bid is profitable,
-            # but increasing the bid makes it unprofitable
-            elif other_order.price < DS_REWARD_CHARGE:
-                order_price = other_order.price
-            # Best buy price is 1 tick less than DS_REWARD_CHARGE
-            else:
-                order_price = ((DS_REWARD_CHARGE - minimum) //
-                               tick * tick) + minimum
+            order = self._mm_buyer_order(other_order)
         # Bot is a seller
         elif self._role == Role.SELLER:
-            order_side = OrderSide.SELL
-            if other_order is None:
-                order_price = maximum - ((maximum - DS_REWARD_CHARGE)
-                                         // tick // 2 * tick)
-            # Check if we can set an ask which beats the current best ask
-            elif other_order.price - tick_size > DS_REWARD_CHARGE:
-                order_price = other_order.price - tick_size
-            # Check if current best ask is profitable, but
-            # decreasing the ask makes it unprofitable
-            elif other_order.price > DS_REWARD_CHARGE:
-                order_price = other_order.price
-            # Best ask price is 1 tick more than DS_REWARD_CHARGE
-            else:
-                order_price = maximum - ((maximum - DS_REWARD_CHARGE)
-                                         // tick * tick)
+            order = self._mm_seller_order(other_order)
         else:
             self.error("Found order with non-BUY-SELL type")
             self.stop = True
             return
 
-        if order_price is not None:
-            order = self._make_order(order_price, order_side)
-            if order is not None and self._order_profitable(order):
-                self._set_active_order(order)
+        if order is not None and self._order_profitable(order):
+            self._set_active_order(order)
+
+    def _mm_buyer_order(self, other_order):
+        self._line_break_inform(inspect.stack()[0][3],
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
+
+        tick = self.markets[self._market_id]["tick"]
+        minimum = self.markets[self._market_id]["minimum"]
+        # Bot is a buyer
+        order_side = OrderSide.BUY
+        if other_order is None:
+            order_price = ((DS_REWARD_CHARGE - minimum) //
+                           tick // 2 * tick) + minimum
+        # Check if we can set a bid which beats the current best bid
+        elif other_order.price + tick < DS_REWARD_CHARGE:
+            order_price = other_order.price + tick
+        # Check if current best bid is profitable,
+        # but increasing the bid makes it unprofitable
+        elif other_order.price < DS_REWARD_CHARGE:
+            order_price = other_order.price
+        # Best buy price is 1 tick less than DS_REWARD_CHARGE
+        else:
+            order_price = ((DS_REWARD_CHARGE - minimum) //
+                           tick * tick) + minimum
+        return self._make_order(order_price, order_side)
+
+    def _mm_seller_order(self, other_order):
+        self._line_break_inform(inspect.stack()[0][3],
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
+
+        tick = self.markets[self._market_id]["tick"]
+        maximum = self.markets[self._market_id]["maximum"]
+        order_side = OrderSide.SELL
+        if other_order is None:
+            order_price = maximum - ((maximum - DS_REWARD_CHARGE)
+                                     // tick // 2 * tick)
+        # Check if we can set an ask which beats the current best ask
+        elif other_order.price - tick > DS_REWARD_CHARGE:
+            order_price = other_order.price - tick
+        # Check if current best ask is profitable, but
+        # decreasing the ask makes it unprofitable
+        elif other_order.price > DS_REWARD_CHARGE:
+            order_price = other_order.price
+        # Best ask price is 1 tick more than DS_REWARD_CHARGE
+        else:
+            order_price = maximum - ((maximum - DS_REWARD_CHARGE)
+                                     // tick * tick)
+        return self._make_order(order_price, order_side)
 
     def _reactive_orders(self, other_order):
         """
@@ -816,7 +886,8 @@ class DSBot(Agent):
         :return:            makes order according to role
         """
         self._line_break_inform(inspect.stack()[0][3],
-                                length=79 + 12 * 10 - get_stack_size() * 10)
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
 
         # Make the opposite order
         order = self._make_opposite_order(other_order)
@@ -835,7 +906,8 @@ class DSBot(Agent):
                                % (order.side, self._role))
             self._set_active_order(order)
 
-    def _line_break_inform(self, msg="", char="-", length=79, width=79):
+    def _line_break_inform(self, msg="", char="-",
+                           length=BASE_LEN, width=BASE_LEN):
         """
         Simply inform a line break with certain character
         :param char:   The character to be repeated
