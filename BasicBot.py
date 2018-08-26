@@ -343,11 +343,15 @@ class DSBot(Agent):
                 # TODO if BUYER, are we going to stop the bot from trading when it reaches 5 units?
                 if self._role == Role["BUYER"]:
                     self.inform("Bot is a buyer")
-                    if self.order_availability["cash_available"] is True:
+                    if self.order_availability["cash_available"] is True and \
+                            self.order_availability["five_units"] is True:
                         addition_info = "can respond to the order."
                     elif self.order_availability["cash_available"] is False:
                         addition_info = ("can not respond to the order "
                                          "due to limited cash")
+                    elif self.order_availability["five_units"] is False:
+                        addition_info = ("can not respond to the order as "
+                                         "we have already bought 5 units")
                     else:
                         addition_info = ("Malfunctioning due to incorrect "
                                          "type given to cash_availability")
