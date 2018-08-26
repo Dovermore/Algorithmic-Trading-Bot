@@ -71,7 +71,7 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id, name="DSBot")
 
         # TBD later
-        self._bot_type = BotType["REACTIVE"]
+        self._bot_type = BotType["MARKET_MAKER"]
 
         self._role = None
 
@@ -328,8 +328,6 @@ class DSBot(Agent):
         else:
             self._warning_inform("Order REJECTED from INACTIVE state!!!")
 
-    # TODO currently does not work correctly. A profitable trade opportunity only exists based on an existing order in
-    # the book. Market maker orders are not profitable trades opportunities.
     def _print_trade_opportunity(self, other_order):
         """
         Depending on our role and our bot type, print trade opportunity.
@@ -416,7 +414,6 @@ class DSBot(Agent):
                                  OrderStatus["ACCEPTED"]]:
             self.inform("Able to cancel order")
             cancel_order = copy.copy(order)
-            print(cancel_order)
             cancel_order.type = OrderType.CANCEL
             cancel_order.ref = self._make_order_ref(
                 self._market_id, self.active_order.price,
@@ -494,7 +491,7 @@ class DSBot(Agent):
                 self.stop = True
         else:
             if self._bot_type == BotType["REACTIVE"]:
-                self.inform("No trade to be done right now")
+                self.inform("No profitable trades are available")
             else:
                 self._warning_inform("Trying to verify NONE order")
         self.order_availability = order_availability
