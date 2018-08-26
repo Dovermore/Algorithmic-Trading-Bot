@@ -34,9 +34,9 @@ ORDER_SIDE_TO_CHAR = {
     OrderSide.SELL: "S"
 }
 ORDER_AVAILABILITY_TEMPLATE = {
-    "profit": None,           # Amount of profit made by completing this order
-    "cash_available": None,   # Is cash enough to place this order
-    "unit_available": None,   # Is unit enough to place this order
+    "five_units": None,         # Max 5 units is reached, only for buying
+    "cash_available": None,     # Is cash enough to place this order
+    "unit_available": None,     # Is unit enough to place this order
 }
 SEPARATION = "-"  # for most string separation
 TIME_FORMATTER = "%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
@@ -80,7 +80,7 @@ class DSBot(Agent):
         self.order_status = OrderStatus["INACTIVE"]
         self.order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
         self.mm_order_cycle = 0
-
+        self.order_units = 0
         self.inactive_order = []
 
         # self.markets stores all market info
@@ -307,6 +307,7 @@ class DSBot(Agent):
     def order_accepted(self, order):
         self._line_break_inform(inspect.stack()[0][3])
         self.inform("Order was accepted in market " + str(self._market_id))
+        self.order_units += 1
         if self.order_status == OrderStatus["PENDING"]:
             self.order_status = OrderStatus["ACCEPTED"]
         elif self.order_status == OrderStatus["CANCEL"]:
@@ -341,7 +342,7 @@ class DSBot(Agent):
                 # From the given template
                 self.inform("[" + str(self._role) + str(other_order))
 
-                # TODO if REACTIVE, are we going to stop the bot from trading when it reaches 5 units?
+                # TODO if BUYER, are we going to stop the bot from trading when it reaches 5 units?
                 if self._role == Role["BUYER"]:
                     self.inform("Bot is a buyer")
                     if self.order_availability["cash_available"] is True:
@@ -444,7 +445,7 @@ class DSBot(Agent):
         return ref
 
     def _make_order(self, order_price, order_side, order_unit=ORDER_UNIT,
-                        order_type=OrderType.LIMIT):
+                    order_type=OrderType.LIMIT):
         """
         MAKES order and stores in active order
         :param order_price: price made after decision
@@ -476,8 +477,11 @@ class DSBot(Agent):
                 if (self.active_order.price * self.active_order.units >
                         self.holdings["cash"]["available_cash"]):
                     order_availability["cash_available"] = False
+                elif self.order_units > 5:
+                    order_availability["five_units"] = False
                 else:
                     order_availability["cash_available"] = True
+                    order_availability["five_units"] = True
             # SELL side
             elif self.active_order.side == OrderSide.SELL:
                 if (self.active_order.units > self.holdings["markets"]
@@ -503,7 +507,8 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3])
         self._verify_active_order()
         self._print_trade_opportunity(self.active_order)
-        if self.order_availability["cash_available"] is True or \
+        if (self.order_availability["cash_available"] is True and
+                self.order_availability["five_units"] is True) or \
                 self.order_availability["unit_available"] is True:
             self.inform("Sending order")
             self.send_order(self.active_order)
@@ -693,5 +698,5 @@ if __name__ == "__main__":
 
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID)
     ds_bot.run()
