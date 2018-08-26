@@ -152,7 +152,7 @@ class DSBot(Agent):
                     self._warning_inform("The order status didn't get updated to "
                                          "ACCEPTED in received_order_book")
             else:
-                cancel_order = self._check_accepted_order()
+                cancel_order = self._check_accepted_order(mine_orders[0])
                 if cancel_order is not None:
                     self.inactive_order.append([self.active_order,
                                                 cancel_order])
@@ -169,7 +169,7 @@ class DSBot(Agent):
             self.inform("Order was completed in market " +
                         str(self._market_id))
 
-    def _check_accepted_order(self):
+    def _check_accepted_order(self, order):
         """
         Check the status of last accepted order and potentially cancel based
         on status
@@ -179,10 +179,10 @@ class DSBot(Agent):
         try:
             if self._bot_type == BotType["REACTIVE"]:
                 self.inform("Reactive order still in the Order Book")
-                return self._cancel_sent_order()
+                return self._cancel_sent_order(order)
             elif self._bot_type == BotType["MARKET_MAKER"]:
                 if self.mm_order_cycle >= MAGIC_MM_CANCEL_CYCLE:
-                    return self._cancel_sent_order()
+                    return self._cancel_sent_order(order)
         except Exception as e:
             return self.inform(e)
 
@@ -412,13 +412,13 @@ class DSBot(Agent):
         else:
             return True
 
-    def _cancel_sent_order(self):
+    def _cancel_sent_order(self, order):
         self._line_break_inform(inspect.stack()[0][3])
         # First check order status before canceling
         if self.order_status in [OrderStatus["PENDING"],
                                  OrderStatus["ACCEPTED"]]:
             self.inform("Able to cancel order")
-            cancel_order = copy.copy(self.active_order)
+            cancel_order = copy.copy(order)
             print(cancel_order)
             cancel_order.type = OrderType.CANCEL
             cancel_order.ref = self._make_order_ref(
@@ -493,7 +493,10 @@ class DSBot(Agent):
                 self._error_inform("Found order with non-BUY-SELL type")
                 self.stop = True
         else:
-            self._warning_inform("Trying to verify NONE order")
+            if self._bot_type == BotType["REACTIVE"]:
+                self.inform("No trade to be done right now")
+            else:
+                self._warning_inform("Trying to verify NONE order")
         self.order_availability = order_availability
 
     def _send_update_active_order(self):
@@ -591,6 +594,8 @@ class DSBot(Agent):
             elif best_ask.price < DS_REWARD_CHARGE:
                 order_price = best_ask.price
                 if show: self.inform("Found an order!!! Making order now...")
+            else:
+                if show: self.inform("No good trade can be done right now")
         elif self._role == Role["SELLER"]:
             order_side = OrderSide.SELL
             if best_bid is None:
@@ -601,6 +606,8 @@ class DSBot(Agent):
             elif best_bid.price > DS_REWARD_CHARGE:
                 order_price = best_bid.price
                 if show: self.inform("Found an order!!! Making order now...")
+            else:
+                if show: self.inform("No good trade can be done right now")
         if order_price:
             self._make_order(order_price, order_side)
 
