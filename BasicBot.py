@@ -312,9 +312,8 @@ class DSBot(Agent):
             self.order_status = OrderStatus["ACCEPTED"]
         elif self.order_status == OrderStatus["CANCEL"]:
             self.order_status = OrderStatus["INACTIVE"]
+
             self.inform("Cancel order ACCEPTED!!!")
-            # Reset the active order
-            self.active_order = None
         else:
             self._warning_inform("Order ACCEPTED from INACTIVE state!!!")
 
@@ -429,6 +428,8 @@ class DSBot(Agent):
             self.send_order(cancel_order)
             # Reset the cycle
             self.mm_order_cycle = 0
+            # Reset the active order
+            self.active_order = None
             return cancel_order
         else:
             self._warning_inform("Order cancelled while "
