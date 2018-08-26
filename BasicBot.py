@@ -57,6 +57,7 @@ class BotType(Enum):
 
 # Status of current order if there is any
 class OrderStatus(Enum):
+    CANCEL = -1
     INACTIVE = 0       # None/Completed/Rejected/Canceled
     MADE = 0
     PENDING = 1
@@ -145,14 +146,18 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3])
         if len(mine_orders) == 1:
             if not self.order_status == OrderStatus["ACCEPTED"]:
-                self._warning_inform("The order status didn't get updated to "
-                                     "ACCEPTED in received_order_book")
+                if self.order_status == OrderStatus["CANCEL"]:
+                    self._warning_inform("Cancel order was not done correctly")
+                else:
+                    self._warning_inform("The order status didn't get updated to "
+                                         "ACCEPTED in received_order_book")
             else:
                 cancel_order = self._check_accepted_order()
                 if cancel_order is not None:
                     self.inactive_order.append([self.active_order,
                                                 cancel_order])
-                    self.active_order = None
+                    self.inform(self.inactive_order)
+                    self.order_status = OrderStatus["CANCEL"]
         elif len(mine_orders) > 1:
             self._warning_inform("More than one active order!")
         elif self.order_status == OrderStatus["ACCEPTED"]:
@@ -304,6 +309,9 @@ class DSBot(Agent):
         self.inform("Order was accepted in market " + str(self._market_id))
         if self.order_status == OrderStatus["PENDING"]:
             self.order_status = OrderStatus["ACCEPTED"]
+        elif self.order_status == OrderStatus["CANCEL"]:
+            self.order_status = OrderStatus["INACTIVE"]
+            self.inform("Cancel order ACCEPTED!!!")
         else:
             self._warning_inform("Order ACCEPTED from INACTIVE state!!!")
 
@@ -314,6 +322,8 @@ class DSBot(Agent):
             self.inactive_order.append([self.active_order])
             self.active_order = None
             self.order_status = OrderStatus["INACTIVE"]
+        elif self.order_status == OrderStatus["CANCEL"]:
+            self._warning_inform("CANCEL order was REJECTED!!!")
         else:
             self._warning_inform("Order REJECTED from INACTIVE state!!!")
 
