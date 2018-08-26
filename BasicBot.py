@@ -312,6 +312,8 @@ class DSBot(Agent):
         else:
             self._warning_inform("Order REJECTED from INACTIVE state!!!")
 
+    # TODO currently does not work correctly. A profitable trade opportunity only exists based on an existing order in
+    # the book. Market maker orders are not profitable trades opportunities.
     def _print_trade_opportunity(self, other_order):
         """
         Depending on our role and our bot type, print trade opportunity.
@@ -320,6 +322,7 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3])
         try:
             if other_order and isinstance(other_order, Order):
+                # TODO the best trade opportunity is not always buying, and a trade should only be printed if profitable
                 self.inform("My Role is " + str(self._role) +
                             ". Current best trade opportunity would "
                             "be buying at " + str(other_order.price))
@@ -480,8 +483,8 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3])
         self._verify_active_order()
         self._print_trade_opportunity(self.active_order)
-        if self.order_availability["cash_availability"] is True or \
-                self.order_availability["unit_availability"] is True:
+        if self.order_availability["cash_available"] is True or \
+                self.order_availability["unit_available"] is True:
             self.inform("Sending order")
             self.send_order(self.active_order)
             self.order_status = OrderStatus["PENDING"]
@@ -502,7 +505,6 @@ class DSBot(Agent):
 
         order_price = None
         order_side = None
-
         # Bot is a buyer
         if self._role == Role["BUYER"]:
             order_side = OrderSide.BUY
