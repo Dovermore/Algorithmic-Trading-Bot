@@ -71,7 +71,7 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id, name="DSBot")
 
         # TBD later
-        self._bot_type = BotType["MARKET_MAKER"]
+        self._bot_type = BotType["REACTIVE"]
 
         self._role = None
 
@@ -427,6 +427,8 @@ class DSBot(Agent):
             self.send_order(cancel_order)
             # Reset the cycle
             self.mm_order_cycle = 0
+            # Reset the active order
+            self.active_order = None
             return cancel_order
         else:
             self._warning_inform("Order cancelled while "
