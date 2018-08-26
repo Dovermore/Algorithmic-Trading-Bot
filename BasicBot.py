@@ -71,7 +71,7 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id, name="DSBot")
 
         # TBD later
-        self._bot_type = BotType["MARKET_MAKER"]
+        self._bot_type = BotType["REACTIVE"]
 
         self._role = None
 
@@ -337,10 +337,6 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3])
         try:
             if other_order and isinstance(other_order, Order):
-                # TODO the best trade opportunity is not always buying, and a trade should only be printed if profitable
-                self.inform("My Role is " + str(self._role) +
-                            ". Current best trade opportunity would "
-                            "be buying at " + str(other_order.price))
 
                 # From the given template
                 self.inform("[" + str(self._role) + str(other_order))
