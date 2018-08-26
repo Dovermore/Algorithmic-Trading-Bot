@@ -343,21 +343,21 @@ class DSBot(Agent):
 
                 # TODO if REACTIVE, are we going to stop the bot from trading when it reaches 5 units?
                 if self._role == Role["BUYER"]:
-                    self.inform("is buyer")
-                    if self.order_availability["cash_availability"] is True:
+                    self.inform("Bot is a buyer")
+                    if self.order_availability["cash_available"] is True:
                         addition_info = "can respond to the order."
-                    elif self.order_availability["cash_availability"] is False:
+                    elif self.order_availability["cash_available"] is False:
                         addition_info = ("can not respond to the order "
                                          "due to limited cash")
                     else:
                         addition_info = ("Malfunctioning due to incorrect "
                                          "type given to cash_availability")
                 elif self._role == Role["SELLER"]:
-                    self.inform("is seller")
-                    if self.order_availability["unit_availability"] is True:
+                    self.inform("Bot is a seller")
+                    if self.order_availability["unit_available"] is True:
                         self.inform("can be sold")
                         addition_info = "can respond to the order."
-                    elif self.order_availability["unit_availability"] is False:
+                    elif self.order_availability["unit_available"] is False:
                         self.inform("can't be sold")
                         addition_info = ("can not respond to the order "
                                          "due to limited units")
