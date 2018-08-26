@@ -171,12 +171,15 @@ class DSBot(Agent):
         :return The canceled order if there is one
         """
         self._line_break_inform(inspect.stack()[0][3])
-        if self._bot_type == BotType["REACTIVE"]:
-            self.inform("Reactive order still in the Order Book")
-            return self._cancel_sent_order()
-        elif self._bot_type == BotType["MARKET_MAKER"]:
-            if self.mm_order_cycle >= MAGIC_MM_CANCEL_CYCLE:
+        try:
+            if self._bot_type == BotType["REACTIVE"]:
+                self.inform("Reactive order still in the Order Book")
                 return self._cancel_sent_order()
+            elif self._bot_type == BotType["MARKET_MAKER"]:
+                if self.mm_order_cycle >= MAGIC_MM_CANCEL_CYCLE:
+                    return self._cancel_sent_order()
+        except Exception as e:
+            return self.inform(e)
 
     def _get_bid_ask_spread(self, best_bid, best_ask, show=False):
         """
@@ -404,7 +407,8 @@ class DSBot(Agent):
         # First check order status before canceling
         if self.order_status in [OrderStatus["PENDING"],
                                  OrderStatus["ACCEPTED"]]:
-            cancel_order = copy.deepcopy(self.active_order)
+            self.inform("Able to cancel order")
+            cancel_order = copy.copy(self.active_order)
             cancel_order.type = OrderType.CANCEL
             cancel_order.ref = self._make_order_ref(
                 self._market_id, self.active_order.price,
@@ -417,7 +421,7 @@ class DSBot(Agent):
             return cancel_order
         else:
             self._warning_inform("Order cancelled while "
-                                "not PENDING or ACCEPTED!")
+                                 "not PENDING or ACCEPTED!")
             return None
 
     @staticmethod
