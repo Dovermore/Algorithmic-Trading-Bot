@@ -245,6 +245,8 @@ class DSBot(Agent):
 
         self._take_action(best_ask, best_bid)
         self.inform("Current order status is: " + str(self.order_status))
+        if self._bot_type == BotType["MARKET_MAKER"]:
+            self.inform("Current mm_order_cycle is " +str(self.mm_order_cycle))
         # Create bid-ask spread and check for depth of order
         # Depending on role, choose to buy or sell at relevant price
 
@@ -330,7 +332,9 @@ class DSBot(Agent):
                 # From the given template
                 self.inform("[" + str(self._role) + str(other_order))
 
+                # TODO if REACTIVE, are we going to stop the bot from trading when it reaches 5 units?
                 if self._role == Role["BUYER"]:
+                    self.inform("is buyer")
                     if self.order_availability["cash_availability"] is True:
                         addition_info = "can respond to the order."
                     elif self.order_availability["cash_availability"] is False:
@@ -358,6 +362,7 @@ class DSBot(Agent):
         except Exception as e:
             self.inform(e)
 
+    # TODO this is not used, can be deleted, functionality done in received_holdings
     def _available_cash_units(self):
         """
         Check if enough cash or units to make purchase or sale
@@ -378,6 +383,7 @@ class DSBot(Agent):
         else:
             return True
 
+    # TODO _check_previous_order_price is not used too
     def _check_previous_order_price(self, order_price):
         """
         Check if order price to be made is better or worse than the previous order
@@ -563,7 +569,7 @@ class DSBot(Agent):
             order_side = OrderSide.BUY
             if best_ask is None:
                 if show: self.inform("No orders can be made!"
-                            "Will continue wait for orders...")
+                                     "Will continue wait for orders...")
 
                 if show: self.inform("No orders can be made! Will "
                                      "continue wait for orders...")
@@ -574,7 +580,7 @@ class DSBot(Agent):
             order_side = OrderSide.SELL
             if best_bid is None:
                 if show: self.inform("No orders can be made!"
-                            "Will continue wait for orders...")
+                                     "Will continue wait for orders...")
                 if show: self.inform("No orders can be made! Will "
                                      "continue wait for orders...")
             elif best_bid.price > DS_REWARD_CHARGE:
@@ -669,5 +675,5 @@ if __name__ == "__main__":
 
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID)
     ds_bot.run()
