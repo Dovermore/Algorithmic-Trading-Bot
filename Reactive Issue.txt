@@ -1,0 +1,265 @@
+C:\Users\npric\Anaconda3\python.exe "C:/Users/npric/Desktop/Melbourne University/2018/Algorithmic Trading/FNCE30010Project1/BasicBot.py"
+[2018-08-27 13:51:09,623:         agent.DSBot]:     INFO - Requesting initial marketplace information.
+[2018-08-27 13:51:11,586:         agent.DSBot]:     INFO - Received initial marketplace information.
+[2018-08-27 13:51:11,586:         agent.DSBot]:     INFO - Initialised, examining markets available
+[2018-08-27 13:51:11,587:         agent.DSBot]:     INFO - Market: 685
+                       Minimum:  25
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : Widgets
+                       Item   : widgets
+                       Describ: Widgets
+
+[2018-08-27 13:51:11,587:         agent.DSBot]:     INFO - {'cash': 235, 'available_cash': 235}
+[2018-08-27 13:51:11,588:         agent.DSBot]:     INFO - {'units': 5, 'available_units': 5}
+[2018-08-27 13:51:11,588:         agent.DSBot]:     INFO - Bot is a buyer
+[2018-08-27 13:51:12,799:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:12,799:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:12,807:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:12,812:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:12,812:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:12,815:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:12,815:         agent.DSBot]:     INFO -            Ask unavailable
+[2018-08-27 13:51:12,823:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:12,835:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:12,844:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:12,846:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:12,854:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:12,862:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:12,862:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:15,502:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:15,503:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:15,515:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:15,524:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:15,524:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:15,524:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:15,524:         agent.DSBot]:     INFO -            Ask unavailable
+[2018-08-27 13:51:15,532:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:15,539:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:15,546:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:15,546:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:15,556:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:15,563:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:15,564:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:17,843:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:17,843:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:17,847:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:17,848:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:17,848:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:17,848:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:17,848:         agent.DSBot]:     INFO -            Ask unavailable
+[2018-08-27 13:51:17,854:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:17,859:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:17,862:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:17,862:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:17,866:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:17,869:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:17,869:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:20,162:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:20,162:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:20,171:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:20,177:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:20,177:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:20,177:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:20,181:         agent.DSBot]:     INFO -            Ask unavailable
+[2018-08-27 13:51:20,190:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:20,198:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:20,204:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:20,204:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:20,210:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:20,215:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:20,215:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:22,792:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:22,792:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:22,794:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:22,798:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:22,798:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:22,798:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:22,807:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:22,808:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:22,817:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:22,823:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:22,823:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-22L
+[2018-08-27 13:51:22,827:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:22,827:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-22L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:22,833:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:22,833:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:22,837:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:22,837:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:22,843:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:22,846:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:22,850:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:22,854:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-22L
+[2018-08-27 13:51:22,856:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:22,856:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:22,856:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:25,154:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:25,155:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:25,162:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:25,173:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:25,174:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:25,174:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:25,181:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:25,190:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:25,197:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:25,207:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:25,207:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-25L
+[2018-08-27 13:51:25,218:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:25,218:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-25L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:25,229:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:25,229:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:25,237:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:25,238:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:25,247:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:25,255:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:25,262:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:25,265:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-25L
+[2018-08-27 13:51:25,271:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:25,275:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:25,275:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:27,577:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:27,577:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:27,587:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:27,596:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:27,596:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:27,596:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:27,604:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:27,611:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:27,617:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:27,627:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:27,627:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-27L
+[2018-08-27 13:51:27,636:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:27,636:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-27L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:27,644:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:27,644:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:27,652:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:27,652:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:27,657:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:27,668:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:27,676:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:27,677:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-27L
+[2018-08-27 13:51:27,681:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:27,681:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:27,681:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:29,968:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:29,968:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:29,978:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:29,991:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:29,992:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:29,992:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:30,006:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:30,015:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:30,017:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:30,021:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:30,021:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-30L
+[2018-08-27 13:51:30,027:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:30,027:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-30L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:30,031:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:30,031:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:30,034:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:30,035:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:30,036:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:30,040:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:30,046:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:30,046:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-30L
+[2018-08-27 13:51:30,050:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:30,050:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:30,050:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:33,206:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:33,207:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:33,221:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:33,230:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:33,230:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:33,230:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:33,237:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:33,241:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:33,248:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:33,259:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:33,259:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-33L
+[2018-08-27 13:51:33,267:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:33,268:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-33L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:33,274:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:33,275:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:33,282:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:33,282:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:33,290:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:33,298:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:33,307:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:33,308:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-33L
+[2018-08-27 13:51:33,315:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:33,316:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:33,316:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:35,601:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:35,601:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:35,611:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:35,622:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:35,624:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:35,624:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:35,632:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:35,639:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:35,652:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:35,661:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:35,661:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-35L
+[2018-08-27 13:51:35,668:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:35,668:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-35L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:35,678:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:35,678:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:35,687:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:35,687:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:35,695:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:35,704:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:35,712:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:35,712:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-35L
+[2018-08-27 13:51:35,723:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:35,724:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:35,724:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:38,002:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:38,002:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:38,014:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:38,023:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:38,023:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:38,023:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:38,032:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:38,040:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:38,051:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:38,055:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:38,055:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-38L
+[2018-08-27 13:51:38,059:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:38,059:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-38L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:38,066:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:38,066:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:38,072:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:38,072:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:38,076:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:38,084:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:38,091:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:38,092:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-38L
+[2018-08-27 13:51:38,097:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:38,097:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:38,098:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+[2018-08-27 13:51:40,376:         agent.DSBot]:     INFO - ------------------------------received_order_book------------------------------
+[2018-08-27 13:51:40,376:         agent.DSBot]:     INFO - received order book from 685
+[2018-08-27 13:51:40,388:         agent.DSBot]:     INFO -      -------------------------_process_order_book-------------------------     
+[2018-08-27 13:51:40,396:         agent.DSBot]:     INFO -      -------------------------_get_bid_ask_spread-------------------------     
+[2018-08-27 13:51:40,396:         agent.DSBot]:     INFO - no bid ask spread available
+[2018-08-27 13:51:40,396:         agent.DSBot]:     INFO -            Bid unavailable
+[2018-08-27 13:51:40,401:         agent.DSBot]:     INFO -      -------------------------_update_mine_orders-------------------------     
+[2018-08-27 13:51:40,411:         agent.DSBot]:     INFO -      ----------------------_print_trade_opportunity-----------------------     
+[2018-08-27 13:51:40,422:         agent.DSBot]:     INFO -           -------------------_make_opposite_order--------------------          
+[2018-08-27 13:51:40,434:         agent.DSBot]:     INFO -                -------------------_make_order-------------------               
+[2018-08-27 13:51:40,434:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-40L
+[2018-08-27 13:51:40,443:         agent.DSBot]:     INFO -           -----------------------_verify_order-----------------------          
+[2018-08-27 13:51:40,443:         agent.DSBot]:     INFO - Order: 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-40L, availability {'cash_available': False, 'unit_available': None}
+[2018-08-27 13:51:40,452:         agent.DSBot]:     INFO -           ---------------------_order_profitable---------------------          
+[2018-08-27 13:51:40,452:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:40,459:         agent.DSBot]:     INFO -      ----------------------------_take_action-----------------------------     
+[2018-08-27 13:51:40,459:         agent.DSBot]:     INFO - Currently no active orders
+[2018-08-27 13:51:40,468:         agent.DSBot]:     INFO -           ---------------------_reactive_orders----------------------          
+[2018-08-27 13:51:40,477:         agent.DSBot]:     INFO -                --------------_make_opposite_order---------------               
+[2018-08-27 13:51:40,485:         agent.DSBot]:     INFO -                     --------------_make_order--------------                    
+[2018-08-27 13:51:40,486:         agent.DSBot]:     INFO - order- 685:NoID:[LIMIT]:Others:BUY:1@495:REF:B-685-495-1-18-08-27-13-51-40L
+[2018-08-27 13:51:40,493:         agent.DSBot]:     INFO -                ----------------_order_profitable----------------               
+[2018-08-27 13:51:40,494:         agent.DSBot]:     INFO - BuyOrder: NetCurrent:5x500=2500, NetAfter=min(5, 5+1)x500-495x1=2005
+[2018-08-27 13:51:40,495:         agent.DSBot]:     INFO - Current order status is: OrderStatus.INACTIVE
+
+Process finished with exit code -1
