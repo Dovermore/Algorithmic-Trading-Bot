@@ -758,8 +758,8 @@ class DSBot(Agent):
             self.order_status = OrderStatus.CANCEL
             return cancel_order
         else:
-            self.warning("Order cancelled while "
-                         "not PENDING or ACCEPTED!")
+            self.warning("Order cancelled with state %s!"
+                         % str(self.order_status))
             return None
 
     @staticmethod
