@@ -562,8 +562,8 @@ class DSBot(Agent):
     def order_accepted(self, order):
         """
         To process accepted_order and verify against stored active_order
-        :param order:
-        :return:
+        :param order: Accepted order
+        :return: No return. Only processes to be executed
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
@@ -878,7 +878,7 @@ class DSBot(Agent):
         Verify the given order with own holdings and return a dictionary
         containing availability of the order
         :param order: The order to be verified(Only price, units, side, needed)
-        :return:
+        :return: Order Availability with preset template
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
@@ -1187,11 +1187,8 @@ if __name__ == "__main__":
     FM_EMAIL_CALVIN = "z.huang51@student.unimelb.edu.au"
     FM_PASSWORD_CALVIN = "908525"
 
-    FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
-    FM_PASSWORD_JD = "888086"
-
     MARKETPLACE_ID1 = 260
     MARKETPLACE_ID2 = 352
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID2)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID2)
     ds_bot.run()
