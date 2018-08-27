@@ -1,5 +1,9 @@
 """
-This is a template for Project 1, Task 1 (Induced demand-supply)
+Project Name: Induced Demand-Supply
+Subject Code and Name: FNCE30010 Algorithmic Trading
+Student Name (ID): Zhuoqun Huang (908525)
+                   Nikolai Price (836389)
+                   Lee Jun Da    (888086)
 """
 
 from enum import Enum
