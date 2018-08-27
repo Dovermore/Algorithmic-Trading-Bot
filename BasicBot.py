@@ -46,6 +46,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price",
 # Dependent on actual task
 DS_REWARD_CHARGE = 500
 MAX_REWARD_UNIT = 5
+MAX_HOLDING_UNIT = 10
 
 # The unit to place order
 ORDER_UNIT = 1
@@ -127,6 +128,12 @@ class DSBot(Agent):
         # Verifying when calling `received_holdings`.
         self.mine_orders = None
 
+        # The value of each unit of cargo currently holding
+        self.unit_values = []
+
+        # Number of completed order read last time
+        self.n_completed = 0
+
     def run(self):
         """
         Kick starts the bot
@@ -161,6 +168,10 @@ class DSBot(Agent):
             self.inform(self._str_market(market_dict))
         self._market_id = list(self.markets.keys())[0]
         self._role = self._get_role()
+
+        unit_holdings = self.holdings["markets"][self._market_id]
+        self.unit_values = ([DS_REWARD_CHARGE] *
+                            unit_holdings["available_units"])
 
     # ------ End of Constructor and initialisation methods -----
     # ------ Start of Interaction with the Market/Order Book ---
@@ -216,6 +227,23 @@ class DSBot(Agent):
         # Best Bid and Best Ask
         return mine_orders, best_bid, best_ask
 
+    def _update_completed_order(self):
+        """
+        Update the completed order and self.unit_values by completed order book
+        """
+        try:
+            self._line_break_inform(inspect.stack()[0][3],
+                                    length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                    get_stack_size() * STACK_DIF)
+            self.get_completed_orders(self._market_id)
+
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+            self._exception_inform(e, inspect.stack()[0][3], addition=addition)
+        pass
+
     # TODO two conditions hard to cope with
     # TODO          1: Sent cancel, but cancel didn't arrive
     # TODO          2: Sent cancel, but order completed before canceled
@@ -231,11 +259,10 @@ class DSBot(Agent):
             self._line_break_inform(inspect.stack()[0][3],
                                     length=BASE_LEN + INIT_STACK * STACK_DIF -
                                     get_stack_size() * STACK_DIF)
-
+            self._update_completed_order()
             # Expected number of my orders in the order book would be 1 when
             # sent
             if len(mine_orders) == 1:
-
                 # If order status is not ACCEPTED, something is not right
                 if self.order_status != OrderStatus.ACCEPTED:
 
@@ -291,13 +318,11 @@ class DSBot(Agent):
 
             # Order no longer in Order Book, update order status
             elif self.order_status == OrderStatus.ACCEPTED:
+                # TODO self.update_completed_order
                 self.inform("Order %s was completed in market %s"
                             % (str(self.active_order), str(self._market_id)))
                 self._deactivate_order()
-            elif self.order_status != OrderStatus.INACTIVE:
-                self.warning("Order %s completed with state: %s"
-                             % (str(self.active_order),
-                                str(self.order_status)))
+
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -505,7 +530,30 @@ class DSBot(Agent):
 
     # TODO implement this part
     def received_completed_orders(self, orders, market_id=None):
-        pass
+        """
+        Process completed orders
+        :param orders:    List of traded orders
+        :param market_id: Market completed orders are in
+        :return:
+        """
+        self._line_break_inform(inspect.stack()[0][3],
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                get_stack_size() * STACK_DIF)
+
+        # self.inform([str(order) for order in orders])
+        # if len(orders) % 2:
+        #     self.error("Received completed_order_book have "
+        #                "odd number orders = %d" % len(orders))
+        #     self.stop = True
+        #     return
+
+        for order in orders[self.n_completed:]:
+            if order.mine:
+                if order.side == OrderSide.SELL:
+                    self.unit_values = sorted(self.unit_values)[order.units:]
+                elif order.side == OrderSide.BUY:
+                    self.unit_values += [order.price] * order.units
+        self.n_completed = len(orders)
 
     def received_holdings(self, holdings):
         """
@@ -922,7 +970,7 @@ class DSBot(Agent):
             self.send_order(self.active_order)
             self.order_status = OrderStatus.PENDING
 
-    def _order_profitable(self, order):
+    def _order_profitable(self, order, speculation=False):
         """
         Check if an order is profitable
         :param order: The order to check
@@ -931,11 +979,11 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
-        if order and isinstance(order, Order):
+        units = self.holdings["markets"][self._market_id]["units"]
+        if order and isinstance(order, Order) and speculation is False:
             # Buying at a lower price
             if order.side == OrderSide.BUY:
                 # units currently holding
-                units = self.holdings["markets"][self._market_id]["units"]
                 # After purchasing the networth is larger
                 net_current = units * DS_REWARD_CHARGE
                 net_after = (min(MAX_REWARD_UNIT, units + order.units) *
@@ -951,7 +999,29 @@ class DSBot(Agent):
             elif order.side == OrderSide.SELL:
                 self.inform("SellOrder: OrderPrice:%d, DSReward:%d"
                             % (order.price, DS_REWARD_CHARGE))
+                # TODO What if order.unit > unit?
                 return (order.price - DS_REWARD_CHARGE) * order.units
+        elif order and isinstance(order, Order) and speculation is True:
+            if order.side == OrderSide.BUY:
+                # When speculating, ignore MAX_REWARD
+                # Checking of max units should be handled in speculation
+                # order function
+                self.inform("SpeculationBuy: UnitMinValue=%d, "
+                            "CurrentTotalValue=%d, OrderPrice=%d, OrderUnit:%d"
+                            % (min(self.unit_values), sum(self.unit_values),
+                               order.price, order.units))
+                return (min(self.unit_values) - order.price) * order.units
+            elif order.side == OrderSide.SELL:
+                self.inform("SpeculationSell: UnitMinValue=%d, "
+                            "CurrentTotalValue=%d, OrderPrice=%d, OrderUnit:%d"
+                            % (min(self.unit_values), sum(self.unit_values),
+                               order.price, order.units))
+                sorted_unit_value = sorted(self.unit_values)
+                profit = 0
+                for price in sorted_unit_value[:order.units]:
+                    profit += order.price - price
+                # TODO What if order.unit > unit?
+                return profit
         return None
 
     def _market_maker_orders(self, other_order):
@@ -1058,7 +1128,25 @@ class DSBot(Agent):
             self._set_active_order(order)
 
     def _speculation_orders(self, best_bid, best_ask):
-        pass
+        ask_order = self._make_opposite_order(best_bid)
+        bid_order = self._make_opposite_order(best_ask)
+        if self._order_profitable(ask_order, speculation=True) > 0:
+            order = ask_order
+        elif self._order_profitable(bid_order, speculation=True) > 0:
+            order = bid_order
+        else:
+            order = None
+        if order is not None:
+            # sanity check
+            if order.side == OrderSide.BUY:
+                if self._role != Role.BUYER:
+                    self.error("Order %s and Role %s doesn't correspond"
+                               % (order.side, self._role))
+            elif OrderSide == OrderSide.SELL:
+                if self._role != Role.SELLER:
+                    self.error("Order %s and Role %s doesn't correspond"
+                               % (order.side, self._role))
+            self._set_active_order(order)
 
     def _line_break_inform(self, msg="", char="-",
                            length=BASE_LEN, width=BASE_LEN):
