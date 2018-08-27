@@ -1057,6 +1057,9 @@ class DSBot(Agent):
                                % (order.side, self._role))
             self._set_active_order(order)
 
+    def _speculation_orders(self, best_bid, best_ask):
+        pass
+
     def _line_break_inform(self, msg="", char="-",
                            length=BASE_LEN, width=BASE_LEN):
         """
