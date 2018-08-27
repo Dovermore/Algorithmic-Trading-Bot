@@ -251,12 +251,13 @@ class DSBot(Agent):
 
         elif self.order_status == OrderStatus.ACCEPTED:
             self.order_status = OrderStatus.INACTIVE
+            self.inform("Order %s was completed in market %s"
+                        % (str(self.active_order, str(self._market_id))))
+            self.active_order = None
         elif self.order_status != OrderStatus.INACTIVE:
             self.warning("Order %s completed with state: %s"
                          % (str(self.active_order),
                             str(self.order_status)))
-            self.inform("Order was completed in market " +
-                        str(self._market_id))
 
     @staticmethod
     def _order_weak_equal(order1, order2, cancel=False):
