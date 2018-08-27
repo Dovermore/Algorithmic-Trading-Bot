@@ -607,16 +607,24 @@ class DSBot(Agent):
                     self.warning("only one value found in %s"
                                  % str(order_availability))
                     return
-                can_trade = (False if False in order_availability.values()
-                             else True)
-                if order.side == OrderSide.SELL:
-                    information = (":unit_available" if
-                                   order_availability[":unit_available"]
-                                   else ":unit_unavailable")
+
+                if False in order_availability.values():
+                    can_trade = False
                 else:
-                    information = (":cash_available" if
-                                   order_availability[":cash_available"]
-                                   else ":cash_unavailable")
+                    if len(self.mine_orders) > 0:
+                        information = ":have_active_trade"
+                        can_trade = False
+                    else:
+                        information = ":have_no_active_trade"
+                        can_trade = True
+                if order.side == OrderSide.SELL:
+                    information += (":unit_available" if
+                                    order_availability[":unit_available"]
+                                    else ":unit_unavailable")
+                else:
+                    information += (":cash_available" if
+                                    order_availability[":cash_available"]
+                                    else ":cash_unavailable")
                 information = "status" + (":have_trade" if can_trade else
                                           ":no_trade") + information
                 self.inform(information)
