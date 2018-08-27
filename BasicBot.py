@@ -87,11 +87,11 @@ class BotType(Enum):
 
 # Status of current order if there is any
 class OrderStatus(Enum):
-    CANCEL = -1
-    INACTIVE = 0       # None/Completed/Rejected/Canceled
-    MADE = 1
-    PENDING = 2
-    ACCEPTED = 3
+    CANCEL = -1        # Cancelled, turns INACTIVE when accepted
+    INACTIVE = 0       # None/Completed/Rejected
+    MADE = 1           # Made, turns PENDING when sent
+    PENDING = 2        # Waiting to be accepted in the order book
+    ACCEPTED = 3       # Accepted in the order book
 
 
 class DSBot(Agent):
@@ -101,7 +101,10 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id,
                          name="DSBot")
 
+        # Set by User which type of Bot they want to be
+        # REACTIVE or MARKET MAKER
         self._bot_type = BotType.REACTIVE
+
         # TBD later
         self._role = None
 
@@ -111,12 +114,16 @@ class DSBot(Agent):
         self.active_order = None
         self.order_status = OrderStatus.INACTIVE
         self.order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
+        # --------------------------------------------------------------------
+
         # Tracking number of cycles that Market Maker Order has been
         # accepted but not traded
         self.mm_order_cycle = 0
 
+        # Stores any inactive order that has been rejected
         self.inactive_order = []
 
+        # Stores the market ID after running the bot
         self._market_id = None
 
         # Additional information, not particularly useful, but helps with
@@ -135,12 +142,13 @@ class DSBot(Agent):
         Set the role of bot based on cash holdings (positive: BUYER, otherwise
         seller)
         """
-        # self._line_break_inform(inspect.stack()[0][3],
-        #                         length=79 + 32 - get_stack_size() * 6)
+        # Reads the initial cash and units holdings of the Account and informs
         cash_holdings = self.holdings["cash"]
         unit_holdings = self.holdings["markets"][self._market_id]
         self.inform(cash_holdings)
         self.inform(unit_holdings)
+
+        # Positive initial cash holdings = BUYER, else: SELLER
         if cash_holdings["cash"] <= 0:
             self.inform("Bot is a seller")
             return Role.SELLER
@@ -158,9 +166,9 @@ class DSBot(Agent):
             self.inform(self._str_market(market_dict))
         self._market_id = list(self.markets.keys())[0]
         self._role = self._get_role()
-        self._role = Role.BUYER
 
     # ------ End of Constructor and initialisation methods -----
+    # ------ Start of Interaction with the Market/Order Book ---
 
     def _process_order_book(self, order_book, all_orders=False):
         """
@@ -176,7 +184,13 @@ class DSBot(Agent):
                  all sell_orders descending sorted
                  ) if all_orders is True
         """
+
         def key(order):
+            """
+            Extracts the price of order
+            :param order: Individual order from the order book
+            :return: Individual order price
+            """
             try:
                 return order.price
             except Exception as e:
@@ -188,19 +202,23 @@ class DSBot(Agent):
         # Get own order
         mine_orders = [order for order in order_book if order.mine is True]
 
-        # Sorted from most to least
+        # Sorted from most to least to determine Best Bid
         buy_orders = sorted([order for order in order_book
                              if order.side == OrderSide.BUY], key=key,
                             reverse=True)
         best_bid = buy_orders[0] if len(buy_orders) > 0 else None
 
-        # Sorted from lease to most
+        # Sorted from lease to most to determine Best Ask
         sell_orders = sorted([order for order in order_book
                               if order.side == OrderSide.SELL], key=key)
         best_ask = sell_orders[0] if len(sell_orders) > 0 else None
 
+        # Returns all_orders if needed
         if all_orders:
             return mine_orders, buy_orders, sell_orders
+
+        # Returns my orders that is in the order book alongside
+        # Best Bid and Best Ask
         return mine_orders, best_bid, best_ask
 
     # TODO two conditions hard to cope with
@@ -216,10 +234,19 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
+        # Expected number of my orders in the order book would be 1 when sent
         if len(mine_orders) == 1:
+
+            # If order status is not ACCEPTED, something is not right
             if self.order_status != OrderStatus.ACCEPTED:
+
+                # If it is CANCEL, cancel order was not accepted
                 if self.order_status == OrderStatus.CANCEL:
                     self.warning("Cancel order did not go through")
+
+                # Possibility of order_accepted did not come through,
+                # self update
                 else:
                     self.warning("Current Order: %s, with status %s, didn't "
                                  "get updated. now updating by order book!"
@@ -229,26 +256,39 @@ class DSBot(Agent):
                         self.inactive_order.append([self.active_order, None])
                     self.active_order = mine_orders[0]
                     self.order_status = OrderStatus.ACCEPTED
+
+            # According to the Type of Bot, check status and may need to cancel
             else:
                 self._check_accepted_order(mine_orders[0], best_bid, best_ask)
+
+        # More than one order from us appear in the order book, WRONG!!!
         elif len(mine_orders) > 1:
             self.warning("More than one active order!")
             mine_orders_sorted = sorted([[order, self._order_profitable(order)]
                                          for order in mine_orders],
                                         key=lambda x: x[1], reverse=True)
+
+            # TODO do we need to include this line into our actual submission?
             # The logic is not complete, this will only in rare cases produce
-            # effective solution, hte precise solution is more complex.
+            # effective solution, the precise solution is more complex.
+
+            # Report on the potential profits from these orders
             for order, profit in mine_orders_sorted:
                 self.inform("order: %s, with potential profit %d"
                             % (str(order), profit))
 
+            # Only keeps the one with the highest profit, cancel rest
             for order, profit in mine_orders_sorted[1:]:
                 cancel_order = self._make_cancel_order(order)
                 self.send_order(cancel_order)
 
+            # Update on the active order exist in the order book
             self.active_order = mine_orders_sorted[0][0]
             self.order_status = OrderStatus.ACCEPTED
 
+        # When there are ZERO order from us in the order book,
+        # Our order has been TAKEN by other people
+        # Update on our status so we can continue make orders
         elif self.order_status == OrderStatus.ACCEPTED:
             self.inform("Order %s was completed in market %s"
                         % (str(self.active_order), str(self._market_id)))
@@ -294,6 +334,8 @@ class DSBot(Agent):
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
         try:
+            # Check if our record of order is the same as the market,
+            # if not the same, record the order book's
             if self._order_weak_equal(self.active_order, order) is not True:
                 self.error("The accepted_order %s is different "
                            "from active_order %s, setting active_order"
@@ -301,15 +343,24 @@ class DSBot(Agent):
                            % (str(order), str(self.active_order)))
                 self.active_order = order
                 self.order_status = OrderStatus.ACCEPTED
+
+            # Order sent by REACTIVE BOT did not get accepted immidiately,
+            # need to be cancelled
             if self._bot_type == BotType.REACTIVE:
                 self.inform("Reactive order still in the Order Book")
                 return self._cancel_sent_order()
+
+            # Order sent by MARKET MAKER BOT has been in the order book for
+            # some time or market may have shifted, cancel order to make space
+            # for new order to be made
             elif self._bot_type == BotType.MARKET_MAKER:
                 other_order = (best_bid if self._role == Role.BUYER
                                else best_ask)
+
                 # The number of iterations exceeds magic number, cancel order
                 if self.mm_order_cycle >= MAGIC_MM_CANCEL_CYCLE:
                     return self._cancel_sent_order()
+
                 elif other_order.mine is not True:
                     order = self._mm_buyer_order(other_order)
                     # If the order found based on new booking is different,
@@ -318,7 +369,9 @@ class DSBot(Agent):
                     if (self._order_weak_equal(self.active_order, order)
                             is not True):
                         return self._cancel_sent_order()
+
                 return None
+
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
@@ -339,11 +392,14 @@ class DSBot(Agent):
             self.inform("Best ask:")
             self.inform(self.str_order(best_ask))
             pass
+
         # Both bid and ask exist
         if best_bid is not None and best_ask is not None:
             bid_ask_spread = best_ask.price - best_bid.price
             self.inform("Spread is: " + str(bid_ask_spread))
             return bid_ask_spread
+
+        # One of bid or ask dont exist in the order book
         else:
             self.inform("no bid ask spread available")
             if best_bid is None:
@@ -361,23 +417,30 @@ class DSBot(Agent):
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
 
-        # If there are currently no active orders
+        # If there are currently no active orders from us
         if self.order_status == OrderStatus.INACTIVE:
             self.inform("Currently no active orders")
+
+            # Bot is a MARKET MAKER BOT
             if self._bot_type == BotType.MARKET_MAKER:
                 other_order = (best_bid if self._role == Role.BUYER
                                else best_ask)
                 self._market_maker_orders(other_order)
+
+            # Bot is a REACTIVE BOT
             elif self._bot_type == BotType.REACTIVE:
                 other_order = (best_ask if self._role == Role.BUYER
                                else best_bid)
                 self._reactive_orders(other_order)
+
+            # Type of Bot was not set, STOP bot immediately
             else:
                 self.error("Found bot with non-MM-REACTIVE type")
                 self.stop = True
+
+            # Order has been made, need to be send to order book
             if self.order_status == OrderStatus.MADE:
                 self._send_update_active_order()
-                pass
 
     def received_order_book(self, order_book, market_id):
         """
@@ -413,10 +476,12 @@ class DSBot(Agent):
             self._take_action(best_ask, best_bid)
             self.inform("Current order status is: " + str(self.order_status))
             if self._bot_type == BotType.MARKET_MAKER:
+
+                if self.order_status == OrderStatus.INACTIVE:
+                    self.mm_order_cycle = 0
+
                 self.inform("Current mm_order_cycle is " +
                             str(self.mm_order_cycle))
-            # Create bid-ask spread and check for depth of order
-            # Depending on role, choose to buy or sell at relevant price
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
@@ -440,6 +505,7 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         try:
             cash_holdings = holdings["cash"]
             self.inform("Total cash: " + str(cash_holdings["cash"]) +
