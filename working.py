@@ -15,7 +15,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086":
 
 # ------ Add a variable called DS_REWARD_CHARGE -----
 # Dependent on actual task
-DS_REWARD_CHARGE = 500
+DS_REWARD_CHARGE = 550
 
 # The unit to place order
 ORDER_UNIT = 1
@@ -291,6 +291,7 @@ class DSBot(Agent):
             self.order_status = OrderStatus["INACTIVE"]
             self.inform("Order was completed in market " +
                         str(self._market_id))
+            self.active_order = None
 
         # This usually happens for REACTIVE BOT
         # where orders is expected to trade straight away
@@ -806,5 +807,5 @@ if __name__ == "__main__":
 
     MARKETPLACE_ID = 352  # replace this with the marketplace id
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID)
     ds_bot.run()
