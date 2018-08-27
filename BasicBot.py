@@ -823,6 +823,11 @@ class DSBot(Agent):
         return None
 
     def _make_cancel_order(self, order):
+        """
+        make a cancel order based on given order
+        :param order: The order to mirror a cancel order with
+        :return:      The mirrored cancel_order correspond to given order
+        """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
