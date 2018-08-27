@@ -101,7 +101,7 @@ class DSBot(Agent):
         super().__init__(account, email, password, marketplace_id,
                          name="DSBot")
 
-        self._bot_type = BotType.MARKET_MAKER
+        self._bot_type = BotType.REACTIVE
         # TBD later
         self._role = None
 
@@ -1037,5 +1037,5 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 260
     MARKETPLACE_ID2 = 352
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID1)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID2)
     ds_bot.run()
