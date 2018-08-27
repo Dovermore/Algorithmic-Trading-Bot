@@ -1198,9 +1198,12 @@ if __name__ == "__main__":
     FM_EMAIL_CALVIN = "z.huang51@student.unimelb.edu.au"
     FM_PASSWORD_CALVIN = "908525"
 
+    FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
+    FM_PASSWORD_JD = "888086"
+
     MARKETPLACE_ID1 = 260
     MARKETPLACE_ID2 = 352
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN,
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD,
                    MARKETPLACE_ID2)
     ds_bot.run()
