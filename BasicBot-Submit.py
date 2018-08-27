@@ -17,19 +17,6 @@ import inspect
 INIT_STACK = 12
 STACK_DIF = 10
 BASE_LEN = 79
-
-
-# Used for visualisation of function call as stacks, that it's easier to
-# trace through functions
-def get_stack_size():
-    """
-    Get stack size for caller's frame.
-    %timeit len(inspect.stack())
-    8.86 ms ± 42.5 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
-    %timeit get_stack_size()
-    4.17 µs ± 11.5 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-    """
-    return len(inspect.stack())
 # </For debugging only>
 
 
@@ -65,8 +52,6 @@ ORDER_AVAILABILITY_TEMPLATE = {
     "unit_available": None,     # Is unit enough to place this order
 }
 SEPARATION = "-"  # for most string separation
-TIME_FORMATTER = ("%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
-                  SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S")
 
 
 # Enum for the roles of the bot
@@ -188,7 +173,7 @@ class DSBot(Agent):
 
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         # Get own order
         mine_orders = [order for order in order_book if order.mine is True]
 
@@ -225,7 +210,7 @@ class DSBot(Agent):
         try:
             self._line_break_inform(inspect.stack()[0][3],
                                     length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                    get_stack_size() * STACK_DIF)
+                                    self.get_stack_size() * STACK_DIF)
 
             # Expected number of my orders in the order book would be 1 when
             # sent
@@ -330,7 +315,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         try:
             # Check if our record of order is the same as the market,
             # if not the same, record the order book's
@@ -384,7 +369,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         if show:
             self.inform("Best bid:")
             self.inform(self.str_order(best_bid))
@@ -415,7 +400,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         # If there are currently no active orders from us
         if self.order_status == OrderStatus.INACTIVE:
@@ -452,7 +437,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         self.inform("received order book from %d" % market_id)
 
         try:
@@ -503,7 +488,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         try:
             # Informs on current cash holdings and potential errors (if exists)
@@ -552,7 +537,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         self.inform("Order was accepted in market " + str(self._market_id))
 
         # Updates order and order status from bot
@@ -604,7 +589,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         self.inform("Order was rejected in market " + str(self._market_id))
         self.warning("Rejection info: %s" % str(info))
 
@@ -659,7 +644,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         try:
             # Process best BUY, SELL order --> collect information -->
             # If valid order --> print
@@ -724,7 +709,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         # First check order status before canceling
         # (can only cancel accepted)
         if self.order_status == OrderStatus.ACCEPTED:
@@ -759,7 +744,9 @@ class DSBot(Agent):
         ref += str(market_id) + SEPARATION
         ref += str(order_price) + SEPARATION
         ref += str(order_unit) + SEPARATION
-        ref += time.strftime(TIME_FORMATTER, time.localtime())
+        ref += time.strftime(("%y" + SEPARATION + "%m" + SEPARATION + "%d" +
+                              SEPARATION + "%H" + SEPARATION + "%M" +
+                              SEPARATION + "%S"), time.localtime())
         ref += ORDER_TYPE_TO_CHAR[order_type]
         return ref
 
@@ -775,7 +762,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         ref = self._make_order_ref(self._market_id, order_price, order_side)
 
@@ -793,7 +780,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         if other_order and isinstance(other_order, Order):
             side = (OrderSide.SELL if other_order.side == OrderSide.BUY
@@ -810,7 +797,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         # If order exists, cancel it
         if order is not None and isinstance(order, Order):
@@ -832,7 +819,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         if self.order_status not in [OrderStatus.INACTIVE,
                                      OrderStatus.CANCEL]:
@@ -867,7 +854,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
         if order and isinstance(order, Order):
@@ -911,7 +898,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         # Record whether the order is valid
         self.order_availability = self._verify_order(self.active_order)
@@ -934,7 +921,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         if order and isinstance(order, Order):
             # Buying at a lower price
@@ -974,7 +961,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
 
         # Record bot role
         if self._role == Role.BUYER:
@@ -999,7 +986,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         tick = self.markets[self._market_id]["tick"]
         minimum = self.markets[self._market_id]["minimum"]
         order_side = OrderSide.BUY
@@ -1035,7 +1022,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         tick = self.markets[self._market_id]["tick"]
         maximum = self.markets[self._market_id]["maximum"]
         order_side = OrderSide.SELL
@@ -1070,7 +1057,7 @@ class DSBot(Agent):
         """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                get_stack_size() * STACK_DIF)
+                                self.get_stack_size() * STACK_DIF)
         self.inform("other_order- %s" % str(other_order))
 
         # Make the opposite order
@@ -1175,6 +1162,19 @@ class DSBot(Agent):
                         "      Order is None")
         except Exception as e:
             return e
+
+    # Used for visualisation of function call as stacks, that it's easier to
+    # trace through functions
+    @staticmethod
+    def get_stack_size():
+        """
+        Get stack size for caller's frame.
+        %timeit len(inspect.stack())
+        8.86 ms ± 42.5 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+        %timeit get_stack_size()
+        4.17 µs ± 11.5 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+        """
+        return len(inspect.stack())
 
     # Archived No longer need to be used
     # def _warning_inform(self, msg):
