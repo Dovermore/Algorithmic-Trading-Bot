@@ -596,8 +596,7 @@ class DSBot(Agent):
                                  % (str(order), self.order_status))
                 self._deactivate_order(order)
             else:
-                # TODO should be cancelled order?
-                self.error("rejected_order %s is different from"
+                self.error("cancelled_order %s is different from"
                            "active_order %s"
                            % (str(order), str(self.active_order)))
                 new_order = copy.copy(order)
