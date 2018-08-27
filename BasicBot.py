@@ -10,6 +10,7 @@ import time
 # <For debugging only>
 import inspect
 import sys
+import os
 
 
 INIT_STACK = 12
@@ -475,15 +476,11 @@ class DSBot(Agent):
 
             self._take_action(best_ask, best_bid)
             self.inform("Current order status is: " + str(self.order_status))
-            if self._bot_type == BotType.MARKET_MAKER:
-
-                if self.order_status == OrderStatus.INACTIVE:
-                    self.mm_order_cycle = 0
-
-                self.inform("Current mm_order_cycle is " +
-                            str(self.mm_order_cycle))
         except Exception as e:
-            self._exception_inform(e, inspect.stack()[0][3])
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+            self._exception_inform(e, inspect.stack()[0][3], addition=addition)
 
     def received_marketplace_info(self, marketplace_info):
         session_id = marketplace_info["session_id"]
@@ -540,7 +537,10 @@ class DSBot(Agent):
                                     str(self.order_status),
                                     str_mine_orders))
         except Exception as e:
-            self._exception_inform(e, inspect.stack()[0][3])
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+            self._exception_inform(e, inspect.stack()[0][3], addition=addition)
 
     def order_accepted(self, order):
         """
@@ -588,7 +588,11 @@ class DSBot(Agent):
                 self.warning("Order %s is of type %s"
                              % (str(order), str(order.type)))
             except Exception as e:
-                self._exception_inform(e, inspect.stack()[0][3])
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+                self._exception_inform(e, inspect.stack()[0][3],
+                                       addition=addition)
 
     def order_rejected(self, info, order):
         self._line_break_inform(inspect.stack()[0][3],
@@ -635,7 +639,11 @@ class DSBot(Agent):
                 self.warning("Order %s is of type %s"
                              % (str(order), str(order.type)))
             except Exception as e:
-                self._exception_inform(e, inspect.stack()[0][3])
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+                self._exception_inform(e, inspect.stack()[0][3],
+                                       addition=addition)
 
     def _print_trade_opportunity(self, other_order):
         """
@@ -698,7 +706,10 @@ class DSBot(Agent):
                 self.warning(str(type(other_order)) +
                              "is not Order Object")
         except Exception as e:
-            self._exception_inform(e, inspect.stack()[0][3])
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            addition = str(exc_type) + str(fname) + str(exc_tb.tb_lineno)
+            self._exception_inform(e, inspect.stack()[0][3], addition=addition)
 
     def _cancel_sent_order(self):
         """
@@ -715,7 +726,7 @@ class DSBot(Agent):
             self.inform("Cancelling order %s" % str(self.active_order))
             cancel_order = self._make_cancel_order(self.active_order)
             self.send_order(cancel_order)
-            # Reset the cycle
+            # Reset the cycle (Not necessary but helps)
             self.mm_order_cycle = 0
             self.order_status = OrderStatus.CANCEL
             return cancel_order
@@ -1038,15 +1049,17 @@ class DSBot(Agent):
         self.inform(" " * space_left + "".join([char] * char_left) +
                     msg + "".join([char] * char_right) + " " * space_right)
 
-    def _exception_inform(self, msg, fn_name):
+    def _exception_inform(self, msg, fn_name, addition=""):
         """
         Show the exception message with function name
         :param msg: exception to inform
         """
         assert isinstance(msg, Exception), ("msg %s is not an exception"
                                             % str(msg))
+        if len(addition) > 0:
+            addition = "addition, " + addition
         self.warning("^^^Exception in function %s^^^:"
-                     "msg: %s" % (fn_name, str(msg))
+                     "msg: %s%s" % (fn_name, str(msg), addition)
                      )
 
     @staticmethod
