@@ -252,7 +252,7 @@ class DSBot(Agent):
         elif self.order_status == OrderStatus.ACCEPTED:
             self.order_status = OrderStatus.INACTIVE
             self.inform("Order %s was completed in market %s"
-                        % (str(self.active_order, str(self._market_id))))
+                        % (str(self.active_order), str(self._market_id)))
             self.active_order = None
         elif self.order_status != OrderStatus.INACTIVE:
             self.warning("Order %s completed with state: %s"
@@ -775,7 +775,7 @@ class DSBot(Agent):
             self.warning(str(type(order)) +
                          "is not Order object")
 
-        self.inform("Order: %s, availability %s"
+        self.inform("order- %s, availability- %s"
                     % (order, str(order_availability)))
         return order_availability
 
@@ -815,7 +815,7 @@ class DSBot(Agent):
                 net_current = units * DS_REWARD_CHARGE
                 net_after = (min(MAX_REWARD_UNIT, units + order.units) *
                              DS_REWARD_CHARGE - order.price * order.units)
-                self.inform("BuyOrder: NetCurrent:%dx%d=%d, "
+                self.inform("BuyOrder: NetCurrent=%dx%d=%d, "
                             "NetAfter=min(%d, %d+%d)x%d-%dx%d=%d"
                             % (units, DS_REWARD_CHARGE, net_current,
                                MAX_REWARD_UNIT, units, order.units,
@@ -913,6 +913,7 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+        self.inform("other_order- %s" % str(other_order))
 
         # Make the opposite order
         order = self._make_opposite_order(other_order)
