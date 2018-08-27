@@ -503,7 +503,6 @@ class DSBot(Agent):
         else:
             print("Marketplace is now closed.")
 
-    # TODO implement this part
     def received_completed_orders(self, orders, market_id=None):
         pass
 
@@ -618,6 +617,11 @@ class DSBot(Agent):
                                        addition=addition)
 
     def order_rejected(self, info, order):
+        """
+        Process rejected order and deal with why rejection occurred
+        :param info: rejection information
+        :param order: rejected order
+        """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
@@ -705,6 +709,7 @@ class DSBot(Agent):
                                  % str(order_availability))
                     return
 
+                # Records whether we have the necessary holdings to trade
                 can_trade = True
 
                 if False in order_availability.values():
@@ -740,8 +745,8 @@ class DSBot(Agent):
 
     def _cancel_sent_order(self):
         """
-        High level interface for cancelling current active_order who must be
-        PENDING or ACCEPTED
+        High level interface for cancelling current active_order which must
+        be ACCEPTED
         :return: the cancel_order created
         """
         self._line_break_inform(inspect.stack()[0][3],
@@ -821,11 +826,11 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+        # If order exists, cancel it
         if order is not None and isinstance(order, Order):
             if order.type == OrderType.CANCEL:
                 self.warning("Making CANCEL order for CANCEL order %s"
                              % str(order))
-            # To cancel an order, must have it's id, so use copy
             cancel_order = copy.copy(order)
             cancel_order.type = OrderType.CANCEL
             return cancel_order
@@ -878,7 +883,7 @@ class DSBot(Agent):
         if order and isinstance(order, Order):
             # BUY side
             if order.side == OrderSide.BUY:
-                # Not enough mana
+                # Check if there is enough cash for order
                 if (order.price * order.units >
                         self.holdings["cash"]["available_cash"]):
                     order_availability["cash_available"] = False
@@ -886,6 +891,7 @@ class DSBot(Agent):
                     order_availability["cash_available"] = True
             # SELL side
             elif order.side == OrderSide.SELL:
+                # Check if there are enough units for order
                 if (order.units > self.holdings["markets"]
                         [self._market_id]["available_units"]):
                     order_availability["unit_available"] = False
@@ -911,11 +917,13 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+        # Record whether the order is valid
         self.order_availability = self._verify_order(self.active_order)
         if self.order_status != OrderStatus.MADE:
             self.warning("Active order with order status %s is sent"
                          % str(self.order_status))
 
+        # Check if we have the holdings to send the order
         if (self.order_availability["cash_available"] is True or
                 self.order_availability["unit_available"] is True):
             self.inform("Sending order")
@@ -934,10 +942,11 @@ class DSBot(Agent):
         if order and isinstance(order, Order):
             # Buying at a lower price
             if order.side == OrderSide.BUY:
-                # units currently holding
+                # units currently available
                 units = self.holdings["markets"][self._market_id]["units"]
-                # After purchasing the networth is larger
+                # Current net worth
                 net_current = units * DS_REWARD_CHARGE
+                # Net worth after purchase
                 net_after = (min(MAX_REWARD_UNIT, units + order.units) *
                              DS_REWARD_CHARGE - order.price * order.units)
                 self.inform("BuyOrder: NetCurrent=%dx%d=%d, "
@@ -964,10 +973,9 @@ class DSBot(Agent):
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
 
-        # Bot is a buyer
+        # Record bot role
         if self._role == Role.BUYER:
             order = self._mm_buyer_order(other_order)
-        # Bot is a seller
         elif self._role == Role.SELLER:
             order = self._mm_seller_order(other_order)
         else:
@@ -979,16 +987,23 @@ class DSBot(Agent):
             self._set_active_order(order)
 
     def _mm_buyer_order(self, other_order):
+        """
+        Create market maker buy orders
+        :param other_order: best order on the buy side
+        :return: market maker order
+        """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
         tick = self.markets[self._market_id]["tick"]
         minimum = self.markets[self._market_id]["minimum"]
-        # Bot is a buyer
         order_side = OrderSide.BUY
+
+        # There are currently no orders on the buy side
         if other_order is None:
             order_price = ((DS_REWARD_CHARGE - minimum) //
                            tick // 2 * tick) + minimum
+        # The best order on the buy side is ours
         elif other_order.mine is True:
             return None
         # Check if we can set a bid which beats the current best bid
@@ -1005,15 +1020,22 @@ class DSBot(Agent):
         return self._make_order(order_price, order_side)
 
     def _mm_seller_order(self, other_order):
+        """
+        Create market maker sell orders
+        :param other_order: Current best order on sell side
+        :return: market maker order
+        """
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
         tick = self.markets[self._market_id]["tick"]
         maximum = self.markets[self._market_id]["maximum"]
         order_side = OrderSide.SELL
+        # There are no orders on the sell side
         if other_order is None:
             order_price = maximum - ((maximum - DS_REWARD_CHARGE)
                                      // tick // 2 * tick)
+        # The best order on the buy side is ours
         elif other_order.mine is True:
             return None
         # Check if we can set an ask which beats the current best ask
