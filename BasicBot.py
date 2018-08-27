@@ -474,6 +474,8 @@ class DSBot(Agent):
             # Below meant for Market Maker
             if self.order_status == OrderStatus.ACCEPTED:
                 self.mm_order_cycle += 1
+                if self._bot_type == BotType.MARKET_MAKER:
+                    self.inform("mm_order_cycle = %d" % self.mm_order_cycle)
 
             mine_orders, best_bid, best_ask = \
                 self._process_order_book(order_book)
@@ -880,7 +882,7 @@ class DSBot(Agent):
         """
         if self.active_order is None:
             return
-        if self.order_status != OrderStatus.ACCEPTED:
+        if self.order_status not in [OrderStatus.ACCEPTED, OrderStatus.CANCEL]:
             self.warning("Deactivated Order %s with state %s"
                          % (str(self.active_order), str(self.order_status)))
 
@@ -1231,5 +1233,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 260
     MARKETPLACE_ID2 = 352
 
-    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN, MARKETPLACE_ID2)
+    ds_bot = DSBot(FM_ACCOUNT, FM_EMAIL_CALVIN, FM_PASSWORD_CALVIN,
+                   MARKETPLACE_ID2)
     ds_bot.run()
