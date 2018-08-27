@@ -15,7 +15,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price", "888086":
 
 # ------ Add a variable called DS_REWARD_CHARGE -----
 # Dependent on actual task
-DS_REWARD_CHARGE = 550
+DS_REWARD_CHARGE = 500
 
 # The unit to place order
 ORDER_UNIT = 1
