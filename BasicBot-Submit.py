@@ -14,9 +14,8 @@ import time
 # <For debugging only>
 import inspect
 
-
 INIT_STACK = 12
-STACK_DIF = 5 * 2
+STACK_DIF = 10
 BASE_LEN = 79
 
 
@@ -66,8 +65,8 @@ ORDER_AVAILABILITY_TEMPLATE = {
     "unit_available": None,     # Is unit enough to place this order
 }
 SEPARATION = "-"  # for most string separation
-TIME_FORMATTER = "%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
-                 SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S"
+TIME_FORMATTER = ("%y" + SEPARATION + "%m" + SEPARATION + "%d" + \
+                  SEPARATION + "%H" + SEPARATION + "%M" + SEPARATION + "%S")
 
 
 # Enum for the roles of the bot
