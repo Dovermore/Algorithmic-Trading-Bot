@@ -755,10 +755,13 @@ class DSBot(Agent):
         # (can only cancel accepted)
         if self.order_status == OrderStatus.ACCEPTED:
             self.inform("Cancelling order %s" % str(self.active_order))
+
             cancel_order = self._make_cancel_order(self.active_order)
             self.send_order(cancel_order)
+
             # Reset the cycle (Not necessary but helps)
             self.mm_order_cycle = 0
+
             self.order_status = OrderStatus.CANCEL
             return cancel_order
         else:
@@ -799,7 +802,9 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         ref = self._make_order_ref(self._market_id, order_price, order_side)
+
         order = Order(order_price, order_unit, order_type,
                       order_side, self._market_id, ref=ref)
         self.inform("order- %s" % str(order))
@@ -815,10 +820,12 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         if other_order and isinstance(other_order, Order):
             side = (OrderSide.SELL if other_order.side == OrderSide.BUY
                     else OrderSide.BUY)
             return self._make_order(other_order.price, side, other_order.units)
+
         return None
 
     def _make_cancel_order(self, order):
@@ -830,14 +837,17 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         # If order exists, cancel it
         if order is not None and isinstance(order, Order):
             if order.type == OrderType.CANCEL:
                 self.warning("Making CANCEL order for CANCEL order %s"
                              % str(order))
+
             cancel_order = copy.copy(order)
             cancel_order.type = OrderType.CANCEL
             return cancel_order
+
         else:
             return None
 
@@ -849,10 +859,12 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         if self.order_status not in [OrderStatus.INACTIVE,
                                      OrderStatus.CANCEL]:
             self.error("Old order is still in %s state" %
                        str(self.order_status))
+
         self.active_order = order
         self.order_status = OrderStatus.MADE
 
@@ -893,6 +905,7 @@ class DSBot(Agent):
                     order_availability["cash_available"] = False
                 else:
                     order_availability["cash_available"] = True
+
             # SELL side
             elif order.side == OrderSide.SELL:
                 # Check if there are enough units for order
@@ -901,17 +914,21 @@ class DSBot(Agent):
                     order_availability["unit_available"] = False
                 else:
                     order_availability["unit_available"] = True
+
             else:
                 self.error("Found order with non-BUY-SELL type")
                 self.stop = True
+
         elif order is None:
             self.inform("No order to verify.")
+
         else:
             self.warning(str(type(order)) +
                          "is not Order object")
 
         self.inform("order- %s, availability- %s"
                     % (order, str(order_availability)))
+
         return order_availability
 
     def _send_update_active_order(self):
@@ -921,6 +938,7 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         # Record whether the order is valid
         self.order_availability = self._verify_order(self.active_order)
         if self.order_status != OrderStatus.MADE:
@@ -943,23 +961,30 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
+
         if order and isinstance(order, Order):
             # Buying at a lower price
             if order.side == OrderSide.BUY:
+
                 # units currently available
                 units = self.holdings["markets"][self._market_id]["units"]
+
                 # Current net worth
                 net_current = units * DS_REWARD_CHARGE
+
                 # Net worth after purchase
                 net_after = (min(MAX_REWARD_UNIT, units + order.units) *
                              DS_REWARD_CHARGE - order.price * order.units)
+
                 self.inform("BuyOrder: NetCurrent=%dx%d=%d, "
                             "NetAfter=min(%d, %d+%d)x%d-%dx%d=%d"
                             % (units, DS_REWARD_CHARGE, net_current,
                                MAX_REWARD_UNIT, units, order.units,
                                DS_REWARD_CHARGE, order.price, order.units,
                                net_after))
+
                 return net_after - net_current
+
             # Selling at a higher price
             elif order.side == OrderSide.SELL:
                 self.inform("SellOrder: OrderPrice:%d, DSReward:%d"
@@ -980,8 +1005,10 @@ class DSBot(Agent):
         # Record bot role
         if self._role == Role.BUYER:
             order = self._mm_buyer_order(other_order)
+
         elif self._role == Role.SELLER:
             order = self._mm_seller_order(other_order)
+
         else:
             self.error("Found order with non-BUY-SELL type")
             self.stop = True
@@ -1010,13 +1037,16 @@ class DSBot(Agent):
         # The best order on the buy side is ours
         elif other_order.mine is True:
             return None
+
         # Check if we can set a bid which beats the current best bid
         elif other_order.price + tick < DS_REWARD_CHARGE:
             order_price = other_order.price + tick
+
         # Check if current best bid is profitable,
         # but increasing the bid makes it unprofitable
         elif other_order.price < DS_REWARD_CHARGE:
             order_price = other_order.price
+
         # Best buy price is 1 tick less than DS_REWARD_CHARGE
         else:
             order_price = ((DS_REWARD_CHARGE - minimum) //
@@ -1042,13 +1072,16 @@ class DSBot(Agent):
         # The best order on the buy side is ours
         elif other_order.mine is True:
             return None
+
         # Check if we can set an ask which beats the current best ask
         elif other_order.price - tick > DS_REWARD_CHARGE:
             order_price = other_order.price - tick
+
         # Check if current best ask is profitable, but
         # decreasing the ask makes it unprofitable
         elif other_order.price > DS_REWARD_CHARGE:
             order_price = other_order.price
+
         # Best ask price is 1 tick more than DS_REWARD_CHARGE
         else:
             order_price = maximum - ((maximum - DS_REWARD_CHARGE)
@@ -1072,15 +1105,20 @@ class DSBot(Agent):
         # If the opposite order exists and is profitable then set it to
         # be active order
         if order is not None and self._order_profitable(order) > 0:
+
             # sanity check
             if order.side == OrderSide.BUY:
+
                 if self._role != Role.BUYER:
                     self.error("Order %s and Role %s doesn't correspond"
                                % (order.side, self._role))
+
             elif OrderSide == OrderSide.SELL:
+
                 if self._role != Role.SELLER:
                     self.error("Order %s and Role %s doesn't correspond"
                                % (order.side, self._role))
+
             self._set_active_order(order)
 
     def _line_break_inform(self, msg="", char="-",
