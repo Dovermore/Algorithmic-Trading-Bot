@@ -506,42 +506,7 @@ class DSBot(Agent):
         self._line_break_inform(inspect.stack()[0][3],
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 get_stack_size() * STACK_DIF)
-<<<<<<< HEAD
-        cash_holdings = holdings["cash"]
-        self.inform("Total cash: " + str(cash_holdings["cash"]) +
-                    " available cash: " + str(cash_holdings["available_cash"]))
-        if cash_holdings["cash"] > cash_holdings["available_cash"]:
-            self.inform("Total cash %d != available cash")
-            if self.order_status != OrderStatus.ACCEPTED:
-                str_mine_orders = ""
-                for mine_order in self.mine_orders:
-                    str_mine_orders += str(mine_order) + " ;; "
-                self.warning("Order %s status is %s while cash is not "
-                             "consistent. And mine_orders has %s"
-                             % (str(self.active_order),
-                                str(self.order_status),
-                                str_mine_orders))
 
-        unit_holdings = holdings["markets"][self._market_id]
-        # for market_id, market_holding in holdings["markets"].items():
-        #     self.inform("Market ID " + str(market_id) + ": total units: " +
-        #                 str(market_holding["units"]) + ", available units: "+
-        #                 str(market_holding["available_units"]))
-        self.inform("Market ID " + str(self._market_id) + ": total units: " +
-                    str(unit_holdings["units"]) + ", available units: " +
-                    str(unit_holdings["available_units"]))
-        if unit_holdings["units"] > unit_holdings["available_units"]:
-            self.inform("Total units %d != available units")
-            if self.order_status != OrderStatus.ACCEPTED:
-                str_mine_orders = ""
-                for mine_order in self.mine_orders:
-                    str_mine_orders += str(mine_order) + " ;; "
-                self.warning("Order %s status is %s while unit is not "
-                             "consistent. And mine_orders has %s "
-                             % (str(self.active_order),
-                                str(self.order_status),
-                                str_mine_orders))
-=======
         try:
             cash_holdings = holdings["cash"]
             self.inform("Total cash: " + str(cash_holdings["cash"]) +
@@ -577,7 +542,6 @@ class DSBot(Agent):
                                     str_mine_orders))
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
->>>>>>> 340df4eb50ca105e3ddedff7894b2f18e4d27b96
 
     def order_accepted(self, order):
         """
