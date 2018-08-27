@@ -250,10 +250,9 @@ class DSBot(Agent):
             self.order_status = OrderStatus.ACCEPTED
 
         elif self.order_status == OrderStatus.ACCEPTED:
-            self.order_status = OrderStatus.INACTIVE
             self.inform("Order %s was completed in market %s"
                         % (str(self.active_order), str(self._market_id)))
-            self.active_order = None
+            self._deactivate_order()
         elif self.order_status != OrderStatus.INACTIVE:
             self.warning("Order %s completed with state: %s"
                          % (str(self.active_order),
@@ -510,9 +509,7 @@ class DSBot(Agent):
                 if not self.order_status == OrderStatus.CANCEL:
                     self.warning("Order %s canceled with state: %s"
                                  % (str(order), self.order_status))
-                self.inactive_order.append([self.active_order, order])
-                self.active_order = None
-                self.order_status = OrderStatus.INACTIVE
+                self._deactivate_order(order)
             else:
                 self.error("rejected_order %s is different from"
                            "active_order %s"
@@ -547,9 +544,7 @@ class DSBot(Agent):
                              "active_order %s in state: %s"
                              % (str(order), str(self.active_order),
                                 str(self.order_status)))
-            self.inactive_order.append([self.active_order, None])
-            self.active_order = None
-            self.order_status = OrderStatus.INACTIVE
+            self._deactivate_order()
         elif order.type == OrderType.CANCEL:
             # Different order
             if not self._order_weak_equal(self.active_order, order,
@@ -609,22 +604,24 @@ class DSBot(Agent):
                                  % str(order_availability))
                     return
 
+                can_trade = True
+
                 if False in order_availability.values():
                     can_trade = False
+
+                if len(self.mine_orders) > 0:
+                    information = ":have_active_trade"
+                    can_trade = False
                 else:
-                    if len(self.mine_orders) > 0:
-                        information = ":have_active_trade"
-                        can_trade = False
-                    else:
-                        information = ":have_no_active_trade"
-                        can_trade = True
+                    information = ":have_no_active_trade"
+
                 if order.side == OrderSide.SELL:
                     information += (":unit_available" if
-                                    order_availability[":unit_available"]
+                                    order_availability["unit_available"]
                                     else ":unit_unavailable")
                 else:
                     information += (":cash_available" if
-                                    order_availability[":cash_available"]
+                                    order_availability["cash_available"]
                                     else ":cash_unavailable")
                 information = "status" + (":have_trade" if can_trade else
                                           ":no_trade") + information
@@ -746,7 +743,21 @@ class DSBot(Agent):
         self.active_order = order
         self.order_status = OrderStatus.MADE
 
-    # Tweaking the function a bit to incorporate to other functions
+    def _deactivate_order(self, cancel_order=None):
+        """
+        Deactivate the active order and add it (and cancel_order) to
+        inactive_order list. Reset the mm_order cycle
+        :param cancel_order: Possible pair of cancel order
+        """
+        if self.active_order is None:
+            return
+        if self.order_status != OrderStatus.ACCEPTED:
+            self.warning("Deactivated Order %s with state %s"
+                         % (str(self.active_order), str(self.order_status)))
+
+        self.inactive_order.append([self.active_order, cancel_order])
+        self._deactivate_order()
+
     def _verify_order(self, order):
         """
         Verify the given order with own holdings and return a dictionary
