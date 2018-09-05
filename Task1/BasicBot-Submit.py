@@ -548,15 +548,13 @@ class DSBot(Agent):
                                  % (str(self.active_order),
                                     str(self.order_status)))
                 # the new order have id for canceling
-                self.active_order = order
-                self.order_status = OrderStatus.ACCEPTED
             else:
                 self.error("accepted_order %s is different from"
                            "active_order %s, changing to new_order"
                            % (str(order), str(self.active_order)))
                 self.inactive_order.append([self.active_order, None])
-                self.active_order = order
-                self.order_status = OrderStatus.ACCEPTED
+            self.active_order = order
+            self.order_status = OrderStatus.ACCEPTED
 
         # Cancel order accepted, Updates order and order status
         elif order.type == OrderType.CANCEL:
@@ -928,7 +926,7 @@ class DSBot(Agent):
             if order.side == OrderSide.BUY:
 
                 # units currently available
-                units = self.holdings["markets"][self._market_id]["units"]
+                units = self.holdings["markets"][self._market_id]["available_units"]
 
                 # Current net worth
                 net_current = units * DS_REWARD_CHARGE
