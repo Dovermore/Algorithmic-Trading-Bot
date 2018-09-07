@@ -1,12 +1,18 @@
 """
-This is a template bot for  the CAPM Task.
+Project Name: Induced Demand-Supply
+Subject Code and Name: FNCE30010 Algorithmic Trading
+Student Name (ID): Zhuoqun Huang (908525)
+                   Nikolai Price (836389)
+                   Lee Jun Da    (888086)
 """
+
 
 from fmclient import Agent
 from fmclient import Order, OrderSide, OrderType
 
 # Group details
-GROUP_MEMBERS = {"1234": "Name 1", "4567": "Name 2"}
+GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price",
+                 "888086": "Lee Jun Da"}
 
 
 class CAPMBot(Agent):
