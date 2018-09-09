@@ -81,9 +81,15 @@ class CAPMBot(Agent):
 
 if __name__ == "__main__":
     FM_ACCOUNT = "bullish-delight"
-    FM_EMAIL = "<email>"
-    FM_PASSWORD = "<password>"
-    MARKETPLACE_ID = -1  # replace this with the marketplace id
 
-    bot = CAPMBot(FM_ACCOUNT, FM_EMAIL, FM_PASSWORD, MARKETPLACE_ID)
+    FM_EMAIL_CALVIN = "z.huang51@student.unimelb.edu.au"
+    FM_PASSWORD_CALVIN = "908525"
+
+    FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
+    FM_PASSWORD_JD = "888086"
+
+    MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
+    MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
+
+    bot = CAPMBot(FM_ACCOUNT, FM_EMAIL_JD, FM_PASSWORD_JD, MARKETPLACE_ID1)
     bot.run()
