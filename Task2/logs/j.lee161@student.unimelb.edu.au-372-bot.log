@@ -179,3 +179,158 @@
 [2018-09-10 18:39:06,013:      agent.CAPM Bot]:     INFO - received order book from 713
 [2018-09-10 18:39:06,019:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
 [2018-09-10 18:39:06,019:      agent.CAPM Bot]:     INFO - received order book from 715
+
+=============================== Log Started [2018-09-10 22:38:00 AUS Eastern Standard Time] ===============================
+[2018-09-10 22:38:02,140:      agent.CAPM Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-10 22:38:03,781:      agent.CAPM Bot]:     INFO - Received initial marketplace information.
+[2018-09-10 22:38:03,781:      agent.CAPM Bot]:     INFO - Initialised, examining markets available
+[2018-09-10 22:38:03,781:      agent.CAPM Bot]:     INFO - Market: 713
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : Stock A
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+
+=============================== Log Started [2018-09-10 22:39:17 AUS Eastern Standard Time] ===============================
+[2018-09-10 22:39:19,845:      agent.CAPM Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-10 22:39:21,536:      agent.CAPM Bot]:     INFO - Received initial marketplace information.
+[2018-09-10 22:39:21,536:      agent.CAPM Bot]:     INFO - Initialised, examining markets available
+[2018-09-10 22:39:21,536:      agent.CAPM Bot]:     INFO - Market: 713
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : Stock A
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+
+=============================== Log Started [2018-09-10 22:40:49 AUS Eastern Standard Time] ===============================
+[2018-09-10 22:40:51,223:      agent.CAPM Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Received initial marketplace information.
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Initialised, examining markets available
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Market: 713
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : Stock A
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Market: 714
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :  10
+                       Name   : Stock B
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Market: 715
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :  10
+                       Name   : Stock C
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-10 22:40:52,961:      agent.CAPM Bot]:     INFO - Market: 716
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ: 500, 500, 500, 500
+
+[2018-09-10 22:40:53,353:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:53,353:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:40:54,103:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:54,105:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:40:54,492:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:54,492:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:40:55,208:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:55,208:      agent.CAPM Bot]:     INFO - received order book from 713
+[2018-09-10 22:40:55,616:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:55,617:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:40:56,355:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:56,356:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:40:56,723:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:56,723:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:40:57,456:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:57,461:      agent.CAPM Bot]:     INFO - received order book from 713
+[2018-09-10 22:40:57,899:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:57,900:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:40:58,624:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:58,624:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:40:59,307:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:59,311:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:40:59,715:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:40:59,715:      agent.CAPM Bot]:     INFO - received order book from 713
+[2018-09-10 22:41:00,161:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:00,162:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:41:00,890:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:00,890:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:41:01,561:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:01,562:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:41:02,254:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:02,255:      agent.CAPM Bot]:     INFO - received order book from 713
+[2018-09-10 22:41:02,420:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:02,420:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:41:03,137:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:03,137:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:41:03,810:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:41:03,810:      agent.CAPM Bot]:     INFO - received order book from 714
+
+=============================== Log Started [2018-09-10 22:42:50 AUS Eastern Standard Time] ===============================
+[2018-09-10 22:42:52,733:      agent.CAPM Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Received initial marketplace information.
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Initialised, examining markets available
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Market: 713
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : Stock A
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - There are 4 possible states
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Market: 714
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :  10
+                       Name   : Stock B
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Market: 715
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :  10
+                       Name   : Stock C
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-10 22:42:54,403:      agent.CAPM Bot]:     INFO - Market: 716
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ: 500, 500, 500, 500
+
+[2018-09-10 22:42:54,800:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:54,800:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:42:55,872:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:55,872:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:42:56,071:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:56,071:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:42:56,083:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:56,084:      agent.CAPM Bot]:     INFO - received order book from 713
+[2018-09-10 22:42:57,048:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:57,048:      agent.CAPM Bot]:     INFO - received order book from 716
+[2018-09-10 22:42:58,141:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:58,141:      agent.CAPM Bot]:     INFO - received order book from 715
+[2018-09-10 22:42:58,341:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:58,342:      agent.CAPM Bot]:     INFO - received order book from 714
+[2018-09-10 22:42:58,361:      agent.CAPM Bot]:     INFO -      -------------------------received_order_book-------------------------     
+[2018-09-10 22:42:58,361:      agent.CAPM Bot]:     INFO - received order book from 713

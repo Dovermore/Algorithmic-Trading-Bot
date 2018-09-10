@@ -24,14 +24,6 @@ STACK_DIF = 10
 BASE_LEN = 79
 # </For debugging only>
 
-# ------ Add a variable called DS_REWARD_CHARGE -----
-# Dependent on actual task
-DS_REWARD_CHARGE = 500
-MAX_REWARD_UNIT = 5
-
-# The unit to place order
-ORDER_UNIT = 1
-
 # The MAGIC cancel number
 MAGIC_MM_CANCEL_CYCLE = 10
 
@@ -93,6 +85,11 @@ class CAPMBot(Agent):
         self._session_time = session_time
         self._market_ids = {}
 
+        # Record the number of possible states
+        self._states = 0
+
+        # Expected return for each security
+        self._expected_returns = {}
         # TODO use time to change the type of bot to be more
         # TODO     aggressive when almost end we we have not reach target
         self._bot_type = BotType.REACTIVE
@@ -102,8 +99,8 @@ class CAPMBot(Agent):
 
         # This member variable take advantage of only one order at a time
         # --------------------------------------------------------------------
-        # Stores active order currently in the order book
-        self._active_order = None
+        # Stores active orders currently in the order book
+        self._active_orders = []
         self._order_status = OrderStatus.INACTIVE
         self._order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
         # --------------------------------------------------------------------
@@ -132,6 +129,11 @@ class CAPMBot(Agent):
             description = market_dict["description"]
             self._market_ids[security] = security_id
             self._payoffs[security] = [int(a) for a in description.split(",")]
+            # Record number of states
+            if len(self._payoffs) == 1:
+                self._states = len(self._payoffs[security])
+            self._expected_returns[security] = sum(self._payoffs[security]) / self._states
+        self.inform("There are %s possible states" % str(self._states))
 
     def get_potential_performance(self, orders):
         """
@@ -190,6 +192,16 @@ class CAPMBot(Agent):
     def run(self):
         self.initialise()
         self.start()
+
+    def calculate_performance(self, expected_payoff, payoff_var):
+        """
+        Calculates the portfolio performance
+        :param expected_payoff: potential payoff at end of session
+        :param payoff_var: variance of portfolio
+        :return: performance
+        """
+        performance = expected_payoff - self._risk_penalty*payoff_var
+        return performance
 
     def _line_break_inform(self, msg="", char="-",
                            length=BASE_LEN, width=BASE_LEN):
@@ -294,6 +306,9 @@ if __name__ == "__main__":
 
     FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD_JD = "888086"
+
+    FM_EMAIL_NP = "n.price3@student.unimelb.edu.au"
+    FM_PASSWORD_NP = "836389"
 
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
