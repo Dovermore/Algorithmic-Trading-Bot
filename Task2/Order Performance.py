@@ -1,37 +1,43 @@
 import time
 import timeit
 from fmclient import Order, OrderSide, OrderType
-import random
 
-random.seed(100)
+available_orders = {
+                    250: [[400, 4, 'bid'], [600, 5, 'ask']],  # Stock A
+                    350: [[550, 3, 'bid'], [700, 6, 'ask']],  # Stock B
+                    450: [[450, 5, 'bid'], [550, 2, 'ask']],  # Stock C
+                    550: [[300, 4, 'bid'], [650, 7, 'ask']]   # risk-free
+                    }
 
-order_side = {
-    0: OrderSide.BUY,
-    1: OrderSide.SELL
-}
 
-order_list = []
+t0 = time.time()
+store_orders = []
 
-for x in range(10):
-    units = random.randint(1, 5)
-    side = order_side[random.randint(0, 1)]
-    price = random.randint(0, 1000)//5*5
-    order_to_make = Order(price, units, OrderType.LIMIT, side, 250)
-    order_list.append(order_to_make)
 
-for i in range(10):
-    print(order_list[i])
+def best_order(orders):
+    pass
+
+
+t1 = time.time()
+
+duration = timeit.timeit(best_order, number=1000)
+print(duration)
+print(t1-t0)
+
+# ---------------------------------------------------------------------------
 
 t0 = time.time()
 order = None
 
 
-def best_orders(orders):
-    for order in orders:
-        pass
+def make_orders(orders):
+    pass
 
 
 t1 = time.time()
 
-duration = timeit.timeit(best_orders, number=1000)
+duration = timeit.timeit(make_orders, number=1000)
 print(duration)
+print(t1-t0)
+
+
