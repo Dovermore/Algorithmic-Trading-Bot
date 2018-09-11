@@ -1,0 +1,20 @@
+Performance = expected_payoff - (risk_penalty)*(payoff_var)
+Sharpe_Ratio = expected_payoff / sqrt(payoff_variance)
+
+expected_payoff = cash + A_held*(1/number_states)*(sum(payoff_per_state)) + B_held*(1/number_states)*(sum(payoff_per_state)) 
+		 + Notes_held*(1/number_states)*(sum(payoff_per_state))
+
+payoff_var = (A_held^2)*var(A) + (B_held^2)*var(B) + (Notes_held^2)*var(Notes) + 2*A_held*B_held*cov(A,B) 
+	     + 2*A_held*Notes_held*cov(A,N) + 2*B_held*Notes_held*cov(B,N)
+
+var(A) = (1/number_states)*(A_X^2 + A_Y^2 + A_Z^2) - (1/(number_states^2)*(A_X + A_Y + A_Z)^2
+var(B) = (1/number_states)*(B_X^2 + B_Y^2 + B_Z^2) - (1/(number_states^2)*(B_X + B_Y + B_Z)^2
+var(Notes) = (1/number_states)*(Notes_X^2 + Notes_Y^2 + Notes_Z^2) - (1/(number_states^2)*(Notes_X + Notes_Y + Notes_Z)^2
+
+cov(A,B) = (1/number_states)*(A_X*B_X + A_Y*B_Y + A_Z*B_Z) - E(A_r)*E(B_r)
+cov(A,Notes) = (1/number_states)*(A_X*Notes_X + A_Y*Notes_Y + A_Z*Notes_Z) - E(A_r)*E(Notes_r)
+cov(B,Notes) = (1/number_states)*(B_X*Notes_X + B_Y*Notes_Y + B_Z*Notes_Z) - E(B_r)*E(Notes_r)
+
+
+Can set a threshold for each asset (won't sell for less than expected return, or buy for more than expected return)
+Can we determine the optimal portfolio without trading?
