@@ -1,5 +1,6 @@
 import time
 import timeit
+import numpy as np
 
 available_orders = {
                     250: [[400, 4, 'bid'], [600, 5, 'ask']],  # Stock A
@@ -8,42 +9,70 @@ available_orders = {
                     550: [[300, 4, 'bid'], [650, 7, 'ask']]   # risk-free
                     }
 
+holdings = {
+                250: 10,  # Stock A
+                350: 10,  # Stock B
+                450: 10,  # Stock C
+                550: 10   # risk-free
+                }
 
-def calculate_performance(expected_payoff, payoff_var, risk_penalty = -0.01):
+exp_return = np.array([[10, 0, 0, 5], [0, 2.5, 7.5, 5],
+                       [0, 7.5, 2.5, 5], [5, 5, 5, 5]])  # Return table
+
+cov_matrix = np.cov(exp_return.T)
+
+
+def calculate_performance(holding, b=-0.01):
     """
     Calculates the portfolio performance
-    :param expected_payoff: potential payoff at end of session
-    :param payoff_var: variance of portfolio
-    :param risk_penalty: given -0.01
-    :return:
+    :param holding: assets held
+    :param b: risk penalty, given -0.01
+    :return: performance
     """
-    performance = expected_payoff - risk_penalty*payoff_var
-    return performance
+    ret = np.dot(exp_return, holdings)
+    variance = np.var(ret)
+    return [np.mean(ret) - variance * b, np.mean(ret), variance, holding]
 
 
 t0 = time.time()
 
 
-def best_order(orders):
-    store_orders = []
+def make_orders(orders, holding):
+    store_orders = {}
+    holding1 = holding
     for market in orders.keys():
         market_to_check = orders[market]
+        order_to_make = None
+        holding2 = holding1
+
         for buy_sell in market_to_check:
             price, units, side = buy_sell
-            for potential_order_units in range(1,units):
-                performance_to_compare = None
-                potential_order = None
+            performance_to_compare = None
+
+            for potential_order_units in range(1, units):
+
                 if side == 'bid':
-                    add_payoff = 
-                    add_var =
-                    performance = calculate_performance(add_payoff, add_var)
-        order_specs = []
-        store_orders.append(order_specs)
+                    holding2[market] += potential_order_units
+                elif side == 'ask':
+                    holding2[market] -= potential_order_units
+
+                performance = calculate_performance(holdings)
+                if performance_to_compare:
+                    performance_to_compare = performance
+                    order_to_make = [potential_order_units, side]
+                else:
+                    if performance_to_compare < performance:
+                        performance_to_compare = performance
+                        order_to_make = [potential_order_units, side]
+
+        store_orders[market] = order_to_make
+
+    return store_orders
 
 
 t1 = time.time()
-best_order(available_orders)
-# duration = timeit.timeit(best_order(available_orders), number=1000)
+make_orders(available_orders, holdings)
+# duration = timeit.timeit(make_orders(available_orders), number=1000)
 # print("best order: " + str(duration))
 print("best order: " + str(t1-t0))
 
@@ -53,7 +82,7 @@ t0 = time.time()
 order = None
 
 
-def make_orders(orders):
+def best_orders(orders):
     pass
 
 
