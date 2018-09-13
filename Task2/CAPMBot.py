@@ -8,21 +8,19 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
+from typing import List, Tuple, Optional
 import copy
-import time
-from collections import defaultdict as dd
+# <For debugging only>
+import inspect
+INIT_STACK = 12
+STACK_DIF = 10
+BASE_LEN = 79
+# </For debugging only>
 
 # Group details
 GROUP_MEMBERS = {"908525": "Zhuoqun Huang", "836389": "Nikolai Price",
                  "888086": "Lee Jun Da"}
 
-# <For debugging only>
-import inspect
-
-INIT_STACK = 12
-STACK_DIF = 10
-BASE_LEN = 79
-# </For debugging only>
 
 # The MAGIC cancel number
 MAGIC_MM_CANCEL_CYCLE = 10
@@ -68,8 +66,154 @@ class OrderStatus(Enum):
 
 
 class CAPMBot(Agent):
+    class OrderHolder:
+        def __init__(self):
+            # TODO find a better data structure for storing orders
+            # A dictionary of {market_it: order_lit}
+            # All accepted orders (that market responded by order_accepted)
+            self._active_orders = {}
+            # All order that has been completed
+            self._completed_orders = {}
 
-    def __init__(self, account, email, password, marketplace_id, risk_penalty=0.01, session_time=20):
+        @property
+        def active_orders(self) -> Optional[dict]:
+            """
+            Retrieve active orders of specific market_id
+            :return: list of active orders, None if failed to retrieve
+            """
+            try:
+                return copy.deepcopy(self._active_orders)
+            except KeyError:
+                return None
+
+        @property
+        def completed_orders(self) -> Optional[dict]:
+            """
+            Retrieve completed orders of specific market_id
+            :return: list of completed orders, None if failed to retrieve
+            """
+            try:
+                return copy.deepcopy(self._completed_orders)
+            except KeyError:
+                return None
+
+        def has_active_order(self, order: Order, market_id: int) -> bool:
+            """
+            Check if order holder holds some order with same
+            :param order:
+            :param market_id:
+            :return: True if found corresponding order, False otherwise
+            """
+            pass
+
+        def order_accepted(self, order: Order) -> bool:
+            """
+            Add new accepted_order to active_orders
+            :param order: The order accepted
+            :return: True if added successfully, False otherwise
+                     (E.g. No id for order provided)
+            """
+            # TODO can use order.market_id to assign to market
+            pass
+
+        def order_rejected(self, order: Order) -> None:
+            """
+            Handles rejection of orders in order holder
+            :param order: The rejected order
+            """
+            pass
+
+    class Market:
+        _states = -1
+
+        def __init__(self, market_dict: dict):
+            self._market_id = market_dict["id"]
+            self._minimum = market_dict["minimum"]
+            self._maximum = market_dict["maximum"]
+            self._tick = market_dict["tick"]
+            self._name = market_dict["name"]
+            self._item = market_dict["item"]
+            self._description = market_dict["description"]
+            self._payoffs = tuple(int(a) for a in self._description.split(","))
+            self._expected_return = sum(self._payoffs) / self._states
+            self._covariances = {}
+            if self._states == -1:
+                self._states = len(self._payoffs)
+            else:
+                assert len(self._payoffs) != self._states
+
+        @property
+        def market_id(self):
+            return self._market_id
+
+        @property
+        def minimum(self):
+            return self._minimum
+
+        @property
+        def maximum(self):
+            return self._maximum
+
+        @property
+        def tick(self):
+            return self._tick
+
+        @property
+        def name(self):
+            return self._name
+
+        @property
+        def item(self):
+            return self._item
+
+        @property
+        def description(self):
+            return self._description
+
+        @property
+        def payoffs(self):
+            return self._payoffs
+
+        @property
+        def expected_return(self):
+            return self._expected_return
+
+        @property
+        def covariances(self):
+            return self._covariances
+
+        @classmethod
+        def states(cls):
+            return cls._states
+
+        def is_valid_price(self, price: int) -> bool:
+            """
+            Check if price is valid, that is, it's proper considering minimum,
+            minimum and tick
+            :param price: The price to be checked
+            :return: True if valid, else false
+            """
+            # TODO implement price checking
+
+        def build_covariance(self, markets) -> None:
+            for market in markets:
+                self._covariances[market.market_id] = \
+                    self.compute_covariance(self._payoffs, market.payoffs)
+
+        @staticmethod
+        def compute_covariance(payoff1: Tuple[int],
+                               payoff2: Tuple[int]) -> float:
+            """
+            Compute the covariance between list of payoff1 and payoff2, they
+            have to be the same length
+            :param payoff1: List of payoff1
+            :param payoff2: List of payoff2
+            :return: the covariance value
+            """
+            # TODO implement compute covariance procedure
+
+    def __init__(self, account, email, password, marketplace_id,
+                 risk_penalty=0.01, session_time=20):
         """
         Constructor for the Bot
         :param account: Account name
@@ -79,17 +223,18 @@ class CAPMBot(Agent):
         :param risk_penalty: Penalty for risk
         :param session_time: Total trading time for one session
         """
-        super().__init__(account, email, password, marketplace_id, name="CAPM Bot")
-        self._payoffs = {}
-        self._risk_penalty = risk_penalty
+        super().__init__(account, email, password, marketplace_id,
+                         name="CAPM_Bot")
         self._session_time = session_time
+
         self._market_ids = {}
 
+        self._risk_penalty = risk_penalty
+        self._payoffs = {}
+        self._variances = {}
         # Record the number of possible states
         self._states = 0
 
-        # Expected return for each security
-        self._expected_returns = {}
         # TODO use time to change the type of bot to be more
         # TODO     aggressive when almost end we we have not reach target
         self._bot_type = BotType.REACTIVE
@@ -105,16 +250,6 @@ class CAPMBot(Agent):
         self._order_availability = copy.copy(ORDER_AVAILABILITY_TEMPLATE)
         # --------------------------------------------------------------------
 
-        # Iterations since Market Maker order made
-        self._mm_order_cycle = 0
-
-        # Stores any inactive order that has been rejected
-        self._inactive_order = []
-
-        # Additional information, not particularly useful, but helps with
-        # Verifying when calling `received_holdings`.
-        self.mine_orders = None
-
     def initialised(self):
         """
         Initialise by looking at the requirements of the market,
@@ -124,22 +259,16 @@ class CAPMBot(Agent):
         self.inform("Initialised, examining markets available")
         for market_id, market_dict in self.markets.items():
             self.inform(self._str_market(market_dict))
-            security = market_dict["item"]
-            security_id = market_dict["id"]
-            description = market_dict["description"]
-            self._market_ids[security] = security_id
-            self._payoffs[security] = [int(a) for a in description.split(",")]
-            # Record number of states
-            if len(self._payoffs) == 1:
-                self._states = len(self._payoffs[security])
-            self._expected_returns[security] = sum(self._payoffs[security]) / self._states
+
         self.inform("There are %s possible states" % str(self._states))
 
     def get_potential_performance(self, orders):
         """
-        Returns the portfolio performance if the given list of orders is executed.
+        Returns the portfolio performance if the given list of orders is
+        executed.
         The performance as per the following formula:
-        Performance = ExpectedPayoff - b * PayoffVariance, where b is the penalty for risk.
+        Performance = ExpectedPayoff - b * PayoffVariance, where b is the
+        penalty for risk.
         :param orders: list of orders
         :return:
         """
@@ -188,6 +317,51 @@ class CAPMBot(Agent):
 
     def received_marketplace_info(self, marketplace_info):
         pass
+
+    # --- ORDER HANDLER section ---
+    def _verify_order_book(self, order_book: List[Order],
+                           market_id: int) -> None:
+        """
+        Verify received order book against current hand
+        :param order_book: Received Order book
+        :param market_id: Id of the market where order_book come from
+        """
+        pass
+
+    def _update_completed_order(self, orders: List[Order],
+                                market_id: int) -> None:
+        """
+        Update active orders based on received completed orders
+        :param orders: List of completed orders
+        :param market_id: Id of the market where completed orders come from
+        """
+        pass
+
+    def _check_order(self, order: Order) -> bool:
+        """
+        Check if an order can be sent based on cash or unit holdings
+        :param order: The order to be checked
+        :return: True if can send, False if order is null
+        """
+        pass
+
+    def _send_order(self, order: Order) -> bool:
+        """
+        Check and send an order
+        :param order: The order to be checked and sent
+        :return: True if successfully sent, false if failed check
+        """
+        pass
+
+    def _cancel_order(self, order: Order) -> bool:
+        """
+        Cancel the given order
+        :param order: The order to be cancelled,
+                      it need to be in `active_orders`
+        :return: True if cancel order successfully sent, else False
+        """
+        pass
+    # ---   END ORDER HANDLER   ---
 
     def run(self):
         self.initialise()
@@ -257,33 +431,6 @@ class CAPMBot(Agent):
         except Exception as e:
             return e
 
-    @staticmethod
-    def str_order(order):
-        """
-        This function return string representation of the detail of orders
-        :param order: object of Order class of fmclient
-        """
-        try:
-            if order is not None:
-                return ("Order Detail\n"
-                        "                       Price: %d\n"
-                        "                       Units: %d\n"
-                        "                       Type:  %s\n"
-                        "                       Side:  %s\n"
-                        "                       Ref:   %s\n"
-                        "                       Id:    %d\n"
-                        % (order.price,
-                           order.units,
-                           ORDER_TYPE_TO_CHAR[order.type],
-                           ORDER_SIDE_TO_CHAR[order.side],
-                           order.ref if order.ref else "No Ref",
-                           order.id if order.id else -1))
-            else:
-                return ("Order Detail\n"
-                        "      Order is None")
-        except Exception as e:
-            return e
-
     # Used for visualisation of function call as stacks, that it's easier to
     # trace through functions
     @staticmethod
@@ -296,6 +443,16 @@ class CAPMBot(Agent):
         4.17 µs ± 11.5 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
         """
         return len(inspect.stack())
+
+    def fn_start(self):
+        self._line_break_inform(inspect.stack()[1][3], char="v",
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                (self.get_stack_size()-1) * STACK_DIF)
+
+    def fn_end(self):
+        self._line_break_inform(inspect.stack()[1][3], char="^",
+                                length=BASE_LEN + INIT_STACK * STACK_DIF -
+                                       (self.get_stack_size()-1) * STACK_DIF)
 
 
 if __name__ == "__main__":
