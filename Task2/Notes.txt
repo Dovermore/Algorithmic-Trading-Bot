@@ -18,3 +18,5 @@ cov(B,Notes) = (1/number_states)*(B_X*Notes_X + B_Y*Notes_Y + B_Z*Notes_Z) - E(B
 
 Can set a threshold for each asset (won't sell for less than expected return, or buy for more than expected return)
 Can we determine the optimal portfolio without trading?
+
+want to incrementally check for performance improvinng trade, in each market. update expected holdings each time.
