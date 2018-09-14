@@ -1,6 +1,5 @@
 import time
 import timeit
-import numpy as np
 
 available_orders = {
                     250: [[400, 4, 'bid'], [600, 5, 'ask']],  # Stock A
@@ -16,10 +15,25 @@ holdings = {
                 550: 10   # risk-free
                 }
 
-exp_return = np.array([[10, 0, 0, 5], [0, 2.5, 7.5, 5],
-                       [0, 7.5, 2.5, 5], [5, 5, 5, 5]])  # Return table
+payoff = [[10, 0, 0, 5], [0, 2.5, 7.5, 5],
+          [0, 7.5, 2.5, 5], [5, 5, 5, 5]]  # Return table
 
-cov_matrix = np.cov(exp_return.T)
+
+def payoff_variance(payoff):
+    num_states = len(payoff[0])
+    print(num_states)
+
+
+def payoff_covariance(payoff):
+    pass
+
+
+def units_payoff_variance(units, variance, covariance):
+    pass
+
+
+variance = payoff_variance(payoff)
+covariance = payoff_variance(payoff)
 
 
 def calculate_performance(holding, b=-0.01):
@@ -29,9 +43,7 @@ def calculate_performance(holding, b=-0.01):
     :param b: risk penalty, given -0.01
     :return: performance
     """
-    ret = np.dot(exp_return, holdings)
-    variance = np.var(ret)
-    return [np.mean(ret) - variance * b, np.mean(ret), variance, holding]
+    pass
 
 
 t0 = time.time()
