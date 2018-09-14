@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Dovermore.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Dovermore.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/.idea/Task2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/.idea/other.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/MarketTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/MarketTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,12 +44,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="7336" />
+          <entry key="py" value="7346" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="7336" />
+          <entry key="Python" value="7346" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -57,8 +60,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="747">
-              <caret line="161" column="32" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
+            <state relative-caret-position="6893">
+              <caret line="463" lean-forward="true" selection-start-line="463" selection-end-line="463" />
               <folding>
                 <element signature="e#224#245#0" expanded="true" />
               </folding>
@@ -148,6 +151,7 @@
       <find>__</find>
       <find>list[</find>
       <find>order</find>
+      <find>np.</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -545,8 +549,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="161" column="32" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
+        <state relative-caret-position="6893">
+          <caret line="463" lean-forward="true" selection-start-line="463" selection-end-line="463" />
           <folding>
             <element signature="e#224#245#0" expanded="true" />
           </folding>

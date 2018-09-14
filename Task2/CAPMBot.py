@@ -10,6 +10,7 @@ from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
 from typing import List, Tuple
 import copy
+
 # <For debugging only>
 import inspect
 INIT_STACK = 12
@@ -443,7 +444,7 @@ class CAPMBot(Agent):
             return
         self._line_break_inform(inspect.stack()[1][3], char="^",
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                       (self.get_stack_size()-1) * STACK_DIF)
+                                (self.get_stack_size()-1) * STACK_DIF)
 
 
 if __name__ == "__main__":
