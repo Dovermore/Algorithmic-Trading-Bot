@@ -10,6 +10,7 @@ from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
 from typing import List, Tuple, Optional
 import copy
+import numpy as np
 # <For debugging only>
 import inspect
 INIT_STACK = 12
@@ -69,7 +70,7 @@ class CAPMBot(Agent):
     class OrderHolder:
         def __init__(self):
             # TODO find a better data structure for storing orders
-            # A dictionary of {market_it: order_lit}
+            # A dictionary of {market_id: order_lit}
             # All accepted orders (that market responded by order_accepted)
             self._active_orders = {}
             # All order that has been completed
@@ -137,6 +138,7 @@ class CAPMBot(Agent):
             self._payoffs = tuple(int(a) for a in self._description.split(","))
             self._expected_return = sum(self._payoffs) / self._states
             self._covariances = {}
+            self._variance = np.var(self._payoffs)
             if self._states == -1:
                 self._states = len(self._payoffs)
             else:
@@ -210,7 +212,7 @@ class CAPMBot(Agent):
             :param payoff2: List of payoff2
             :return: the covariance value
             """
-            # TODO implement compute covariance procedure
+            return np.cov(payoff1, payoff2, bias=True)[0][1]
 
     def __init__(self, account, email, password, marketplace_id,
                  risk_penalty=0.01, session_time=20):
