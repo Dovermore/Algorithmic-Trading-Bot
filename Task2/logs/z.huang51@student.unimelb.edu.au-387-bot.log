@@ -1,0 +1,1628 @@
+
+=============================== Log Started [2018-09-14 11:34:48 AEST] ===============================
+[2018-09-14 11:34:50,115:      agent.CAPM_Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-14 11:34:52,112:      agent.CAPM_Bot]:     INFO - Received initial marketplace information.
+[2018-09-14 11:34:52,113:      agent.CAPM_Bot]:     INFO - Initialised, examining markets available
+[2018-09-14 11:34:52,113:      agent.CAPM_Bot]:     INFO - Market: 733
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockA
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-14 11:34:52,114:      agent.CAPM_Bot]:     INFO - Market: 734
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : StockB
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-14 11:34:52,114:      agent.CAPM_Bot]:     INFO - Market: 735
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockC
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-14 11:34:52,114:      agent.CAPM_Bot]:     INFO - Market: 736
+                       Minimum:   0
+                       Maximum: 500
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ:  500, 500, 500, 500
+
+[2018-09-14 11:34:52,115:      agent.CAPM_Bot]:     INFO - There are 0 possible states
+[2018-09-14 11:34:52,552:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:52,553:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:34:52,555:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:53,112:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:53,112:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:34:53,115:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:53,413:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:53,413:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:34:53,417:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:53,486:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:53,486:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:34:53,488:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:54,883:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:54,884:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:34:54,885:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:55,404:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:55,405:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:34:55,407:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:55,703:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:55,703:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:34:55,705:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:55,777:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:55,778:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:34:55,780:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:57,237:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:57,238:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:34:57,240:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:57,696:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:57,697:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:34:57,699:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:57,993:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:57,994:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:34:57,997:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:58,070:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:58,071:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:34:58,074:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:59,526:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:59,527:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:34:59,529:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:34:59,986:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:34:59,986:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:34:59,988:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:00,283:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:00,292:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:00,294:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:00,364:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:00,365:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:00,369:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:01,827:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:01,829:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:01,837:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:02,276:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:02,277:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:02,283:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:02,582:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:02,582:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:02,585:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:02,661:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:02,661:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:02,663:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:04,123:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:04,123:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:04,126:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:04,582:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:04,583:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:04,587:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:04,877:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:04,883:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:04,889:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:04,992:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:04,993:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:04,998:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:06,414:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:06,414:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:06,417:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:07,262:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:07,263:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:07,278:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:07,429:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:07,430:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:07,443:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:07,449:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:07,453:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:07,464:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:08,707:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:08,708:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:08,711:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:09,583:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:09,590:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:09,622:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:09,802:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:09,802:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:09,814:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:09,830:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:09,830:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:09,833:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:11,064:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:11,064:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:11,067:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:11,916:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:11,916:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:11,923:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:12,163:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:12,164:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:12,180:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:12,198:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:12,199:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:12,205:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:13,373:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:13,374:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:13,381:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:14,242:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:14,255:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:14,264:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:14,485:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:14,486:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:14,494:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:14,515:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:14,516:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:14,521:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:15,677:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:15,677:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:15,680:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:16,555:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:16,556:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:16,559:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:16,797:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:16,798:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:16,800:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:16,809:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:16,809:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:16,811:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:18,034:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:18,034:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:18,037:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:18,985:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:18,986:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:19,016:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:19,160:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:19,160:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:19,166:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:19,182:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:19,183:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:19,221:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:20,331:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:20,332:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:20,338:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:21,305:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:21,305:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:21,311:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:21,454:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:21,454:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:21,457:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:21,511:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:21,511:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:21,514:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:22,629:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:22,630:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:22,644:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:23,599:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:23,599:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:23,601:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:23,747:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:23,748:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:23,750:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:23,808:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:23,808:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:23,811:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:24,993:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:24,993:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:24,998:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:26,371:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:26,372:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:26,378:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:26,386:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:26,386:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:26,389:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:26,392:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:26,392:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:26,394:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:28,237:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:28,237:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:28,241:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:29,132:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:29,132:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:29,137:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:29,143:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:29,144:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:29,147:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:29,152:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:29,154:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:29,160:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:30,534:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:30,535:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:30,537:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:31,478:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:31,478:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:31,486:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:31,494:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:31,494:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:31,500:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:31,506:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:31,507:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:31,516:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:32,829:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:32,830:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:32,834:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:33,774:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:33,774:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:33,779:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:33,786:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:33,786:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:33,788:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:33,804:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:33,805:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:33,806:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:35,124:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:35,125:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:35,128:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:36,073:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:36,073:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:36,076:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:36,080:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:36,080:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:36,082:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:36,094:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:36,094:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:36,096:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:37,418:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:37,418:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:37,420:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:38,406:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:38,406:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:38,409:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:38,413:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:38,413:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:38,416:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:38,420:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:38,421:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:38,424:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:39,745:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:39,746:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:39,756:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:40,761:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:40,761:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:40,765:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:40,771:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:40,772:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:40,775:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:40,783:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:40,783:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:40,787:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:42,045:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:42,045:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:42,047:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:43,141:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:43,142:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:43,169:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:43,246:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:43,250:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:43,264:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:43,270:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:43,270:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:43,274:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:44,343:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:44,343:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:44,351:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:45,464:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:45,465:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:45,468:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:45,551:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:45,551:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:45,553:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:45,560:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:45,560:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:45,562:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:46,698:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:46,699:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:46,701:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:47,801:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:47,801:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:47,810:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:47,849:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:47,849:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:47,859:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:47,869:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:47,870:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:47,878:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:48,993:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:48,993:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:48,995:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:50,179:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:50,179:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:50,181:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:50,186:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:50,186:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:50,188:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:50,191:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:50,191:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:50,194:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:51,311:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:51,311:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:51,316:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:52,466:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:52,466:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:52,470:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:52,476:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:52,476:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:52,479:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:52,484:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:52,485:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:52,489:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:53,608:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:53,608:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:53,612:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:54,789:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:54,790:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:54,793:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:54,797:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:54,797:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:54,799:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:54,802:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:54,802:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:54,804:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:55,914:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:55,914:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:55,916:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:57,087:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:57,087:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:57,090:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:57,096:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:57,096:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:57,100:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:57,104:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:57,105:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:57,108:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:58,271:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:58,271:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:35:58,275:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:59,402:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:59,403:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:35:59,405:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:59,408:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:59,408:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:35:59,410:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:35:59,415:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:35:59,416:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:35:59,420:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:00,625:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:00,625:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:00,628:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:01,689:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:01,690:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:01,692:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:01,698:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:01,698:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:01,700:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:01,709:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:01,709:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:01,712:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:02,919:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:02,919:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:02,923:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:04,009:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:04,009:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:04,013:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:04,016:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:04,017:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:04,021:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:04,025:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:04,028:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:04,042:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:05,213:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:05,214:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:05,218:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:06,307:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:06,307:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:06,310:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:06,313:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:06,314:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:06,318:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:06,358:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:06,359:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:06,377:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:07,514:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:07,515:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:07,522:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:08,612:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:08,613:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:08,617:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:08,623:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:08,624:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:08,629:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:08,672:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:08,672:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:08,675:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:09,811:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:09,811:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:09,816:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:10,975:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:10,976:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:10,981:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:10,987:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:10,987:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:10,990:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:10,997:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:10,997:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:11,000:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:12,200:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:12,201:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:12,208:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:13,291:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:13,291:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:13,300:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:13,305:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:13,305:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:13,313:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:13,323:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:13,323:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:13,328:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:14,499:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:14,499:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:14,503:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:15,593:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:15,593:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:15,598:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:15,625:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:15,625:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:15,634:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:15,653:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:15,658:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:15,683:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:16,805:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:16,805:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:16,807:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:17,898:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:17,898:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:17,914:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:17,960:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:17,960:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:17,975:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:17,997:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:17,997:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:18,004:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:19,162:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:19,162:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:19,165:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:20,202:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:20,204:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:20,207:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:20,264:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:20,264:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:20,266:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:20,294:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:20,294:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:20,296:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:21,514:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:21,514:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:21,516:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:22,495:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:22,496:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:22,497:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:22,548:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:22,549:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:22,551:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:22,586:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:22,586:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:22,588:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:23,853:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:23,853:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:23,855:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:24,784:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:24,784:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:24,786:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:24,839:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:24,839:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:24,842:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:24,878:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:24,878:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:24,881:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:26,227:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:26,227:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:26,229:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:27,074:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:27,074:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:27,078:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:27,133:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:27,133:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:27,137:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:27,197:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:27,198:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:27,209:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:28,519:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:28,520:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:28,523:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:29,366:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:29,366:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:29,369:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:29,423:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:29,423:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:29,426:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:29,501:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:29,501:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:29,504:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:30,834:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:30,834:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:30,836:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:31,664:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:31,664:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:31,666:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:31,715:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:31,716:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:31,719:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:31,800:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:31,801:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:31,804:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:33,126:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:33,127:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:33,131:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:33,953:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:33,954:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:33,956:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:34,013:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:34,013:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:34,016:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:34,097:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:34,098:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:34,101:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:35,445:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:35,446:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:35,452:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:36,246:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:36,246:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:36,248:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:36,308:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:36,309:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:36,311:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:36,387:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:36,387:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:36,389:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:37,742:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:37,743:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:37,746:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:38,537:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:38,537:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:38,539:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:38,602:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:38,602:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:38,604:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:38,675:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:38,675:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:38,677:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:40,035:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:40,047:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:40,049:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:40,840:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:40,841:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:40,851:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:40,894:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:40,894:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:40,896:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:40,963:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:40,963:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:40,965:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:42,360:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:42,361:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:42,363:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:43,141:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:43,141:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:43,146:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:43,188:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:43,188:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:43,190:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:43,259:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:43,260:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:43,266:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:44,651:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:44,652:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:44,654:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:45,438:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:45,438:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:45,440:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:45,483:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:45,483:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:45,486:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:45,557:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:45,557:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:45,559:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:47,014:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:47,015:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:47,021:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:47,731:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:47,731:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:47,734:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:47,776:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:47,776:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:47,780:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:47,844:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:47,844:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:47,846:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:49,312:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:49,313:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:49,315:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:50,027:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:50,027:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:50,030:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:50,067:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:50,067:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:50,074:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:50,134:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:50,134:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:50,139:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:51,624:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:51,625:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:51,628:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:52,319:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:52,319:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:52,322:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:52,362:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:52,362:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:52,366:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:52,427:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:52,427:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:52,429:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:53,916:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:53,916:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:53,920:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:54,613:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:54,613:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:54,615:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:54,656:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:54,656:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:54,660:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:54,718:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:54,718:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:54,720:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:56,229:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:56,229:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:56,231:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:56,898:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:56,898:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:56,900:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:56,946:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:56,946:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:56,948:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:57,915:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:57,915:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:36:57,917:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:58,584:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:58,584:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:36:58,587:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:59,189:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:59,189:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:36:59,191:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:36:59,237:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:36:59,237:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:36:59,239:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:00,225:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:00,225:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:00,228:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:00,939:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:00,939:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:00,942:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:01,478:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:01,478:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:01,480:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:01,527:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:01,527:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:01,529:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:02,519:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:02,519:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:02,521:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:03,229:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:03,229:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:03,232:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:03,770:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:03,770:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:03,772:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:03,813:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:03,813:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:03,815:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:04,839:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:04,841:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:04,847:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:05,559:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:05,560:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:05,579:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:06,069:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:06,069:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:06,072:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:06,106:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:06,106:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:06,108:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:07,228:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:07,228:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:07,234:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:07,870:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:07,870:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:07,872:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:08,363:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:08,363:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:08,367:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:08,400:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:08,400:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:08,404:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:09,543:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:09,555:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:09,558:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:10,157:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:10,157:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:10,159:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:10,656:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:10,656:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:10,658:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:10,691:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:10,691:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:10,693:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:11,850:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:11,850:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:11,854:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:12,450:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:12,450:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:12,452:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:12,953:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:12,953:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:12,956:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:12,984:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:12,985:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:12,987:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:14,143:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:14,144:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:14,147:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:14,739:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:14,740:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:14,742:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:15,248:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:15,249:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:15,254:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:15,282:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:15,283:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:15,336:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:16,451:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:16,451:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:16,455:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:17,087:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:17,087:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:17,090:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:17,549:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:17,549:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:17,557:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:17,654:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:17,654:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:17,659:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:18,767:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:18,767:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:18,778:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:19,376:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:19,376:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:19,378:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:19,844:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:19,844:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:19,846:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:19,947:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:19,947:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:19,949:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:21,070:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:21,070:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:21,072:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:21,728:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:21,728:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:21,730:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:22,108:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:22,109:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:22,114:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:22,252:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:22,253:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:22,263:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:23,366:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:23,366:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:23,368:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:24,026:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:24,027:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:24,030:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:24,361:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:24,362:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:24,364:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:24,555:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:24,556:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:24,559:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:25,658:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:25,658:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:25,660:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:26,337:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:26,338:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:26,341:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:26,647:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:26,647:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:26,651:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:26,853:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:26,854:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:26,869:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:27,978:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:27,978:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:27,981:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:28,666:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:28,668:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:28,671:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:28,965:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:28,966:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:28,969:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:29,164:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:29,164:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:29,169:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:30,329:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:30,329:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:30,332:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:30,963:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:30,964:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:30,966:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:31,255:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:31,256:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:31,259:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:31,422:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:31,422:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:31,424:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:32,586:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:32,587:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:37:32,590:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:33,220:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:33,220:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:37:33,223:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:33,530:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:33,530:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:37:33,536:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:33,733:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:37:33,734:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:37:33,739:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:37:34,429:      agent.CAPM_Bot]:    ERROR - Oops. Keyboard Interrupt received from user.
+
+=============================== Log Started [2018-09-14 11:41:21 AEST] ===============================
+[2018-09-14 11:41:23,569:      agent.CAPM_Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-14 11:41:25,584:      agent.CAPM_Bot]:     INFO - Received initial marketplace information.
+[2018-09-14 11:41:25,584:      agent.CAPM_Bot]:     INFO - Initialised, examining markets available
+[2018-09-14 11:41:25,584:      agent.CAPM_Bot]:     INFO - Market: 733
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockA
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-14 11:41:25,584:      agent.CAPM_Bot]:     INFO - Market: 734
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : StockB
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-14 11:41:25,585:      agent.CAPM_Bot]:     INFO - Market: 735
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockC
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-14 11:41:25,585:      agent.CAPM_Bot]:     INFO - Market: 736
+                       Minimum:   0
+                       Maximum: 500
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ:  500, 500, 500, 500
+
+[2018-09-14 11:41:25,585:      agent.CAPM_Bot]:     INFO - There are 0 possible states
+[2018-09-14 11:41:25,995:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:25,996:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:26,013:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:26,311:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:26,319:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:26,921:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:26,921:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:26,926:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:26,935:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:26,935:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:26,939:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:26,944:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:26,944:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:26,947:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:27,212:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:27,216:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:27,234:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:27,238:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:27,241:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:27,244:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:28,307:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:28,308:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:28,314:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:28,600:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:28,606:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:29,234:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:29,235:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:29,250:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:29,267:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:29,268:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:29,273:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:29,281:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:29,281:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:29,287:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:29,593:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:29,609:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:29,636:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:29,649:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:29,662:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:29,667:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:30,600:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:30,600:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:30,604:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:30,888:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:30,894:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:31,539:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:31,539:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:31,541:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:31,563:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:31,563:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:31,566:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:31,574:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:31,574:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:31,576:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:31,829:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:31,836:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:31,868:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:31,872:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:31,879:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:31,882:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:32,892:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:32,892:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:32,896:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:33,182:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:33,186:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:33,843:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:33,843:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:33,845:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:33,852:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:33,853:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:33,855:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:33,860:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:33,860:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:33,863:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:34,150:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:34,152:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:34,156:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:34,158:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:34,161:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:34,164:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:35,178:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:35,178:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:35,181:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:35,463:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:35,469:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:36,197:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:36,198:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:36,200:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:36,206:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:36,206:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:36,208:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:36,211:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:36,211:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:36,214:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:36,504:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:36,509:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:36,514:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:36,516:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:36,519:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:36,521:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:37,465:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:37,465:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:37,469:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:37,752:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:37,754:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:38,489:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:38,489:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:38,492:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:38,499:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:38,499:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:38,503:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:38,507:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:38,507:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:38,509:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:38,776:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:38,778:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:38,787:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:38,793:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:38,797:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:38,803:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:39,782:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:39,782:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:39,789:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:40,072:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:40,073:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:40,776:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:40,776:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:40,779:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:40,788:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:40,788:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:40,791:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:40,795:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:40,796:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:40,798:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:41,062:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:41,064:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:41,074:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:41,077:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:41,084:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:41,087:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:42,071:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:42,071:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:42,073:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:42,357:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:42,363:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:43,108:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:43,109:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:43,111:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:43,116:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:43,116:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:43,120:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:43,122:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:43,122:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:43,124:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:43,467:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:43,470:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:43,473:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:43,475:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:43,478:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:43,480:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:44,359:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:44,359:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:44,361:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:44,697:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:44,700:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:45,414:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:45,416:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:41:45,434:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:45,473:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:45,473:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:41:45,476:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:45,480:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:45,480:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:41:45,483:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:45,757:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:45,774:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:45,791:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:45,797:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:45,813:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:45,817:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:46,748:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvvvvreceived_order_bookvvvvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:41:46,749:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:41:46,751:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^^^received_order_book^^^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:41:47,035:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvreceived_completed_ordersvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:41:47,038:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^received_completed_orders^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:41:47,380:      agent.CAPM_Bot]:    ERROR - Oops. Keyboard Interrupt received from user.
+
+=============================== Log Started [2018-09-14 11:47:13 AEST] ===============================
+[2018-09-14 11:47:14,714:      agent.CAPM_Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-14 11:47:16,670:      agent.CAPM_Bot]:     INFO - Received initial marketplace information.
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - Initialised, examining markets available
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - Market: 733
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockA
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - Market: 734
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : StockB
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - Market: 735
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockC
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - Market: 736
+                       Minimum:   0
+                       Maximum: 500
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ:  500, 500, 500, 500
+
+[2018-09-14 11:47:16,671:      agent.CAPM_Bot]:     INFO - There are 0 possible states
+[2018-09-14 11:47:17,105:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:17,105:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:17,110:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:17,397:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:17,413:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:18,161:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:18,162:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:18,165:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:18,187:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:18,187:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:18,194:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:18,213:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:18,213:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:18,224:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:18,472:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:18,475:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:18,513:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:18,516:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:18,522:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:18,525:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:19,447:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:19,447:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:19,452:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:19,756:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:19,761:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:20,459:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:20,459:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:20,463:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:20,479:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:20,479:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:20,482:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:20,509:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:20,509:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:20,511:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:20,754:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:20,759:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:20,766:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:20,769:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:20,793:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:20,795:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:21,802:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:21,803:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:21,808:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:22,095:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:22,098:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:22,760:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:22,760:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:22,766:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:22,776:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:22,776:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:22,779:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:22,810:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:22,811:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:22,815:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:23,058:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:23,064:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:23,070:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:23,075:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:23,099:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:23,102:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:24,099:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:24,099:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:24,102:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:24,388:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:24,391:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:25,131:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:25,131:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:25,133:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:25,137:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:25,137:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:25,139:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:25,143:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:25,143:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:25,145:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:25,458:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:25,460:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:25,463:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:25,466:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:25,468:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:25,471:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:26,394:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:26,396:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:26,401:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:26,685:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:26,687:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:27,445:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:27,445:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:27,448:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:27,454:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:27,454:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:27,459:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:27,465:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:27,466:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:27,469:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:27,749:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:27,754:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:27,759:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:27,763:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:27,771:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:27,773:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:28,691:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:28,693:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:28,696:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:28,982:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:28,984:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:29,733:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:29,733:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:29,736:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:29,751:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:29,751:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:29,753:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:29,760:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:29,761:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:29,765:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:30,023:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:30,036:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:30,043:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:30,055:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:30,069:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:30,072:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:31,023:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:31,024:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:31,027:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:31,329:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:31,335:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:32,019:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:32,019:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:32,021:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:32,046:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:32,047:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:32,051:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:32,060:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:32,061:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:32,065:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:32,328:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:32,341:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:32,352:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:32,367:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:32,373:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:32,380:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:33,312:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:33,312:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:33,314:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:33,598:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:33,600:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:34,312:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:34,313:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:34,317:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:34,336:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:34,336:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:34,340:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:34,355:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:34,355:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:34,359:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:34,613:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:34,618:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:34,647:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:34,679:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:34,698:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:34,712:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:35,600:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:35,600:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:35,602:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:35,902:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:35,915:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:36,608:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:36,609:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:36,615:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:36,635:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:36,635:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:36,640:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:36,652:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:36,652:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:36,655:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:36,903:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:36,905:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:36,923:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:36,926:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:36,939:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:36,940:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:37,893:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:37,893:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:37,905:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:38,191:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:38,194:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:38,901:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:38,901:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:38,904:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:38,928:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:38,929:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:38,934:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:38,943:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:38,943:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:38,950:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:39,189:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:39,193:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:39,224:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:39,228:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:39,235:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:39,237:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:40,197:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:40,198:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:40,201:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:40,486:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:40,488:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:41,193:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:41,193:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:41,196:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:41,226:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:41,227:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:41,249:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:41,291:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:41,292:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:41,299:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:41,488:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:41,493:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:41,542:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:41,546:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:41,589:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:41,595:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:42,485:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:42,486:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:42,490:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:42,772:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:42,778:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:43,486:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:43,486:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:43,488:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:43,539:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:43,539:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:43,543:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:43,590:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:43,591:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:43,593:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:43,778:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:43,792:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:43,825:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:43,828:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:43,876:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:43,878:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:44,795:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:44,796:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:44,799:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:45,153:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:45,161:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:45,777:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:45,777:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:45,781:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:45,835:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:45,835:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:45,839:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:45,875:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:45,875:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:45,877:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:46,072:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:46,078:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:46,173:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:46,176:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:46,184:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:46,187:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:47,085:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:47,086:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:47,088:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:47,371:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:47,373:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:48,066:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:48,066:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:48,069:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:48,124:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:48,124:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:48,126:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:48,160:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:48,160:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:48,162:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:48,352:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:48,359:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:48,418:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:48,420:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:48,441:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:48,443:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:49,370:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:49,370:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:49,372:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:49,655:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:49,657:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:50,353:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:50,354:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:50,356:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:50,410:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:50,410:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:50,412:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:50,448:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:50,448:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:50,451:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:50,640:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:50,642:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:50,699:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:50,701:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:50,734:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:50,736:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:51,659:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:51,660:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:47:51,667:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:51,953:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:51,954:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:52,653:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:52,653:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:47:52,657:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:52,718:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:52,719:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:47:52,745:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:52,931:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:47:52,932:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:47:52,952:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:47:53,002:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:53,008:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:53,044:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:53,058:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:53,321:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:47:53,331:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:47:53,876:      agent.CAPM_Bot]:    ERROR - Oops. Keyboard Interrupt received from user.
+
+=============================== Log Started [2018-09-14 11:49:24 AEST] ===============================
+[2018-09-14 11:49:26,367:      agent.CAPM_Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-14 11:49:28,362:      agent.CAPM_Bot]:     INFO - Received initial marketplace information.
+[2018-09-14 11:49:28,362:      agent.CAPM_Bot]:     INFO - Initialised, examining markets available
+[2018-09-14 11:49:28,362:      agent.CAPM_Bot]:     INFO - Market: 733
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockA
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-14 11:49:28,362:      agent.CAPM_Bot]:     INFO - Market: 734
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : StockB
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-14 11:49:28,363:      agent.CAPM_Bot]:     INFO - Market: 735
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockC
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-14 11:49:28,363:      agent.CAPM_Bot]:     INFO - Market: 736
+                       Minimum:   0
+                       Maximum: 500
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ:  500, 500, 500, 500
+
+[2018-09-14 11:49:28,363:      agent.CAPM_Bot]:     INFO - There are 0 possible states
+[2018-09-14 11:49:28,764:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:28,765:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:49:28,765:      agent.CAPM_Bot]:     INFO - 733:1643457:[LIMIT]:Mine:SELL:1@805
+[2018-09-14 11:49:28,765:      agent.CAPM_Bot]:     INFO - 733:1643456:[LIMIT]:Mine:SELL:2@800
+[2018-09-14 11:49:28,765:      agent.CAPM_Bot]:     INFO - 733:1643460:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:28,767:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:29,059:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:29,059:      agent.CAPM_Bot]:     INFO - 733:1643451:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:29,059:      agent.CAPM_Bot]:     INFO - 733:1643455:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:29,059:      agent.CAPM_Bot]:     INFO - 733:1643458:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:29,059:      agent.CAPM_Bot]:     INFO - 733:1643459:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:29,063:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:29,360:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:29,361:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:49:29,364:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:29,506:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:29,506:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:49:29,508:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:29,627:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:29,674:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:29,691:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:29,691:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:49:29,703:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:29,791:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:29,796:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:30,011:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:30,020:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:31,070:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:31,070:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:49:31,070:      agent.CAPM_Bot]:     INFO - 733:1643457:[LIMIT]:Mine:SELL:1@805
+[2018-09-14 11:49:31,071:      agent.CAPM_Bot]:     INFO - 733:1643456:[LIMIT]:Mine:SELL:2@800
+[2018-09-14 11:49:31,071:      agent.CAPM_Bot]:     INFO - 733:1643460:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:31,074:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:31,374:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:31,374:      agent.CAPM_Bot]:     INFO - 733:1643451:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:31,375:      agent.CAPM_Bot]:     INFO - 733:1643455:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:31,375:      agent.CAPM_Bot]:     INFO - 733:1643458:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:31,375:      agent.CAPM_Bot]:     INFO - 733:1643459:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:31,377:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:31,663:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:31,664:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:49:31,669:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:31,793:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:31,795:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:49:31,798:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:31,958:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:31,959:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:31,997:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:31,998:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:49:32,009:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:32,078:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:32,080:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:32,293:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:32,296:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:33,365:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:33,365:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:49:33,365:      agent.CAPM_Bot]:     INFO - 733:1643457:[LIMIT]:Mine:SELL:1@805
+[2018-09-14 11:49:33,365:      agent.CAPM_Bot]:     INFO - 733:1643456:[LIMIT]:Mine:SELL:2@800
+[2018-09-14 11:49:33,367:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:33,660:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:33,660:      agent.CAPM_Bot]:     INFO - 733:1643451:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:33,661:      agent.CAPM_Bot]:     INFO - 733:1643455:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:33,661:      agent.CAPM_Bot]:     INFO - 733:1643458:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:33,661:      agent.CAPM_Bot]:     INFO - 733:1643459:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:33,661:      agent.CAPM_Bot]:     INFO - 733:1643460:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:33,663:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:33,957:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:33,957:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:49:33,963:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:34,081:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:34,081:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:49:34,087:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:34,267:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:34,273:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:34,308:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:34,308:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:49:34,313:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:34,377:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:34,380:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:34,614:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:34,617:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:35,698:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:35,698:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:49:35,698:      agent.CAPM_Bot]:     INFO - 733:1643470:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:35,699:      agent.CAPM_Bot]:     INFO - 733:1643457:[LIMIT]:Mine:SELL:1@805
+[2018-09-14 11:49:35,708:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:36,008:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:36,009:      agent.CAPM_Bot]:     INFO - 733:1643451:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:36,009:      agent.CAPM_Bot]:     INFO - 733:1643455:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:36,009:      agent.CAPM_Bot]:     INFO - 733:1643458:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:36,009:      agent.CAPM_Bot]:     INFO - 733:1643459:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:36,009:      agent.CAPM_Bot]:     INFO - 733:1643460:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:36,010:      agent.CAPM_Bot]:     INFO - 733:1643469:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:36,011:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:36,250:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:36,250:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:49:36,253:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:36,393:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:36,393:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:49:36,397:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:36,590:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:36,601:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:36,613:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:36,616:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-14 11:49:36,630:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:36,711:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:36,728:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:36,891:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:36,930:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:37,962:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:37,963:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-14 11:49:37,963:      agent.CAPM_Bot]:     INFO - 733:1643470:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:37,963:      agent.CAPM_Bot]:     INFO - 733:1643457:[LIMIT]:Mine:SELL:1@805
+[2018-09-14 11:49:37,966:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:38,220:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:38,220:      agent.CAPM_Bot]:     INFO - 733:1643451:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:38,220:      agent.CAPM_Bot]:     INFO - 733:1643455:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:38,220:      agent.CAPM_Bot]:     INFO - 733:1643458:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:38,221:      agent.CAPM_Bot]:     INFO - 733:1643459:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:38,221:      agent.CAPM_Bot]:     INFO - 733:1643460:[LIMIT]:Mine:SELL:1@790
+[2018-09-14 11:49:38,221:      agent.CAPM_Bot]:     INFO - 733:1643469:[LIMIT]:Mine:SELL:1@800
+[2018-09-14 11:49:38,223:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:38,499:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:38,499:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-14 11:49:38,502:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:38,689:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-14 11:49:38,689:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-14 11:49:38,693:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-14 11:49:38,749:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-14 11:49:38,752:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-14 11:49:38,765:      agent.CAPM_Bot]:    ERROR - Oops. Keyboard Interrupt received from user.

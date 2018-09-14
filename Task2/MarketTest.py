@@ -1,6 +1,7 @@
 import random
 from typing import List
 
+
 class Market:
     _states = -1
 
