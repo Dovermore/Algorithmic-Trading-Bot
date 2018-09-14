@@ -8,9 +8,11 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
+from fmclient.utils.constants import DATE_FORMAT
 from typing import List, Tuple, Dict
 import copy
 import time
+import datetime
 
 # <For debugging only>
 import inspect
@@ -30,6 +32,7 @@ GROUP_MEMBERS = {"908525": "Zhuoqun Huang",
 class OrderRole(Enum):
     MARKET_MAKER = 0
     REACTIVE = 1
+
 
 # Dictionary to store letters in representation of a certain OrderType
 # and OrderSide for reference of orders
@@ -60,8 +63,11 @@ class OrderStatus(Enum):
 # Status of current order if there is any
 class OrderCompare(Enum):
     IDENTICAL = 0
-    SAME_PRICE = 1
+    SAME_ORDER = 1
+    SAME_PRICE = 2
     DIFFERENT = -1
+
+# ----- Start of Helper classes -----
 
 
 class Market:
@@ -72,10 +78,9 @@ class Market:
     SYNC_MAX_DELAY = 2
     states = -1
 
-    def __init__(self, market_dict: dict, host: Agent):
-        print(list(market_dict.keys()))
-        # Market information
-        self._host = host
+    def __init__(self, market_dict: dict, agent):
+        # Parse market information into the object
+        self._agent: CAPMBot = agent
         self._market_id = market_dict["id"]
         self._minimum = market_dict["minimum"]
         self._maximum = market_dict["maximum"]
@@ -90,15 +95,24 @@ class Market:
         else:
             assert len(self._payoffs) == self.states
         self._expected_return = sum(self._payoffs) / self.states
-        # Order information
-        self.order = OrderHolder(self._market_id)
+        # Setting up own order information
+        self.order_holder = OrderHolder(self._market_id, agent)
+        self._current_order: MyOrder = None
 
-        # Holding information
+        # Setting up order book
+        self._order_book = None
+        self._best_bid = None
+        self._best_ask = None
+
+        # Setting up holding information
         self._sync_delay = 0
         self._units = 0
         self._available_units = self._units
         # A virtual holding, simulating condition if order got accepted
         self._virtual_available_units = self._available_units
+
+        # Record where the completed order has been read to
+        self._completed_order_index = 0
 
     @property
     def market_id(self):
@@ -156,43 +170,111 @@ class Market:
     def available_units(self, available_units):
         self._available_units = available_units
 
+    @property
+    def virtual_available_units(self):
+        return self._virtual_available_units
+
+    @virtual_available_units.setter
+    def virtual_available_units(self, virtual_available_units):
+        self._virtual_available_units = virtual_available_units
+
     def update_units(self, unit_dict):
+        """
+        This function is used in received holdings to update the units in
+        one particular market. Will also keep track and update outdated
+        virtual holdings.
+        :param unit_dict: Standard dictionary containing the units to check
+        :return:
+        """
+        self._agent.fn_start()
         assert unit_dict["units"] > 0 and unit_dict["available_units"] > 0
         self._units = unit_dict["units"]
         self._available_units = unit_dict["available_units"]
         if self._available_units > self._virtual_available_units:
             self._sync_delay += 1
             if self._sync_delay >= self.SYNC_MAX_DELAY:
-                self._host.warning("Market" + str(self._market_id) +
-                                   "Failed to sync virtual units properly")
+                self._agent.warning("Market" + str(self._market_id) +
+                                    "Failed to sync virtual units properly")
             self._virtual_available_units = self._available_units
         elif self._available_units == self._virtual_available_units:
             self._sync_delay = 0
         else:
-            self._host.error("Market" + str(self._market_id) +
-                             "Virtual Unit MORE Than available units")
-
+            self._agent.error("Market" + str(self._market_id) +
+                              "Virtual Unit MORE Than available units")
+        self._agent.fn_end()
 
     @classmethod
     def set_states(cls, states):
         assert states > 0
         cls.states = states
 
-    def order_accepted(self, order):
+    def order_accepted(self, order: Order):
         """
-        Market side order processing
+        Market side order accepted processing, update available units
         :param order: The order accepted
-        :return: True if added successfully, False otherwise
         """
+        if order.side == OrderSide.SELL:
+            if order.type == OrderType.LIMIT:
+                self._available_units -= order.units
+            else:
+                self._available_units += order.units
+
+        self.order_holder.order_accepted(order)
+
+    def order_rejected(self, order: Order):
+        """
+        Market side order rejected processing
+        :param order: The order rejected
+        """
+        if order.side == OrderSide.SELL:
+            if order.type == OrderType.LIMIT:
+                self._available_units += order.units
+            else:
+                self._available_units -= order.units
+        self.order_holder.order_rejected(order)
+
+    def update_received_order_book(self, order_book):
+        # TODO More logic here, update best_bid, best ask, and order book
+        self._order_book = order_book
+        self.order_holder.update_received_order_book(order_book)
+
+    def update_completed_orders(self, orders):
+        # TODO More logic here
+        self.order_holder.\
+            update_completed_orders(orders[self._completed_order_index:])
+        self._completed_order_index = len(orders)
+
+    def add_order(self, price, units, order_type, order_side, market_id,
+                  order_role):
+        """
+        :return: Reference to the added order
+        """
+        order = self.order_holder.add_order(price, units, order_type,
+                                            order_side, market_id, order_role)
+        self._current_order = order
+
+    def send_current_order(self):
+        """
+        Send the last added order
+        :return: Return True if successful, False Otherwise
+        """
+        if self._current_order is not None:
+            # When selling, reduce virtual units
+            if self._current_order.order.side == OrderSide.SELL:
+                self._virtual_available_units -= \
+                    self._current_order.order.units
+            return self._current_order.send()
+        return False
 
     def is_valid_price(self, price: int) -> bool:
         """
         Check if price is valid, that is, it's proper considering minimum,
         minimum and tick
         :param price: The price to be checked
-        :return: True if valid, else false
+        :return: True if valid, else False
         """
-        # TODO implement price checking
+        return (self._minimum < price < self.maximum and
+                (price - self._minimum) % self._tick != 0)
 
     def build_covariance(self, markets) -> None:
         for market in markets:
@@ -213,59 +295,150 @@ class Market:
 
 
 class OrderHolder:
-    def __init__(self, market_id):
+    # TODO implement cancel order logic
+    def __init__(self, market_id, agent):
+        """
+        Initialise an OrderHolder instance that holds all orders of a market
+        :param market_id: Order of a market it's holding
+        :param agent: The agent bot for logging
+        """
         self._market_id = market_id
-
+        self._agent: CAPMBot = agent
         # The order it's currently holding
-        self._active_orders = []
+        self._orders: List[MyOrder] = []
 
     @property
-    def active_order(self):
+    def orders(self):
         """
-        Retrieve active order
+        Retrieve active orders
         :return: list of active orders, None if failed to retrieve
         """
         try:
-            return copy.deepcopy(self._active_orders)
+            return copy.deepcopy(self._orders)
         except KeyError:
             return None
 
-    def order_accepted(self, order: Order) -> bool:
+    def add_order(self, price, units, order_type,
+                  order_side, market_id, order_role,
+                  order_status=OrderStatus.INACTIVE, orig_order=None):
+        """
+        Add order to order holder, default to inactive order, and return
+        reference to the created MyOrder object
+        :keyword order_status OrderStatus of order added (only aimed
+                                                          for internal use)
+        :keyword orig_order The order object to be added if
+                 there is already such orders (so fixing issues)
+        :return: MyOrder object created during addition
+        """
+        order = MyOrder(price, units, order_type, order_side,
+                        market_id, order_role, order_status)
+        if orig_order:
+            order.order = orig_order
+        self._orders.append(order)
+        self._agent.inform([str(order) for order in self._orders])
+        return order
+
+    def order_accepted(self, order: Order):
         """
         Add new accepted_order to active_order
         :param order: The order accepted
         :return: True if added successfully, False otherwise
                  (E.g. Order invalid or no id for order provided)
         """
-        pass
+        # TODO handle CANCEL order, if order is cancel, remove something
+        # Check all orders to find corresponding order, and accept it
+        self._orders = sort_order_by_date(self._orders)
+        for my_order in self._orders:
+            if order.type == OrderType.CANCEL and \
+                    MyOrder.compare_order(my_order.cancel_order, order) == \
+                    OrderCompare.IDENTICAL:
+                self._orders.remove(my_order)
+                break
+            if MyOrder.compare_order(my_order, order) ==\
+                    OrderCompare.IDENTICAL:
+                my_order.accepted()
+                break
+        # Didn't find matching order
+        else:
+            self._agent.warning(str(order) + ": Didn't find matching order")
+            order_role = OrderRole.REACTIVE
+            if order.ref is not None:
+                if order.ref[-2:] == "MM":
+                    order_role = OrderRole.MARKET_MAKER
+                else:
+                    order_role = OrderRole.REACTIVE
+            self.add_order(order.price, order.units, order.type, order.side,
+                           order.market_id, order_role, OrderStatus.ACCEPTED,
+                           order)
 
-    def order_rejected(self, order: Order) -> None:
+    def order_rejected(self, order: Order):
         """
         Handles rejection of orders in order holder
         :param order: The rejected order
         """
-        pass
+        # TODO handle CANCEL order...
+        self._orders = sort_order_by_date(self._orders)
+        for my_order in self._orders:
+            if MyOrder.compare_order(my_order, order) == \
+                    OrderCompare.IDENTICAL:
+                self._orders.remove(my_order)
+                break
+        # Didn't find matching order
+        else:
+            self._agent.warning(str(order) + ": Didn't find matching order")
 
-    def sort(self):
-        self._active_orders = sorted(self._active_orders, key=self.key)
+    def update_received_order_book(self, order_book):
+        mine_orders = [order for order in order_book if order.mine is True]
+        self._orders = sort_order_by_date(self._orders)
+        for order in mine_orders:
+            for my_order in self._orders:
+                compare = MyOrder.compare_order(my_order, order)
+                # Identical order, update its delay indicator
+                if compare == OrderCompare.IDENTICAL:
+                    if my_order.delayed():
+                        my_order.cancel()
+                    break
+            # Didn't find order in all kept orders
+            else:
+                self._agent.warning(str(order) +
+                                    ": Didn't find matching order")
+                # Treat it as if it's reactive order if didn't find record
+                self.add_order(order.price, order.units, order.type,
+                               order.side, order.market_id, OrderRole.REACTIVE,
+                               OrderStatus.ACCEPTED, order)
 
-    @staticmethod
-    def key(my_order):
-        return my_order.order
+    def update_completed_orders(self, orders):
+        mine_orders = sort_order_by_date([order for order in
+                                          orders if order.mine is True])
+        self._orders = sort_order_by_date(self._orders)
+        for order in mine_orders:
+            for my_order in self._orders:
+                compare = MyOrder.compare_order(my_order, order)
+                # Identical order, fully traded, remove it
+                if compare == OrderCompare.SAME_ORDER:
+                    self._orders.remove(my_order)
+                    break
+                # Partially traded order
+                elif compare == OrderCompare.SAME_PRICE and \
+                        my_order.order.units > order.units:
+                    my_order.partial_traded(order)
 
 
 class MyOrder:
     MM_ORDER_MAX_DELAY = 5
     REACTIVE_ORDER_MAX_DELAY = 1
+    AGENT = None
 
     def __init__(self, price, units, order_type, order_side, market_id,
-                 order_role):
+                 order_role, order_status=OrderStatus.INACTIVE):
         ref = self._make_order_ref(price, units, order_type, order_side,
                                    market_id, order_role)
         self._order = Order(price, units, order_type, order_side, market_id,
                             ref=ref)
+        self._cancel_order = None
         self._order_delay = 0
         self._order_role = order_role
+        self._order_status = order_status
 
     @staticmethod
     def _make_order_ref(price, units, order_type,
@@ -280,11 +453,7 @@ class MyOrder:
         :param order_role: Market maker or reactive
         :return: A standard string containing all information
         """
-
-        ref = ":" + time.strftime(("%y" + SEPARATION + "%m" + SEPARATION
-                                   + "%d" +SEPARATION + "%H" + SEPARATION
-                                   + "%M" +SEPARATION + "%S"),
-                                  time.localtime()) + SEPARATION
+        ref = ":" + time.strftime(DATE_FORMAT, time.localtime()) + SEPARATION
         ref += str(price) + SEPARATION
         ref += str(units) + SEPARATION
         ref += ORDER_TYPE_TO_CHAR[order_type] + SEPARATION
@@ -301,8 +470,88 @@ class MyOrder:
     def order(self, order):
         self._order = order
 
+    @property
+    def cancel_order(self):
+        return copy.copy(self._order)
+
+    @cancel_order.setter
+    def cancel_order(self, cancel_order):
+        self._cancel_order = cancel_order
+
+    def send(self):
+        """
+        Send the order
+        :return: True if successfully sent, False otherwise
+        """
+        if self.AGENT is not None and self._order_status ==\
+                OrderStatus.INACTIVE:
+            self.AGENT.send_order(self._order)
+            self._order_status = OrderStatus.PENDING
+            return True
+        return False
+
+    def cancel(self):
+        if self.AGENT is not None:
+            self._cancel_order = copy.copy(self._order)
+            self._cancel_order.type = OrderType.CANCEL
+            self.AGENT.send_order(self._cancel_order)
+
+    def accepted(self):
+        self._order_status = OrderStatus.ACCEPTED
+
+    def delayed(self, times=1):
+        """
+        Called when this order is delayed,
+        and return if the order should be cancelled
+        :return: True if exceeded max delay, false otherwise
+        """
+        self._order_delay += times
+        return self._should_cancel()
+
+    def partial_traded(self, order):
+        """
+        Called when order is partially_traded and return if the order
+        should be cancelled, if not reset the order delay
+        :param order: The order in completed orders
+        """
+        if self._order_role == OrderRole.REACTIVE:
+            return True
+        self._order_delay = 0
+        self._order.units = self._order.units - order.units
+        return False
+
+    def _should_cancel(self):
+        """
+        Check if should cancel itself, based on the current delay
+        :return: True if need to cancel, False otherwise
+        """
+        if self._order_role == OrderRole.MARKET_MAKER and \
+                self._order_delay >= self.MM_ORDER_MAX_DELAY:
+            return True
+        elif self._order_role == OrderRole.REACTIVE and \
+                self._order_delay >= self.REACTIVE_ORDER_MAX_DELAY:
+            return True
+        else:
+            return False
+
+    @classmethod
+    def set_agent(cls, agent):
+        """
+        Set up the agent used to send orders
+        """
+        cls.AGENT: CAPMBot = agent
+
     @staticmethod
     def compare_order(order1, order2):
+        """
+        Compare if two orders are same, either Order or MyOrder can be passed
+        :param order1: The first order to compare
+        :param order2: The first order to compare
+        :return: OrderCompare.IDENTICAL if two orders are completely same
+                 OrderCompare.SAME_PRICE if two orders differs in unit but
+                                    not price (thus might be the same order)
+                 OrderCompare.DIFFERENT if two orders can't possibly be same
+        """
         if isinstance(order1, MyOrder):
             order1 = order1._order
         if isinstance(order2, MyOrder):
@@ -312,18 +561,48 @@ class MyOrder:
             return OrderCompare.DIFFERENT
         # Handles accepted_order() and rejected order()
         elif (order1.ref is not None and order2.ref is not None
-            and order1.ref == order2.ref):
+              and order1.ref == order2.ref):
             return OrderCompare.IDENTICAL
         # Handles accepted order but not traded yet
         elif (order1.id is not None and order2.id is not None and
               order1.id == order2.id):
             return OrderCompare.IDENTICAL
         # When price same but units differs
+        elif order1.price == order2.price and order1.units == order2.units:
+            return OrderCompare.SAME_ORDER
         elif order1.price == order2.price and order1.units != order2.units:
             return OrderCompare.SAME_PRICE
         # Other conditions
         else:
             return OrderCompare.DIFFERENT
+
+
+def key(order):
+    """
+    Takes an Order or a MyOrder object and return it's date attribute, for
+    sorting purpose only. For order WITHOUT date, the time now will
+    be used
+    :param order: the object to be sorted
+    :return: datetime object contained in it
+    """
+    assert isinstance(order, (MyOrder, Order))
+    if isinstance(order, MyOrder):
+        date = order.order.date
+    else:
+        date = order.date
+    if date is None:
+        date = datetime.datetime.now()
+    return date
+
+
+def sort_order_by_date(orders, reverse=False):
+    """
+    Sort the given orders by time so that comparing logic will work well.
+    :return:
+    """
+    return sorted(orders, key=key, reverse=reverse)
+
+# ----- End of Helper classes -----
 
 
 class CAPMBot(Agent):
@@ -350,6 +629,9 @@ class CAPMBot(Agent):
         self._available_cash = self._cash
         # A virtual holding, simulating condition if order got accepted
         self._virtual_available_cash = self._available_cash
+
+        # Set up agent for Order sender
+        MyOrder.set_agent(self)
 
     def initialised(self):
         """
@@ -401,25 +683,19 @@ class CAPMBot(Agent):
         self.fn_start()
         self.get_completed_orders(market_id)
         self.inform("received order book from %d" % market_id)
-        od = None
-        for order in order_book:
-            if order.mine:
-                self.inform(order)
-                self.inform(order.date)
-
         try:
-            self.fn_end()
-            pass
+            self._my_markets[market_id].update_received_order_book(order_book)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
-    def _get_bid_ask_price(self, orders):
-        """
-        Get the best bid and best ask price of the market
-        :param orders: Orders from the order book
-        :return: Best bid and best ask
-        """
-        pass
+    # TODO move this to market section
+    # def _get_bid_ask_price(self, orders):
+    #     """
+    #     Get the best bid and best ask price of the market
+    #     :param orders: Orders from the order book
+    #     :return: Best bid and best ask
+    #     """
+    #     pass
 
     def received_completed_orders(self, orders, market_id=None):
         self.fn_start()
@@ -438,8 +714,7 @@ class CAPMBot(Agent):
         self._available_cash = cash["available_cash"]
 
         for market_id, units in holdings["markets"]:
-            self._my_markets[market_id].units = units["units"]
-            self._my_markets[market_id].available_units = units["available_units"]
+            self._my_markets[market_id].update_units(units)
 
         self.fn_end()
         pass
@@ -464,7 +739,7 @@ class CAPMBot(Agent):
         :param order_book: Received Order book
         :param market_id: Id of the market where order_book come from
         """
-        pass
+        self._my_markets[market_id].update_received_order_book(order_book)
 
     def _update_completed_order(self, orders: List[Order],
                                 market_id: int) -> None:
@@ -473,20 +748,24 @@ class CAPMBot(Agent):
         :param orders: List of completed orders
         :param market_id: Id of the market where completed orders come from
         """
-        pass
+        self._my_markets[market_id].update_completed_orders(orders)
 
-    def _check_order(self, price, units, order_type,
-                     order_side, market_id) -> bool:
+    def _check_order(self, price, units, order_side, market_id) -> bool:
         """
-        Check if an order can be sent based on cash or unit holdings
+        Check if an order can be sent based on cash or unit holdings, this only
+        support limit order, use MyOrder's object method cancel to cancel order
         :param price: price to send order at
         :param units: units to send
-        :param order_type: type of order
         :param order_side: side of order
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
-        pass
+        if order_side == OrderSide.BUY:
+            return self._virtual_available_cash >= price * units
+        else:
+            market: Market = self.markets[market_id]
+            return market.is_valid_price(price) and \
+                   market.virtual_available_units >= units
 
     def _send_order(self, price, units, order_type,
                     order_side, market_id, order_role) -> bool:
@@ -500,8 +779,18 @@ class CAPMBot(Agent):
         :param order_role: role of order (market_maker or reactive)
         :return: True if successfully sent, false if failed check
         """
-        # TODO first make MyOrder then send it
-        pass
+        if self._check_order(price, units, order_side, market_id):
+            market:Market = self._my_markets[market_id]
+            market.add_order(price, units, order_type, order_side,
+                             market_id, order_role)
+            return market.send_current_order()
+        else:
+            return False
+
+    def _cancel_order(self):
+        """
+        cancel some order, not implemented yet (not used right now)
+        """
     # ---   END ORDER HANDLER   ---
 
     def run(self):

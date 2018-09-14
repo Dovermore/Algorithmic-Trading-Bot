@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Task2/test.file.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log" afterDir="false" />
@@ -14,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1536901928413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1536928011439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
     <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1536901846073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
     <SUITE FILE_PATH="coverage/FNCE30010Project1$MarketTest.coverage" NAME="MarketTest Coverage Results" MODIFIED="1536850480937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
   </component>
@@ -31,26 +30,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="log" value="2" />
-          <entry key="py" value="8" />
+          <entry key="py" value="15" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="8" />
+          <entry key="Python" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="12155" />
+          <entry key="py" value="21041" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="12155" />
+          <entry key="Python" value="21041" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -62,26 +61,45 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="172" column="68" selection-start-line="172" selection-start-column="68" selection-end-line="172" selection-end-column="68" />
+            <state relative-caret-position="3141">
+              <caret line="476" column="17" selection-start-line="476" selection-start-column="17" selection-end-line="476" selection-end-column="17" />
               <folding>
                 <element signature="e#224#245#0" expanded="true" />
-                <marker date="1536903310081" expanded="true" signature="1552:1611" ph="..." />
-                <marker date="1536903310081" expanded="true" signature="3803:3804" ph="..." />
-                <marker date="1536903310081" expanded="true" signature="4080:4806" ph="..." />
-                <marker date="1536903310081" expanded="true" signature="5106:5112" ph="..." />
-                <marker date="1536903310081" expanded="true" signature="6044:6046" ph="..." />
-                <marker date="1536903310081" expanded="true" signature="14688:14694" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="1618:1735" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="4224:4225" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="4650:4656" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="5839:5843" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="7435:8107" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="9115:9117" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="10494:10806" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="16985:17191" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="17260:17266" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="17583:17979" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="18004:18641" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="25817:25822" ph="..." />
+                <marker date="1536928119677" expanded="true" signature="27447:27544" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/constants.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="1706" column="101" selection-start-line="1706" selection-start-column="90" selection-end-line="1706" selection-end-column="101" />
+            <state relative-caret-position="413">
+              <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/helper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="26" column="17" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,19 +117,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Task2/MarketTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <marker date="1536888255341" expanded="true" signature="1436:1442" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Task1/logs/j.lee161@student.unimelb.edu.au-260-bot.log">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
@@ -121,10 +126,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Task1/BasicBot-Submit.py">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="728" selection-start-line="728" selection-end-line="748" selection-end-column="18" />
+            <state relative-caret-position="240">
+              <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/fmio/net/fmapi/rest/request.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="509">
+              <caret line="208" column="30" selection-start-line="208" selection-start-column="30" selection-end-line="208" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -137,17 +151,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/data/orm/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="108" column="11" lean-forward="true" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/helper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="44" column="16" lean-forward="true" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="16" />
+            <state relative-caret-position="-825">
+              <caret line="9" column="72" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -163,34 +168,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>is_opti</find>
-      <find>os.</find>
-      <find>get</find>
-      <find>order_acce</find>
-      <find>lt</find>
-      <find>__</find>
-      <find>list[</find>
-      <find>order</find>
-      <find>np.</find>
-      <find>holding</find>
-      <find>self.marke</find>
-      <find>markets</find>
-      <find>_markets</find>
-      <find>self.markets</find>
-      <find>self.sess</find>
-      <find>self.risk</find>
-      <find>self.ava</find>
-      <find>self.</find>
-      <find>possi</find>
-      <find>possible</find>
       <find>_states</find>
-      <find>received_ho</find>
       <find>ref</find>
       <find>date</find>
       <find>receive</find>
       <find>key</find>
       <find>Market(</find>
       <find>._hos</find>
+      <find>locat</find>
+      <find>local</find>
+      <find>received_ho</find>
+      <find>order_accepted</find>
+      <find>Request</find>
+      <find>_callback</find>
+      <find>callback_func</find>
+      <find>response_json</find>
+      <find>format</find>
+      <find>host</find>
+      <find>remove</find>
+      <find>market</find>
+      <find>class M</find>
+      <find>send</find>
+      <find>def send_cu</find>
+      <find>received_c</find>
+      <find>update_received_order_book</find>
+      <find>received_co</find>
+      <find>tz=</find>
+      <find>Didn't find matching order</find>
+      <find>same_price</find>
+      <find>print</find>
+      <find>0x11102c9e8</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -204,6 +211,7 @@
       <list>
         <option value="$PROJECT_DIR$/Task2/MarketTest.py" />
         <option value="$PROJECT_DIR$/Task2/test.file.py" />
+        <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py" />
         <option value="$PROJECT_DIR$/Task2/CAPMBot.py" />
       </list>
     </option>
@@ -242,6 +250,82 @@
               <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
               <item name="Task2" type="462c0819:PsiDirectoryNode" />
               <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="fmclient" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="fmclient" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="fmclient" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="fmclient" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="orm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="python3.6" type="462c0819:PsiDirectoryNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="fmclient" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -399,6 +483,28 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Task2/CAPMBot.py</url>
+          <line>296</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Task2/CAPMBot.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Task2/CAPMBot.py</url>
+          <line>426</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Task2/CAPMBot.py</url>
+          <line>607</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
@@ -420,16 +526,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Task2/Notes.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Task1/logs/j.lee161@student.unimelb.edu.au-260-bot.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="15442" column="107" selection-start-line="15442" selection-start-column="107" selection-end-line="15442" selection-end-column="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Task2/MarketTest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -441,10 +537,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py">
+    <entry file="file://$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8621">
-          <caret line="599" column="26" lean-forward="true" selection-start-line="599" selection-start-column="26" selection-end-line="599" selection-end-column="26" />
+        <state relative-caret-position="73">
+          <caret line="1706" column="101" selection-start-line="1706" selection-start-column="90" selection-end-line="1706" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task1/BasicBot-Submit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="728" selection-start-line="728" selection-end-line="748" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task1/logs/j.lee161@student.unimelb.edu.au-260-bot.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="15442" column="107" selection-start-line="15442" selection-start-column="107" selection-end-line="15442" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task2/Notes.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -458,46 +578,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Task1/BasicBot-Submit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="728" selection-start-line="728" selection-end-line="748" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="1706" column="101" selection-start-line="1706" selection-start-column="90" selection-end-line="1706" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/helper.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/fmio/net/fmapi/rest/fmsession.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/fmio/net/fmapi/rest/request.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="509">
-          <caret line="44" column="16" lean-forward="true" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="16" />
+          <caret line="208" column="30" selection-start-line="208" selection-start-column="30" selection-end-line="208" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/data/orm/order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="108" column="11" lean-forward="true" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="11" />
+        <state relative-caret-position="-825">
+          <caret line="9" column="72" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="172" column="68" selection-start-line="172" selection-start-column="68" selection-end-line="172" selection-end-column="68" />
+        <state relative-caret-position="3141">
+          <caret line="476" column="17" selection-start-line="476" selection-start-column="17" selection-end-line="476" selection-end-column="17" />
           <folding>
             <element signature="e#224#245#0" expanded="true" />
-            <marker date="1536903310081" expanded="true" signature="1552:1611" ph="..." />
-            <marker date="1536903310081" expanded="true" signature="3803:3804" ph="..." />
-            <marker date="1536903310081" expanded="true" signature="4080:4806" ph="..." />
-            <marker date="1536903310081" expanded="true" signature="5106:5112" ph="..." />
-            <marker date="1536903310081" expanded="true" signature="6044:6046" ph="..." />
-            <marker date="1536903310081" expanded="true" signature="14688:14694" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="1618:1735" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="4224:4225" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="4650:4656" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="5839:5843" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="7435:8107" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="9115:9117" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="10494:10806" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="16985:17191" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="17260:17266" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="17583:17979" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="18004:18641" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="25817:25822" ph="..." />
+            <marker date="1536928119677" expanded="true" signature="27447:27544" ph="..." />
           </folding>
         </state>
       </provider>
