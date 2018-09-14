@@ -22,26 +22,68 @@ payoffs = {
             }  # Return table
 
 
-def payoff_variance(payoff, num_state):
+def payoff_variance(payoff, num_states=4):
     squared_states = []
     for states in payoff:
         squared_states.append(states**2)
-    return (1/num_state*sum(squared_states))-((1/(num_states**2))*sum(payoff)**2)
+    return (1/num_states*sum(squared_states))-((1/(num_states**2))*sum(payoff)**2)
 
 
-def expected_return(stock, num_state):
-    exp_ret = sum(stock)/num_state
+def all_variance(given_payoffs, num_states=4):
+    cal_variances = {}
+    for individual_stock in given_payoffs:
+        ind_variance = payoff_variance(given_payoffs[individual_stock], num_states)
+        cal_variances[individual_stock] = ind_variance
+    return cal_variances
+
+
+def expected_return(stock, num_state=4, num_stocks=1):
+    exp_ret = num_stocks*sum(stock)/num_state
     return exp_ret
 
 
-def payoff_covariance(first_stock, second_stock, num_state):
+def initial_expected_return(given_payoffs, num_states=4):
+    expected_returns = {}
+    for individual_stock in given_payoffs:
+        ind_exp_ret = expected_return(given_payoffs[individual_stock],
+                                      num_states)
+        expected_returns[individual_stock] = ind_exp_ret
+    return expected_returns
+
+
+def update_expected_return(units, given_payoffs, num_states=4):
+    expected_returns = {}
+    for individual_stock in given_payoffs:
+        ind_exp_ret = expected_return(given_payoffs[individual_stock],
+                                      num_states,
+                                      units[individual_stock])
+        expected_returns[individual_stock] = ind_exp_ret
+    return expected_returns
+
+
+def payoff_covariance(first_stock, second_stock, num_states=4):
     first_stock_payoff = payoffs[first_stock]
     second_stock_payoff = payoffs[second_stock]
     multiplied = []
-    for num in range(num_state):
+    for num in range(num_states):
         multiplied.append(first_stock_payoff[num]*second_stock_payoff[num])
-    return (1/num_state)*sum(multiplied) - \
-           (expected_returns[first_stock]*expected_returns[second_stock])
+    return (1/num_states)*sum(multiplied) - \
+           (ini_exp_ret[first_stock]*ini_exp_ret[second_stock])
+
+
+def total_covariance(given_payoffs, num_states=4):
+    cal_covariance = {}
+    for first_iter_stocks in given_payoffs.keys():
+        for second_iter_stocks in given_payoffs.keys():
+            to_be_key = sorted([first_iter_stocks, second_iter_stocks])
+            key_for_dict = str(to_be_key[0])+'-'+str(to_be_key[1])
+            if first_iter_stocks != second_iter_stocks and \
+                    key_for_dict not in cal_covariance:
+                individual_covariance = payoff_covariance(first_iter_stocks,
+                                                          second_iter_stocks,
+                                                          num_states)
+                cal_covariance[key_for_dict] = individual_covariance
+    return cal_covariance
 
 
 def units_payoff_variance(units, variance, covariance):
@@ -56,34 +98,23 @@ def units_payoff_variance(units, variance, covariance):
     return total_variance
 
 
-num_states = 4
-variances = {}
-expected_returns = {}
-covariances = {}
-for individual_stock in payoffs:
-    ind_variance = payoff_variance(payoffs[individual_stock], num_states)
-    ind_exp_ret = expected_return(payoffs[individual_stock], num_states)
-    expected_returns[individual_stock] = ind_exp_ret
-    variances[individual_stock] = ind_variance
-
-for first_iter_stocks in payoffs.keys():
-    for second_iter_stocks in payoffs.keys():
-        to_be_key = sorted([first_iter_stocks, second_iter_stocks])
-        key_for_dict = str(to_be_key[0])+'-'+str(to_be_key[1])
-        if first_iter_stocks != second_iter_stocks and \
-                key_for_dict not in covariances:
-            individual_covariance = payoff_covariance(first_iter_stocks,
-                                                      second_iter_stocks,
-                                                      num_states)
-            covariances[key_for_dict] = individual_covariance
-
 print('variance')
+variances = all_variance(payoffs)
 print(variances)
-print('expected_returns')
-print(expected_returns)
+print('')
+print('initial expected_returns')
+ini_exp_ret = initial_expected_return(payoffs)
+print(ini_exp_ret)
+print('')
+print('updated expected return')
+new_exp_ret = update_expected_return(holdings, payoffs)
+print(new_exp_ret)
+print('')
 print('covariances')
+covariances = total_covariance(payoffs)
 print(covariances)
-
+print('')
+print('total payoff variance')
 tot_payoff_variance = units_payoff_variance(holdings, variances, covariances)
 print(tot_payoff_variance)
 
@@ -95,8 +126,15 @@ def calculate_performance(holding, b=-0.01):
     :param b: risk penalty, given -0.01
     :return: performance
     """
-    pass
+    tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
+    new_expected_return = update_expected_return(holdings, payoffs)
+    expected_payoff = sum(new_expected_return.values())
+    return expected_payoff+b*tot_payoff_variance
 
+
+print('')
+print('performance')
+print(calculate_performance(holdings))
 
 t0 = time.time()
 
@@ -115,12 +153,12 @@ def make_orders(orders, holding):
 
             for potential_order_units in range(1, units):
 
-                if side == 'bid':
+                if side == 'ask':
                     holding2[market] += potential_order_units
-                elif side == 'ask':
+                elif side == 'bid':
                     holding2[market] -= potential_order_units
 
-                performance = calculate_performance(holdings)
+                performance = calculate_performance(holding2)
                 if performance_to_compare:
                     performance_to_compare = performance
                     order_to_make = [potential_order_units, side]
