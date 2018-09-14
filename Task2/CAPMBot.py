@@ -180,6 +180,7 @@ class Market:
 
     def update_units(self, unit_dict):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         This function is used in received holdings to update the units in
         one particular market. Will also keep track and update outdated
         virtual holdings.
@@ -205,11 +206,17 @@ class Market:
 
     @classmethod
     def set_states(cls, states):
+        """
+        ---- Should not be used elsewhere. Need not to read ----
+        :param states:
+        :return:
+        """
         assert states > 0
         cls.states = states
 
     def order_accepted(self, order: Order):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Market side order accepted processing, update available units
         :param order: The order accepted
         """
@@ -223,6 +230,7 @@ class Market:
 
     def order_rejected(self, order: Order):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Market side order rejected processing
         :param order: The order rejected
         """
@@ -234,11 +242,18 @@ class Market:
         self.order_holder.order_rejected(order)
 
     def update_received_order_book(self, order_book):
+        """
+        ---- Should not be used elsewhere. Need not to read ----
+        :param order_book: Order book from market
+        """
         # TODO More logic here, update best_bid, best ask, and order book
         self._order_book = order_book
         self.order_holder.update_received_order_book(order_book)
 
     def update_completed_orders(self, orders):
+        """
+        ---- Should not be used elsewhere. Need not to read ----
+        """
         # TODO More logic here
         self.order_holder.\
             update_completed_orders(orders[self._completed_order_index:])
@@ -298,6 +313,7 @@ class OrderHolder:
     # TODO implement cancel order logic
     def __init__(self, market_id, agent):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Initialise an OrderHolder instance that holds all orders of a market
         :param market_id: Order of a market it's holding
         :param agent: The agent bot for logging
@@ -322,6 +338,7 @@ class OrderHolder:
                   order_side, market_id, order_role,
                   order_status=OrderStatus.INACTIVE, orig_order=None):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Add order to order holder, default to inactive order, and return
         reference to the created MyOrder object
         :keyword order_status OrderStatus of order added (only aimed
@@ -340,6 +357,7 @@ class OrderHolder:
 
     def order_accepted(self, order: Order):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Add new accepted_order to active_order
         :param order: The order accepted
         :return: True if added successfully, False otherwise
@@ -373,6 +391,7 @@ class OrderHolder:
 
     def order_rejected(self, order: Order):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Handles rejection of orders in order holder
         :param order: The rejected order
         """
@@ -388,12 +407,18 @@ class OrderHolder:
             self._agent.warning(str(order) + ": Didn't find matching order")
 
     def update_received_order_book(self, order_book):
+        """
+        ---- Should not be used elsewhere. Need not to read ----
+        Update orders based on received order book
+        """
         mine_orders = [order for order in order_book if order.mine is True]
         self._orders = sort_order_by_date(self._orders)
         for order in mine_orders:
             for my_order in self._orders:
                 compare = MyOrder.compare_order(my_order, order)
                 # Identical order, update its delay indicator
+                # Partially traded orders will be updated by completed orders
+                # Don't need to update it here
                 if compare == OrderCompare.IDENTICAL:
                     if my_order.delayed():
                         my_order.cancel()
@@ -408,6 +433,10 @@ class OrderHolder:
                                OrderStatus.ACCEPTED, order)
 
     def update_completed_orders(self, orders):
+        """
+        ---- Should not be used elsewhere. Need not to read ----
+        Update orders based on completed orders
+        """
         mine_orders = sort_order_by_date([order for order in
                                           orders if order.mine is True])
         self._orders = sort_order_by_date(self._orders)
@@ -480,6 +509,7 @@ class MyOrder:
 
     def send(self):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Send the order
         :return: True if successfully sent, False otherwise
         """
@@ -491,16 +521,24 @@ class MyOrder:
         return False
 
     def cancel(self):
-        if self.AGENT is not None:
+        """
+        Cancel this order
+        :return: True if cancel success, False otherwise
+        """
+        if self.AGENT is not None and self._order_status ==\
+                OrderStatus.ACCEPTED:
             self._cancel_order = copy.copy(self._order)
             self._cancel_order.type = OrderType.CANCEL
             self.AGENT.send_order(self._cancel_order)
+            return True
+        return False
 
     def accepted(self):
         self._order_status = OrderStatus.ACCEPTED
 
     def delayed(self, times=1):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Called when this order is delayed,
         and return if the order should be cancelled
         :return: True if exceeded max delay, false otherwise
@@ -510,6 +548,7 @@ class MyOrder:
 
     def partial_traded(self, order):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Called when order is partially_traded and return if the order
         should be cancelled, if not reset the order delay
         :param order: The order in completed orders
@@ -544,6 +583,7 @@ class MyOrder:
     @staticmethod
     def compare_order(order1, order2):
         """
+        ---- Should not be used elsewhere. Need not to read ----
         Compare if two orders are same, either Order or MyOrder can be passed
         :param order1: The first order to compare
         :param order2: The first order to compare
@@ -579,6 +619,7 @@ class MyOrder:
 
 def key(order):
     """
+    ---- Should not be used elsewhere. Need not to read ----
     Takes an Order or a MyOrder object and return it's date attribute, for
     sorting purpose only. For order WITHOUT date, the time now will
     be used
@@ -597,8 +638,9 @@ def key(order):
 
 def sort_order_by_date(orders, reverse=False):
     """
+    ---- Should not be used elsewhere. Need not to read ----
     Sort the given orders by time so that comparing logic will work well.
-    :return:
+    :return: Sorted list or orders
     """
     return sorted(orders, key=key, reverse=reverse)
 
