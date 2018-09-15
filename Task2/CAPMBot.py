@@ -721,15 +721,26 @@ class CAPMBot(Agent):
         :param orders: list of orders
         :return:
         """
-        # TODO implement holding calculation and call calculate_performance
-        pass
+        new_holdings = {}
+        new_cash = self._cash
+        for market in self._my_markets.keys():
+            new_holdings[market] = self._my_markets[market].units
+        for order in orders:
+            if order.side == OrderSide.SELL:
+                new_holdings[order.market_id] -= order.units
+                new_cash += order.price * order.units
+            else:
+                new_holdings[order.market_id] += order.units
+                new_cash -= order.price * order.units
+
+        new_performance = self.calculate_performance(new_holdings, new_cash)
+        return new_performance
 
     ##########################################################################
     @staticmethod
     def units_payoff_variance(units):
         total_variance = 0
         for market_id in units.keys():
-            market_id = market_id
             total_variance += (units[market_id]**2)*\
                               (Market.variances[market_id])
         for market_ids in Market.covariances.keys():
@@ -751,18 +762,19 @@ class CAPMBot(Agent):
             expected_returns[individual_stock] = ind_exp_ret
         return expected_returns
 
-    def calculate_performance(self):
+    def calculate_performance(self, holdings, cash):
         """
         Calculates the portfolio performance
-        :param holding: assets held
-        :param b: risk penalty, given -0.01
+        :param holdings: dictionary with market IDs and units held
+        :param cash: cash held
         :return: performance
         """
         b = self._risk_penalty
-        tot_payoff_variance = self.units_payoff_variance()
-        new_expected_return = self.update_expected_return()
-        expected_payoff = sum(new_expected_return.values())
-        return expected_payoff+b*tot_payoff_variance
+        expected_payoff = cash
+        tot_payoff_variance = self.units_payoff_variance(holdings)
+        for market in holdings.keys():
+            expected_payoff += self._my_markets[market].expected_return * holdings[market]
+        return expected_payoff - b*tot_payoff_variance
     ##########################################################################
 
     def is_portfolio_optimal(self):
@@ -1006,6 +1018,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_CH + [MARKETPLACE_MANUAL]
+    FM_SETTING = [FM_ACCOUNT] + FM_CH + [MARKETPLACE_ID1]
     bot = CAPMBot(*FM_SETTING)
     bot.run()
