@@ -141,11 +141,11 @@ t0 = time.time()
 
 def make_orders(orders, holding):
     store_orders = {}
-    holding1 = holding
+    holding_accumulate = holding
     for market in orders.keys():
         market_to_check = orders[market]
         order_to_make = None
-        holding2 = holding1
+        holding_to_test = holding_accumulate
 
         for buy_sell in market_to_check:
             price, units, side = buy_sell
@@ -154,11 +154,11 @@ def make_orders(orders, holding):
             for potential_order_units in range(1, units):
 
                 if side == 'ask':
-                    holding2[market] += potential_order_units
+                    holding_to_test[market] += potential_order_units
                 elif side == 'bid':
-                    holding2[market] -= potential_order_units
+                    holding_to_test[market] -= potential_order_units
 
-                performance = calculate_performance(holding2)
+                performance = calculate_performance(holding_to_test)
                 if performance_to_compare:
                     performance_to_compare = performance
                     order_to_make = [potential_order_units, side]
