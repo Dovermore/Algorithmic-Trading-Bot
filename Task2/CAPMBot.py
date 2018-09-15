@@ -77,6 +77,8 @@ class Market:
     """
     SYNC_MAX_DELAY = 2
     states = -1
+    covariances = {}
+    variances = {}
 
     def __init__(self, market_dict: dict, agent):
         # Parse market information into the object
@@ -89,7 +91,6 @@ class Market:
         self._item = market_dict["item"]
         self._description = market_dict["description"]
         self._payoffs = tuple(int(a) for a in self._description.split(","))
-        self._covariances = {}
         if self.states == -1:
             self.set_states(len(self._payoffs))
         else:
@@ -149,10 +150,6 @@ class Market:
     @property
     def expected_return(self):
         return self._expected_return
-
-    @property
-    def covariances(self):
-        return self._covariances
 
     @property
     def units(self):
@@ -292,21 +289,49 @@ class Market:
                 (price - self._minimum) % self._tick != 0)
 
     def build_covariance(self, markets) -> None:
+        for first_iter_market in markets:
+            market_id1 = first_iter_market.market_id
+            for second_iter_market in markets:
+                market_id2 = second_iter_market.market_id
+                to_be_key = sorted([market_id1, market_id2])
+                key_for_dict = str(to_be_key[0])+'-'+str(to_be_key[1])
+                if market_id1 != market_id2 and \
+                        key_for_dict not in Market.covariances:
+                    Market.covariances[key_for_dict] = \
+                        self.compute_covariance(first_iter_market,
+                                                second_iter_market)
+
+    def build_variance(self, markets) -> None:
         for market in markets:
-            self._covariances[market.market_id] = \
-                self.compute_covariance(self._payoffs, market.payoffs)
+            Market.variances[market.market_id] = \
+                self.compute_variance(market.payoffs)
 
     @staticmethod
-    def compute_covariance(payoff1: Tuple[int],
-                           payoff2: Tuple[int]) -> float:
+    def compute_variance(payoff: Tuple[int]) -> float:
+        squared_payoff = []
+        for states in payoff:
+            squared_payoff.append(states**2)
+        return ((1/Market.states)*sum(squared_payoff)) - \
+               ((1/(Market.states**2))*(sum(payoff)**2))
+
+    @staticmethod
+    def compute_covariance(market1, market2):
         """
         Compute the covariance between list of payoff1 and payoff2, they
         have to be the same length
-        :param payoff1: List of payoff1
-        :param payoff2: List of payoff2
+        :param market1:
+        :param market2: List of payoff2
         :return: the covariance value
         """
         # TODO implement compute covariance procedure
+        cross_multiply = ()
+        payoff1 = tuple(market1.payoffs)
+        payoff2 = tuple(market2.payoffs)
+        exp_ret1 = market1.expected_return
+        exp_ret2 = market2.expected_return
+        for num in range(Market.states):
+            cross_multiply += (payoff1[num]*payoff2[num])
+        return (1/Market.states)*sum(cross_multiply) - (exp_ret1*exp_ret2)
 
 
 class OrderHolder:
@@ -693,13 +718,40 @@ class CAPMBot(Agent):
         """
         Returns the portfolio performance if the given list of orders is
         executed.
-        The performance as per the following formula:
-        Performance = ExpectedPayoff - b * PayoffVariance, where b is the
-        penalty for risk.
         :param orders: list of orders
         :return:
         """
+        # TODO implement holding calculation and call calculate_performance
         pass
+
+    ##########################################################################
+    @staticmethod
+    def units_payoff_variance(units):
+        total_variance = 0
+        for market_id in units.keys():
+            market_id = market_id
+            total_variance += (units[market_id]**2)*\
+                              (Market.variances[market_id])
+        for market_ids in Market.covariances.keys():
+            ind_market_id = market_ids.split('-')
+            total_variance += (2*units[int(ind_market_id[0])]) * \
+                              (units[int(ind_market_id[1])]) * \
+                              (Market.covariances[market_ids])
+        return total_variance
+
+    def calculate_performance(self):
+        """
+        Calculates the portfolio performance
+        :param holding: assets held
+        :param b: risk penalty, given -0.01
+        :return: performance
+        """
+        b = self._risk_penalty
+        tot_payoff_variance = self.units_payoff_variance()
+        new_expected_return = self.update_expected_return()
+        expected_payoff = sum(new_expected_return.values())
+        return expected_payoff+b*tot_payoff_variance
+    ##########################################################################
 
     def is_portfolio_optimal(self):
         """
@@ -838,16 +890,6 @@ class CAPMBot(Agent):
     def run(self):
         self.initialise()
         self.start()
-
-    def calculate_performance(self, expected_payoff, payoff_var):
-        """
-        Calculates the portfolio performance
-        :param expected_payoff: potential payoff at end of session
-        :param payoff_var: variance of portfolio
-        :return: performance
-        """
-        performance = expected_payoff - self._risk_penalty*payoff_var
-        return performance
 
     def _line_break_inform(self, msg="", char="-",
                            length=BASE_LEN, width=BASE_LEN):
