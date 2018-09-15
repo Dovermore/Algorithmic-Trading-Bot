@@ -750,18 +750,6 @@ class CAPMBot(Agent):
                               (Market.covariances[market_ids])
         return total_variance
 
-    @staticmethod
-    def expected_return(units):
-        exp_ret = num_stocks*sum(stock)/Market.states
-        return exp_ret
-
-    def update_expected_return(self, units, given_payoffs, num_states=4):
-        expected_returns = {}
-        for individual_stock in given_payoffs:
-            ind_exp_ret = self.expected_return(units)
-            expected_returns[individual_stock] = ind_exp_ret
-        return expected_returns
-
     def calculate_performance(self, holdings, cash):
         """
         Calculates the portfolio performance
