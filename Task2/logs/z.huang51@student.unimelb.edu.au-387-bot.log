@@ -15841,3 +15841,5 @@
 [2018-09-14 22:27:02,027:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
 [2018-09-14 22:27:02,032:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
 [2018-09-14 22:27:03,655:      agent.CAPM_Bot]:    ERROR - Oops. Keyboard Interrupt received from user.
+
+=============================== Log Started [2018-09-14 23:41:21 AEST] ===============================

@@ -802,12 +802,13 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
+        # TODO check multiple orders at once
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
             market: Market = self.markets[market_id]
-            return market.is_valid_price(price) and \
-                   market.virtual_available_units >= units
+            return (market.is_valid_price(price) and
+                    market.virtual_available_units >= units)
 
     def _send_order(self, price, units, order_type,
                     order_side, market_id, order_role) -> bool:
@@ -821,6 +822,7 @@ class CAPMBot(Agent):
         :param order_role: role of order (market_maker or reactive)
         :return: True if successfully sent, false if failed check
         """
+        # TODO virtual holding check
         if self._check_order(price, units, order_side, market_id):
             market:Market = self._my_markets[market_id]
             market.add_order(price, units, order_type, order_side,
