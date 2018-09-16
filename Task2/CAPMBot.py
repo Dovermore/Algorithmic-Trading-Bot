@@ -979,12 +979,12 @@ class CAPMBot(Agent):
 
     @staticmethod
     def read_variance(market, variance):
-        return "The variance for %d is %3d" %(market, variance)
+        return "The variance for market %d is %3d" % (market, variance)
 
     @staticmethod
     def read_covariance(market1, market2, covariance):
-        return "The covariance between %d and %d is %3d" \
-               %(market1, market2, covariance)
+        return "The covariance between market %d and market %d is %3d" \
+               % (market1, market2, covariance)
 
     @staticmethod
     def get_stack_size():
