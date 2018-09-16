@@ -1,9 +1,14 @@
+import copy
+
+
 available_orders = {
-                    250: [[400, 4, 'bid'], [600, 5, 'ask']],  # Stock A
-                    350: [[550, 3, 'bid'], [700, 6, 'ask']],  # Stock B
-                    450: [[450, 5, 'bid'], [550, 2, 'ask']],  # Stock C
-                    550: [[300, 4, 'bid'], [650, 7, 'ask']]   # risk-free
+                    250: {"bid": {"price": 400, "units": 4}, 'ask': {"price": 600, "units": 5}},  # Stock A
+                    350: {"bid": {"price": 550, "units": 3}, 'ask': {"price": 700, "units": 6}},  # Stock B
+                    450: {"bid": {"price": 450, "units": 5}, 'ask': {"price": 550, "units": 2}},  # Stock C
+                    550: {"bid": {"price": 300, "units": 4}, 'ask': {"price": 650, "units": 7}},  # risk-free
                     }
+
+cash = 5000
 
 holdings = {
                 250: 10,  # Stock A
@@ -113,8 +118,8 @@ covariances = total_covariance(payoffs)
 print(covariances)
 print('')
 print('total payoff variance')
-tot_payoff_variance = units_payoff_variance(holdings, variances, covariances)
-print(tot_payoff_variance)
+total_payoff_variance = units_payoff_variance(holdings, variances, covariances)
+print(total_payoff_variance)
 
 
 def calculate_performance(holding, b=-0.01):
@@ -125,10 +130,70 @@ def calculate_performance(holding, b=-0.01):
     :return: performance
     """
     tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
-    new_expected_return = update_expected_return(holdings, payoffs)
-    expected_payoff = sum(new_expected_return.values())
+    expected_payoff = cash
+    for market in holding:
+        expected_payoff += ini_exp_ret[market]*holding[market]
     return expected_payoff+b*tot_payoff_variance
+
 
 print('')
 print('performance')
 print(calculate_performance(holdings))
+
+TEMPLATE_TO_MAKE_ORDER = {'price': 0, 'units': 0, 'side': 0}
+
+
+def best_order(order_from_markets, money, hold):
+    """
+    Process best bid and best ask retrieved from market here
+    :param order_from_markets: Orders from each market (dictionary with market id as key)
+    :param money: cash available
+    :param hold: current holdings of account
+    :return: best combination of order that maximizes performance
+    """
+    orders_to_make = {}
+    virtual_cash = cash        # virtual cash that only exist in the function
+    holding = copy.copy(hold)  # virtual holding that only exist in the function
+    for market in order_from_markets.keys():
+        market_order_to_make = copy.copy(TEMPLATE_TO_MAKE_ORDER)
+        for order in order_from_markets[market]:
+            print(market, order)
+        orders_to_make[market] = market_order_to_make
+
+
+def check_unit(num):
+    pass
+
+
+def copy_price(order):
+    pass
+
+
+def make_price(order):
+    pass
+
+
+best_order(available_orders, cash, holdings)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
