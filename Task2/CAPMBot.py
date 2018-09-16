@@ -765,7 +765,7 @@ class CAPMBot(Agent):
         total_variance = 0
         # Holding squared times its variance
         for market_id in units.keys():
-            total_variance += (units[market_id]**2)*\
+            total_variance += (units[market_id]**2) * \
                               (self.variances[market_id])
 
         # Holding1 times Holding2 times covariance
@@ -816,6 +816,7 @@ class CAPMBot(Agent):
         self.inform("received order book from %d" % market_id)
         try:
             self._my_markets[market_id].update_received_order_book(order_book)
+            self.fn_end()
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
