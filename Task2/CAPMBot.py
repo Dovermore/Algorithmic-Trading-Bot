@@ -89,7 +89,6 @@ class Market:
         self._item = market_dict["item"]
         self._description = market_dict["description"]
         self._payoffs = tuple(int(a) for a in self._description.split(","))
-        self._covariances = {}
         if self.states == -1:
             self.set_states(len(self._payoffs))
         else:
@@ -149,10 +148,6 @@ class Market:
     @property
     def expected_return(self):
         return self._expected_return
-
-    @property
-    def covariances(self):
-        return self._covariances
 
     @property
     def units(self):
@@ -290,23 +285,6 @@ class Market:
         """
         return (self._minimum < price < self.maximum and
                 (price - self._minimum) % self._tick != 0)
-
-    def build_covariance(self, markets) -> None:
-        for market in markets:
-            self._covariances[market.market_id] = \
-                self.compute_covariance(self._payoffs, market.payoffs)
-
-    @staticmethod
-    def compute_covariance(payoff1: Tuple[int],
-                           payoff2: Tuple[int]) -> float:
-        """
-        Compute the covariance between list of payoff1 and payoff2, they
-        have to be the same length
-        :param payoff1: List of payoff1
-        :param payoff2: List of payoff2
-        :return: the covariance value
-        """
-        # TODO implement compute covariance procedure
 
 
 class OrderHolder:
@@ -666,6 +644,9 @@ class CAPMBot(Agent):
         self._risk_penalty = risk_penalty
 
         self._my_markets: Dict[int, Market] = {}
+        self.covariances = {}
+        self.variances = {}
+        self.collect_payoffs = {}
 
         self._cash = 0
         self._available_cash = self._cash
@@ -686,6 +667,8 @@ class CAPMBot(Agent):
             self.inform(market_id)
             self.inform(self._str_market(market_dict))
             self._my_markets[market_id] = Market(market_dict, self)
+        self.build_variance()
+        self.build_covariance()
         self.inform("There are %s possible states" % str(Market.states))
         self.fn_end()
 
@@ -693,13 +676,109 @@ class CAPMBot(Agent):
         """
         Returns the portfolio performance if the given list of orders is
         executed.
-        The performance as per the following formula:
-        Performance = ExpectedPayoff - b * PayoffVariance, where b is the
-        penalty for risk.
         :param orders: list of orders
         :return:
         """
-        pass
+        new_holdings = {}
+        new_cash = self._cash
+        for market in self._my_markets.keys():
+            new_holdings[market] = self._my_markets[market].units
+        for order in orders:
+            if order.side == OrderSide.SELL:
+                new_holdings[order.market_id] -= order.units
+                new_cash += order.price * order.units
+            else:
+                new_holdings[order.market_id] += order.units
+                new_cash -= order.price * order.units
+
+        new_performance = self.calculate_performance(new_holdings, new_cash)
+        return new_performance
+
+    ##########################################################################
+    def build_covariance(self) -> None:
+        """
+        Build the covariance for all payoffs
+        :return: None
+        """
+        for first_iter_market in self._my_markets.keys():
+            market_id1 = self._my_markets[first_iter_market].market_id
+            for second_iter_market in self._my_markets:
+                market_id2 = self._my_markets[second_iter_market].market_id
+                to_be_key = sorted([market_id1, market_id2])
+                key_for_dict = str(to_be_key[0])+'-'+str(to_be_key[1])
+                if market_id1 != market_id2 and \
+                        key_for_dict not in self.covariances:
+                    self.covariances[key_for_dict] = \
+                        self.compute_covariance(
+                            self._my_markets[first_iter_market],
+                            self._my_markets[second_iter_market])
+                    self.inform(self.read_covariance
+                                (market_id1, market_id2,
+                                 self.covariances[key_for_dict]))
+
+    def build_variance(self) -> None:
+        """
+        Build the Variance for all Payoffs
+        :return: None
+        """
+        for market in self._my_markets.keys():
+            self.variances[market] = \
+                self.compute_variance(self._my_markets[market].payoffs)
+            self.inform(self.read_variance(market, self.variances[market]))
+
+    @staticmethod
+    def compute_variance(payoff: Tuple[int]) -> float:
+        squared_payoff = []
+        for states in payoff:
+            squared_payoff.append(states**2)
+        return ((1/Market.states)*sum(squared_payoff)) - \
+               ((1/(Market.states**2))*(sum(payoff)**2))
+
+    @staticmethod
+    def compute_covariance(market1, market2):
+        """
+        Compute the covariance between list of payoff1 and payoff2, they
+        have to be the same length
+        :param market1:
+        :param market2: List of payoff2
+        :return: the covariance value
+        """
+        # TODO implement compute covariance procedure
+        cross_multiply = []
+        payoff1 = tuple(market1.payoffs)
+        payoff2 = tuple(market2.payoffs)
+        exp_ret1 = market1.expected_return
+        exp_ret2 = market2.expected_return
+        for num in range(Market.states):
+            cross_multiply.append(payoff1[num]*payoff2[num])
+        return (1/Market.states)*sum(cross_multiply) - (exp_ret1*exp_ret2)
+
+    def units_payoff_variance(self, units):
+        total_variance = 0
+        for market_id in units.keys():
+            total_variance += (units[market_id]**2)*\
+                              (self.variances[market_id])
+        for market_ids in self.covariances.keys():
+            ind_market_id = market_ids.split('-')
+            total_variance += (2*units[int(ind_market_id[0])]) * \
+                              (units[int(ind_market_id[1])]) * \
+                              (self.covariances[market_ids])
+        return total_variance
+
+    def calculate_performance(self, holdings, cash):
+        """
+        Calculates the portfolio performance
+        :param holdings: dictionary with market IDs and units held
+        :param cash: cash held
+        :return: performance
+        """
+        b = self._risk_penalty
+        expected_payoff = cash
+        tot_payoff_variance = self.units_payoff_variance(holdings)
+        for market in holdings.keys():
+            expected_payoff += self._my_markets[market].expected_return * holdings[market]
+        return expected_payoff - b*tot_payoff_variance
+    ##########################################################################
 
     def is_portfolio_optimal(self):
         """
@@ -841,16 +920,6 @@ class CAPMBot(Agent):
         self.initialise()
         self.start()
 
-    def calculate_performance(self, expected_payoff, payoff_var):
-        """
-        Calculates the portfolio performance
-        :param expected_payoff: potential payoff at end of session
-        :param payoff_var: variance of portfolio
-        :return: performance
-        """
-        performance = expected_payoff - self._risk_penalty*payoff_var
-        return performance
-
     def _line_break_inform(self, msg="", char="-",
                            length=BASE_LEN, width=BASE_LEN):
         """
@@ -909,6 +978,16 @@ class CAPMBot(Agent):
 
     # Used for visualisation of function call as stacks, that it's easier to
     # trace through functions
+
+    @staticmethod
+    def read_variance(market, variance):
+        return "The variance for market %d is %3d" % (market, variance)
+
+    @staticmethod
+    def read_covariance(market1, market2, covariance):
+        return "The covariance between market %d and market %d is %3d" \
+               % (market1, market2, covariance)
+
     @staticmethod
     def get_stack_size():
         """
@@ -954,6 +1033,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_CH + [MARKETPLACE_MANUAL]
+    FM_SETTING = [FM_ACCOUNT] + FM_CH + [MARKETPLACE_ID1]
     bot = CAPMBot(*FM_SETTING)
     bot.run()
