@@ -2,10 +2,14 @@ import copy
 
 
 available_orders = {
-                    250: {"bid": {"price": 400, "units": 4}, 'ask': {"price": 600, "units": 5}},  # Stock A
-                    350: {"bid": {"price": 550, "units": 3}, 'ask': {"price": 700, "units": 6}},  # Stock B
-                    450: {"bid": {"price": 450, "units": 5}, 'ask': {"price": 550, "units": 2}},  # Stock C
-                    550: {"bid": {"price": 300, "units": 4}, 'ask': {"price": 650, "units": 7}},  # risk-free
+                    250: {"bid": {"price": 400, "units": 4},
+                          'ask': {"price": 600, "units": 5}},  # Stock A
+                    350: {"bid": {"price": 550, "units": 3},
+                          'ask': {"price": 700, "units": 6}},  # Stock B
+                    450: {"bid": {"price": 450, "units": 5},
+                          'ask': {"price": 550, "units": 2}},  # Stock C
+                    550: {"bid": {"price": 300, "units": 4},
+                          'ask': {"price": 650, "units": 4}},  # risk-free
                     }
 
 cash = 5000
@@ -122,47 +126,74 @@ total_payoff_variance = units_payoff_variance(holdings, variances, covariances)
 print(total_payoff_variance)
 
 
-def calculate_performance(holding, b=-0.01):
+def calculate_performance(orders_to_make, b=-0.01):
     """
     Calculates the portfolio performance
-    :param holding: assets held
+    :param orders_to_make: orders to make
     :param b: risk penalty, given -0.01
     :return: performance
     """
-    tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
-    expected_payoff = cash
-    for market in holding:
-        expected_payoff += ini_exp_ret[market]*holding[market]
-    return expected_payoff+b*tot_payoff_variance
+    try:
+        holding = copy.copy(holdings)
+        expected_payoff = cash
 
+        for order in orders_to_make.keys():
+            holding[order] = orders_to_make[order]['units']
 
-print('')
-print('performance')
-print(calculate_performance(holdings))
+            if orders_to_make[order]['side'] == 'buy':
+                expected_payoff -= orders_to_make[order]['units']\
+                                   * orders_to_make[order]['price']
+
+            elif orders_to_make[order]['side'] == 'sell':
+                expected_payoff += orders_to_make[order]['units']\
+                                   * orders_to_make[order]['price']
+
+        tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
+
+        for market in holding:
+            expected_payoff += ini_exp_ret[market]*holding[market]
+
+        return expected_payoff+b*tot_payoff_variance
+
+    except Exception as e:
+        print("Error Happened")
+        print(e)
+
 
 TEMPLATE_TO_MAKE_ORDER = {'price': 0, 'units': 0, 'side': 0}
 
 
-def best_order(order_from_markets, money, hold):
+def create_order():
     """
     Process best bid and best ask retrieved from market here
-    :param order_from_markets: Orders from each market (dictionary with market id as key)
-    :param money: cash available
-    :param hold: current holdings of account
     :return: best combination of order that maximizes performance
     """
     orders_to_make = {}
     virtual_cash = cash        # virtual cash that only exist in the function
-    holding = copy.copy(hold)  # virtual holding that only exist in the function
-    for market in order_from_markets.keys():
-        market_order_to_make = copy.copy(TEMPLATE_TO_MAKE_ORDER)
-        for order in order_from_markets[market]:
-            print(market, order)
-        orders_to_make[market] = market_order_to_make
+    holding = copy.copy(holdings)  # virtual holding that only exist in the function
+    for market in available_orders.keys():
+        orders_to_make[market] = copy.copy(TEMPLATE_TO_MAKE_ORDER)
+
+    return orders_to_make
 
 
-def check_unit(num):
-    pass
+def check_performance(perform=None, to_compare=None):
+    new_orders = create_order()
+    new_performance = calculate_performance(new_orders)
+
+    if perform is None and to_compare is None:
+        return check_performance(perform=new_performance)
+
+    elif to_compare is None:
+        return check_performance(perform, new_performance)
+
+    else:
+        if perform < new_performance:
+            # TODO make order here based on orders from calculate_performance
+            return "Current best performing order is found!"
+
+        elif perform > new_performance:
+            return 'life'
 
 
 def copy_price(order):
@@ -173,13 +204,26 @@ def make_price(order):
     pass
 
 
-best_order(available_orders, cash, holdings)
+# check_performance()
+sort_performance = []
+# TEMPLATE_TO_MAKE_ORDER = {'price': 0, 'units': 0, 'side': 0}
 
 
+def best_order(available):
+    options_to_test = []
+    for market in available.keys():
+        m_market = {}
+        for side in available[market].keys():
+            units = available[market][side]['units']
+            price = available[market][side]['price']
+            for i in range(units):
+                create = copy.copy(TEMPLATE_TO_MAKE_ORDER)
+                create['price'] = price
+                create['units'] = i
+                create['side'] = side
 
 
-
-
+print(best_order(available_orders))
 
 
 

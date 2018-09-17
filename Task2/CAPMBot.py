@@ -107,6 +107,8 @@ class Market:
         self._sync_delay = 0
         self._units = 0
         self._available_units = self._units
+        # update to agent regarding holdings that is made/cancelled
+        self._agent._current_holdings[self._market_id] = self._available_units
         # A virtual holding, simulating condition if order got accepted
         self._virtual_available_units = self._available_units
 
@@ -644,9 +646,9 @@ class CAPMBot(Agent):
         self._risk_penalty = risk_penalty
 
         self._my_markets: Dict[int, Market] = {}
-        self.covariances = {}
-        self.variances = {}
-        self.collect_payoffs = {}
+        self._covariances = {}
+        self._variances = {}
+        self._current_holdings = {}
 
         self._cash = 0
         self._available_cash = self._cash
@@ -667,8 +669,8 @@ class CAPMBot(Agent):
             self.inform(market_id)
             self.inform(self._str_market(market_dict))
             self._my_markets[market_id] = Market(market_dict, self)
-        self.build_variance()
-        self.build_covariance()
+        self._build_variance()
+        self._build_covariance()
         self.inform("There are %s possible states" % str(Market.states))
         self.fn_end()
 
@@ -691,10 +693,10 @@ class CAPMBot(Agent):
                 new_holdings[order.market_id] += order.units
                 new_cash -= order.price * order.units
 
-        new_performance = self.calculate_performance(new_holdings, new_cash)
+        new_performance = self._calculate_performance(new_holdings, new_cash)
         return new_performance
 
-    def build_covariance(self) -> None:
+    def _build_covariance(self) -> None:
         """
         Build the covariance for all payoffs
         :return: None, builds the covariance dictionary
@@ -706,29 +708,29 @@ class CAPMBot(Agent):
                 to_be_key = sorted([market_id1, market_id2])
                 key_for_dict = str(to_be_key[0])+'-'+str(to_be_key[1])
                 if market_id1 != market_id2 and \
-                        key_for_dict not in self.covariances:
-                    self.covariances[key_for_dict] = \
-                        self.compute_covariance(
+                        key_for_dict not in self._covariances:
+                    self._covariances[key_for_dict] = \
+                        self._compute_covariance(
                         self._my_markets[first_iter_market].payoffs,
                         self._my_markets[second_iter_market].payoffs,
                         self._my_markets[first_iter_market].expected_return,
                         self._my_markets[second_iter_market].expected_return)
-                    self.inform(self.read_covariance
+                    self.inform(self._read_covariance
                                 (market_id1, market_id2,
-                                 self.covariances[key_for_dict]))
+                                 self._covariances[key_for_dict]))
 
-    def build_variance(self) -> None:
+    def _build_variance(self) -> None:
         """
         Build the Variance for all Payoffs
         :return: None, builds the variance dictionary
         """
         for market in self._my_markets.keys():
-            self.variances[market] = \
-                self.compute_variance(self._my_markets[market].payoffs)
-            self.inform(self.read_variance(market, self.variances[market]))
+            self._variances[market] = \
+                self._compute_variance(self._my_markets[market].payoffs)
+            self.inform(self._read_variance(market, self._variances[market]))
 
     @staticmethod
-    def compute_variance(payoff: Tuple[int]) -> float:
+    def _compute_variance(payoff: Tuple[int]) -> float:
         """
         Compute the variance of the market's payoff
         :param payoff: Tuple of the market's payoff
@@ -741,7 +743,7 @@ class CAPMBot(Agent):
                ((1/(Market.states**2))*(sum(payoff)**2))
 
     @staticmethod
-    def compute_covariance(payoff1, payoff2, exp_ret1, exp_ret2):
+    def _compute_covariance(payoff1, payoff2, exp_ret1, exp_ret2):
         """
         Compute the covariance between list of payoff1 and payoff2, they
         have to be the same length
@@ -756,7 +758,7 @@ class CAPMBot(Agent):
             cross_multiply.append(payoff1[num]*payoff2[num])
         return (1/Market.states)*sum(cross_multiply) - (exp_ret1*exp_ret2)
 
-    def units_payoff_variance(self, units):
+    def _units_payoff_variance(self, units):
         """
         Computes the payoff variance of expected and current holdings
         :param units: holdings of a certain market stock
@@ -766,28 +768,29 @@ class CAPMBot(Agent):
         # Holding squared times its variance
         for market_id in units.keys():
             total_variance += (units[market_id]**2) * \
-                              (self.variances[market_id])
+                              (self._variances[market_id])
 
         # Holding1 times Holding2 times covariance
-        for market_ids in self.covariances.keys():
+        for market_ids in self._covariances.keys():
             ind_market_id = market_ids.split('-')
             total_variance += (2*units[int(ind_market_id[0])]) * \
                               (units[int(ind_market_id[1])]) * \
-                              (self.covariances[market_ids])
+                              (self._covariances[market_ids])
         return total_variance
 
-    def calculate_performance(self, holdings, cash):
+    def _calculate_performance(self, cash, holdings):
         """
         Calculates the portfolio performance
-        :param holdings: dictionary with market IDs and units held
-        :param cash: cash held
+        :param cash: cash expected to hold after making order
+        :param holdings: expected holdings after making order
         :return: performance
         """
         b = self._risk_penalty
         expected_payoff = cash
-        tot_payoff_variance = self.units_payoff_variance(holdings)
+        tot_payoff_variance = self._units_payoff_variance(holdings)
         for market in holdings.keys():
-            expected_payoff += self._my_markets[market].expected_return * holdings[market]
+            expected_payoff += self._my_markets[market].expected_return * \
+                               holdings[market]
         return expected_payoff - b*tot_payoff_variance
 
     def is_portfolio_optimal(self):
@@ -899,6 +902,114 @@ class CAPMBot(Agent):
             return (market.is_valid_price(price)) and \
                    (market.virtual_available_units >= units)
 
+    def _make_order(self, best_bid_price, best_ask_price,
+                    best_bid_unit, best_ask_unit, market_id):
+        """
+        Given best bid and best ask from a market, decide to order
+        :param best_bid_price: best bid price
+        :param best_ask_price: best ask price
+        :param best_bid_unit: number of unit from the best bid
+        :param best_ask_unit: number of unit from the best ask
+        :return: best order for that market
+        """
+        sell_same_price = self._same_price(best_bid_price,
+                                           best_bid_unit, 'sell', market_id)
+        buy_same_price = self._same_price(best_ask_price,
+                                          best_ask_unit, 'buy', market_id)
+
+        same_best_perform = sorted([sell_same_price, buy_same_price])[0][0]
+
+        buy_make_price = self._make_price(best_bid_price,
+                                          best_bid_unit, best_ask_price,
+                                          'buy', market_id, same_best_perform)
+        sell_make_price = self._make_price(best_ask_price,
+                                           best_ask_unit, best_bid_price,
+                                           'sell', market_id,
+                                           same_best_perform)
+
+        compare = sorted([sell_make_price, sell_same_price,
+                          buy_same_price, buy_make_price])
+
+        return compare[0]
+
+    def _same_price(self, price, units, side, market_id):
+        """
+        calculate the performance using price given in best bid or best ask
+        :param price: either best bid or best ask
+        :param units: units to consider (default set to 1)
+        :param side: which side to order
+        :param market_id: market to be traded in
+        :return: performance, price, units, side, market id
+        """
+
+        cash = self._virtual_available_cash
+        holdings = self._current_holdings
+
+        if side == 'buy':
+            cash -= price * units
+            holdings[market_id] += units
+
+        elif side == 'sell':
+            cash += price * units
+            holdings[market_id] -= units
+
+        performance = self._calculate_performance(cash, holdings)
+        return [performance, price, units, side, market_id]
+
+    def _make_price(self, price, units, opposite_price, side, market_id,
+                    performance_to_compare):
+        """
+        Create prices that may be profitable
+        :param price: either best bid or best ask
+        :param units: units to consider (default set to 1)
+        :param opposite_price: relative price to compare to
+                               ensure ability to trade
+        :param side: which side to order
+        :param market_id: market to be traded in
+        :param performance_to_compare: compare to reactive order performance
+        :return performance (0 if does not improve) alongside price, units,
+                side, market id
+        """
+        try:
+            tick = self._my_markets[market_id].tick
+            cash = self._virtual_available_cash
+            holdings = self._current_holdings
+            new_performance = 0
+            make_price = 0
+
+            if side == 'buy':
+                holdings[market_id] += units
+                if opposite_price - price > tick:
+                    for increase_price in range(price, opposite_price, tick):
+                        to_test_cash = cash
+                        to_test_cash -= increase_price * units
+                        performance = self._calculate_performance(to_test_cash,
+                                                                  holdings)
+                        if performance > performance_to_compare and \
+                                performance > new_performance:
+                            new_performance = performance
+                            make_price = increase_price
+
+            elif side == 'sell':
+                holdings[market_id] -= units
+                if price - opposite_price > tick:
+                    lower_bound = opposite_price - \
+                                  (opposite_price-price)//tick*tick
+                    for decrease in range(tick, lower_bound, tick):
+                        to_test_cash = cash
+                        to_test_cash -= (price-decrease) * units
+                        performance = self._calculate_performance(to_test_cash,
+                                                                  holdings)
+                        if performance > performance_to_compare and \
+                                performance > new_performance:
+                            new_performance = performance
+                            make_price = price-decrease
+
+            return [new_performance, make_price, units, side, market_id]
+
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+
     def _send_order(self, price, units, order_type,
                     order_side, market_id, order_role) -> bool:
         """
@@ -989,11 +1100,11 @@ class CAPMBot(Agent):
     # trace through functions
 
     @staticmethod
-    def read_variance(market, variance):
+    def _read_variance(market, variance):
         return "The variance for market %d is %3d" % (market, variance)
 
     @staticmethod
-    def read_covariance(market1, market2, covariance):
+    def _read_covariance(market1, market2, covariance):
         return "The covariance between market %d and market %d is %3d" \
                % (market1, market2, covariance)
 
@@ -1032,16 +1143,16 @@ if __name__ == "__main__":
 
     FM_EMAIL_JD = "j.lee161@student.unimelb.edu.au"
     FM_PASSWORD_JD = "888086"
-    FM_JD = [FM_EMAIL_CH, FM_PASSWORD_CH]
+    FM_JD = [FM_EMAIL_JD, FM_PASSWORD_JD]
 
     FM_EMAIL_NP = "n.price3@student.unimelb.edu.au"
     FM_PASSWORD_NP = "836389"
-    FM_NP = [FM_EMAIL_CH, FM_PASSWORD_CH]
+    FM_NP = [FM_EMAIL_NP, FM_PASSWORD_NP]
 
     MARKETPLACE_MANUAL = 387
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_CH + [MARKETPLACE_ID1]
+    FM_SETTING = [FM_ACCOUNT] + FM_JD + [MARKETPLACE_MANUAL]
     bot = CAPMBot(*FM_SETTING)
     bot.run()
