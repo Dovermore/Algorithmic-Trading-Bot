@@ -958,7 +958,7 @@ class CAPMBot(Agent):
         holdings = self._current_holdings
 
         if side == 'buy':
-            order_can_make["side"] = OrderSide.BUY  # TODO why is not match when given None
+            order_can_make["side"] = OrderSide.BUY  # TODO why does it not match when given None
             cash -= price * units
             holdings[market_id] += units
 
