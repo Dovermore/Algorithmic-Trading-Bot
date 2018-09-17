@@ -1,4 +1,22 @@
 import copy
+import operator
+origin_list = [
+    {"name": "foo", "rank": 0, "rofl": 20000},
+    {"name": "Silly", "rank": 15, "rofl": 1000},
+    {"name": "Baa", "rank": 300, "rofl": 20},
+    {"name": "Zoo", "rank": 10, "rofl": 200},
+    {"name": "Penguin", "rank": -1, "rofl": 10000}
+]
+print(">> Original >>")
+for foo in origin_list:
+    print(foo)
+
+print("\n>> Rofl sort >>")
+print(sorted(origin_list, key=operator.itemgetter("rofl"), reverse=True)[0])
+
+print("\n>> Rank sort >>")
+for foo in sorted(origin_list, key=operator.itemgetter("rank")):
+    print(foo)
 
 
 available_orders = {

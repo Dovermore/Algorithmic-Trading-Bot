@@ -13,6 +13,7 @@ from typing import List, Tuple, Dict
 import copy
 import time
 import datetime
+import operator
 
 # <For debugging only>
 import inspect
@@ -49,6 +50,9 @@ ORDER_ROLE_TO_CHAR = {
     OrderRole.REACTIVE: "RE"
 }
 SEPARATION = "-"  # for most string separation
+
+TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
+                                  "side": None, "market_id": None}
 
 
 # Status of current order if there is any
@@ -912,25 +916,31 @@ class CAPMBot(Agent):
         :param best_ask_unit: number of unit from the best ask
         :return: best order for that market
         """
+        # TODO make sure that best bid and best ask has
+        # TODO minimum value of zero and not None
         sell_same_price = self._same_price(best_bid_price,
                                            best_bid_unit, 'sell', market_id)
+
         buy_same_price = self._same_price(best_ask_price,
                                           best_ask_unit, 'buy', market_id)
 
-        same_best_perform = sorted([sell_same_price, buy_same_price])[0][0]
+        same_price_best = sorted([sell_same_price, buy_same_price])[0][0]
 
         buy_make_price = self._make_price(best_bid_price,
                                           best_bid_unit, best_ask_price,
-                                          'buy', market_id, same_best_perform)
+                                          'buy', market_id, same_price_best)
+
         sell_make_price = self._make_price(best_ask_price,
                                            best_ask_unit, best_bid_price,
-                                           'sell', market_id,
-                                           same_best_perform)
+                                           'sell', market_id, same_price_best)
 
-        compare = sorted([sell_make_price, sell_same_price,
-                          buy_same_price, buy_make_price])
+        compare_list = sorted([sell_make_price, sell_same_price,
+                               buy_same_price, buy_make_price])
 
-        return compare[0]
+        best_order = sorted(compare_list, key=operator.itemgetter("performance"),
+                            reverse=True)[0]
+
+        return best_order
 
     def _same_price(self, price, units, side, market_id):
         """
@@ -942,19 +952,28 @@ class CAPMBot(Agent):
         :return: performance, price, units, side, market id
         """
 
+        order_can_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+
         cash = self._virtual_available_cash
         holdings = self._current_holdings
 
         if side == 'buy':
+            order_can_make["side"] = OrderSide.BUY  # TODO why is not match when given None
             cash -= price * units
             holdings[market_id] += units
 
         elif side == 'sell':
+            order_can_make["side"] = OrderSide.SELL
             cash += price * units
             holdings[market_id] -= units
 
         performance = self._calculate_performance(cash, holdings)
-        return [performance, price, units, side, market_id]
+        order_can_make["performance"] = performance
+        order_can_make["price"] = price
+        order_can_make["units"] = units
+        order_can_make["market_id"] = market_id
+
+        return order_can_make
 
     def _make_price(self, price, units, opposite_price, side, market_id,
                     performance_to_compare):
@@ -971,6 +990,8 @@ class CAPMBot(Agent):
                 side, market id
         """
         try:
+            order_can_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+
             tick = self._my_markets[market_id].tick
             cash = self._virtual_available_cash
             holdings = self._current_holdings
@@ -978,6 +999,7 @@ class CAPMBot(Agent):
             make_price = 0
 
             if side == 'buy':
+                order_can_make["side"] = OrderSide.BUY
                 holdings[market_id] += units
                 if opposite_price - price > tick:
                     for increase_price in range(price, opposite_price, tick):
@@ -991,6 +1013,7 @@ class CAPMBot(Agent):
                             make_price = increase_price
 
             elif side == 'sell':
+                order_can_make["side"] = OrderSide.SELL
                 holdings[market_id] -= units
                 if price - opposite_price > tick:
                     lower_bound = opposite_price - \
@@ -1005,7 +1028,12 @@ class CAPMBot(Agent):
                             new_performance = performance
                             make_price = price-decrease
 
-            return [new_performance, make_price, units, side, market_id]
+            order_can_make["performance"] = new_performance
+            order_can_make["price"] = make_price
+            order_can_make["units"] = units
+            order_can_make["market_id"] = market_id
+
+            return order_can_make
 
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
