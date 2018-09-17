@@ -916,31 +916,35 @@ class CAPMBot(Agent):
         :param best_ask_unit: number of unit from the best ask
         :return: best order for that market
         """
-        # TODO make sure that best bid and best ask has
-        # TODO minimum value of zero and not None
-        sell_same_price = self._same_price(best_bid_price,
-                                           best_bid_unit, 'sell', market_id)
+        try:
+            # TODO make sure that best bid and best ask has
+            # TODO minimum value of zero and not None
+            sell_same_price = self._same_price(best_bid_price,
+                                               best_bid_unit, 'sell', market_id)
 
-        buy_same_price = self._same_price(best_ask_price,
-                                          best_ask_unit, 'buy', market_id)
+            buy_same_price = self._same_price(best_ask_price,
+                                              best_ask_unit, 'buy', market_id)
 
-        same_price_best = sorted([sell_same_price, buy_same_price])[0][0]
+            same_price_best = sorted([sell_same_price, buy_same_price])[0][0]
 
-        buy_make_price = self._make_price(best_bid_price,
-                                          best_bid_unit, best_ask_price,
-                                          'buy', market_id, same_price_best)
+            buy_make_price = self._make_price(best_bid_price,
+                                              best_bid_unit, best_ask_price,
+                                              'buy', market_id, same_price_best)
 
-        sell_make_price = self._make_price(best_ask_price,
-                                           best_ask_unit, best_bid_price,
-                                           'sell', market_id, same_price_best)
+            sell_make_price = self._make_price(best_ask_price,
+                                               best_ask_unit, best_bid_price,
+                                               'sell', market_id, same_price_best)
 
-        compare_list = sorted([sell_make_price, sell_same_price,
-                               buy_same_price, buy_make_price])
+            compare_list = sorted([sell_make_price, sell_same_price,
+                                   buy_same_price, buy_make_price])
 
-        best_order = sorted(compare_list, key=operator.itemgetter("performance"),
-                            reverse=True)[0]
+            best_order = sorted(compare_list, key=operator.itemgetter("performance"),
+                                reverse=True)[0]
 
-        return best_order
+            return best_order
+
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
 
     def _same_price(self, price, units, side, market_id):
         """
