@@ -678,24 +678,25 @@ class CAPMBot(Agent):
         self.inform("There are %s possible states" % str(Market.states))
         self.fn_end()
 
-    def get_potential_performance(self, orders):
+    def get_potential_performance(self, orders=None):
         """
         Returns the portfolio performance if the given list of orders is
         executed.
-        :param orders: list of orders
+        :param orders: list of orders (list of lists)
         :return: performance
         """
         new_holdings = {}
-        new_cash = self._cash
+        new_cash = self._available_cash
         for market in self._my_markets.keys():
             new_holdings[market] = self._my_markets[market].virtual_available_units
-        for order in orders:
-            if order.side == OrderSide.SELL:
-                new_holdings[order.market_id] -= order.units
-                new_cash += order.price * order.units
-            else:
-                new_holdings[order.market_id] += order.units
-                new_cash -= order.price * order.units
+        if orders is not None:
+            for order in orders:
+                if order.side == OrderSide.SELL:
+                    new_holdings[order.market_id] -= order.units
+                    new_cash += order.price * order.units
+                else:
+                    new_holdings[order.market_id] += order.units
+                    new_cash -= order.price * order.units
 
         new_performance = self._calculate_performance(new_holdings, new_cash)
         return new_performance
@@ -785,8 +786,8 @@ class CAPMBot(Agent):
     def _calculate_performance(self, cash, holdings):
         """
         Calculates the portfolio performance
-        :param cash: cash expected to hold after making order
-        :param holdings: expected holdings after making order
+        :param cash: cash
+        :param holdings: current holdings
         :return: performance
         """
         b = self._risk_penalty
@@ -799,8 +800,9 @@ class CAPMBot(Agent):
 
     def is_portfolio_optimal(self):
         """
-        Returns true if the current holdings are optimal
-        (as per the performance formula), false otherwise.
+        Returns true if the current holdings are optimal with respect to
+        current market bid and ask (as per the performance formula),
+        false otherwise.
         :return:
         """
         pass
@@ -919,6 +921,8 @@ class CAPMBot(Agent):
         try:
             # TODO make sure that best bid and best ask has
             # TODO minimum value of zero and not None
+            # note: this will cause problems if bot thinks it can buy for 0
+            # maybe best to leave it at None
             sell_same_price = self._same_price(best_bid_price,
                                                best_bid_unit, 'sell', market_id)
 

@@ -802,3 +802,106 @@
 [2018-09-17 22:44:46,736:      agent.CAPM_Bot]:     INFO - 733:1673195:[LIMIT]:Mine:SELL:1@720
 [2018-09-17 22:44:46,736:      agent.CAPM_Bot]:     INFO - 733:1673199:[LIMIT]:Mine:SELL:1@720
 [2018-09-17 22:44:46,746:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+=============================== Log Started [2018-09-18 12:29:27 AUS Eastern Standard Time] ===============================
+[2018-09-18 12:29:31,126:      agent.CAPM_Bot]:     INFO - Requesting initial marketplace information.
+[2018-09-18 12:29:32,925:      agent.CAPM_Bot]:     INFO - Received initial marketplace information.
+[2018-09-18 12:29:33,069:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  initialised  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:33,069:      agent.CAPM_Bot]:     INFO - 733
+[2018-09-18 12:29:33,070:      agent.CAPM_Bot]:     INFO - Market: 733
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockA
+                       Item   : stockA
+                       Describ: 1000, 0, 750, 250
+
+[2018-09-18 12:29:33,070:      agent.CAPM_Bot]:     INFO - 734
+[2018-09-18 12:29:33,070:      agent.CAPM_Bot]:     INFO - Market: 734
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   5
+                       Name   : StockB
+                       Item   : stockB
+                       Describ: 0, 250, 750, 1000
+
+[2018-09-18 12:29:33,072:      agent.CAPM_Bot]:     INFO - 735
+[2018-09-18 12:29:33,072:      agent.CAPM_Bot]:     INFO - Market: 735
+                       Minimum:   0
+                       Maximum: 1000
+                       Tick   :   1
+                       Name   : StockC
+                       Item   : stockC
+                       Describ: 0, 750, 250, 1000
+
+[2018-09-18 12:29:33,072:      agent.CAPM_Bot]:     INFO - 736
+[2018-09-18 12:29:33,072:      agent.CAPM_Bot]:     INFO - Market: 736
+                       Minimum:   0
+                       Maximum: 500
+                       Tick   :   1
+                       Name   : Note
+                       Item   : note
+                       Describ:  500, 500, 500, 500
+
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The variance for market 733 is 156250
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The variance for market 734 is 156250
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The variance for market 735 is 156250
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The variance for market 736 is   0
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 733 and market 734 is -46875
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 733 and market 735 is -140625
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 733 and market 736 is   0
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 734 and market 735 is 93750
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 734 and market 736 is   0
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - The covariance between market 735 and market 736 is   0
+[2018-09-18 12:29:33,073:      agent.CAPM_Bot]:     INFO - There are 4 possible states
+[2018-09-18 12:29:33,079:      agent.CAPM_Bot]:     INFO - 1.5555555555555554
+[2018-09-18 12:29:33,086:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  initialised  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:33,385:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:33,385:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-18 12:29:33,412:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643450:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643454:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643462:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643464:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643466:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:34,415:      agent.CAPM_Bot]:     INFO - 733:1643468:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:34,416:      agent.CAPM_Bot]:     INFO - 733:1673195:[LIMIT]:Mine:SELL:1@720
+[2018-09-18 12:29:34,416:      agent.CAPM_Bot]:     INFO - 733:1673199:[LIMIT]:Mine:SELL:1@720
+[2018-09-18 12:29:34,421:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:34,426:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:34,426:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-18 12:29:34,434:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:34,697:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:34,700:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-18 12:29:34,712:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:34,742:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:34,742:      agent.CAPM_Bot]:     INFO - received order book from 734
+[2018-09-18 12:29:34,751:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:35,198:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:35,212:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:35,516:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:35,532:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:35,545:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:35,558:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:35,709:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:35,711:      agent.CAPM_Bot]:     INFO - received order book from 733
+[2018-09-18 12:29:35,766:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - vvvvvvvvvvvvvvvvvvvvvvvvv  received_completed_orders  vvvvvvvvvvvvvvvvvvvvvvvvv
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - 733:1643450:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - 733:1643454:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - 733:1643462:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - 733:1643464:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:36,289:      agent.CAPM_Bot]:     INFO - 733:1643466:[LIMIT]:Mine:BUY:1@790
+[2018-09-18 12:29:36,291:      agent.CAPM_Bot]:     INFO - 733:1643468:[LIMIT]:Mine:BUY:1@800
+[2018-09-18 12:29:36,291:      agent.CAPM_Bot]:     INFO - 733:1673195:[LIMIT]:Mine:SELL:1@720
+[2018-09-18 12:29:36,291:      agent.CAPM_Bot]:     INFO - 733:1673199:[LIMIT]:Mine:SELL:1@720
+[2018-09-18 12:29:36,294:      agent.CAPM_Bot]:     INFO - ^^^^^^^^^^^^^^^^^^^^^^^^^  received_completed_orders  ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2018-09-18 12:29:36,693:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:36,694:      agent.CAPM_Bot]:     INFO - received order book from 736
+[2018-09-18 12:29:36,705:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:36,985:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:36,985:      agent.CAPM_Bot]:     INFO - received order book from 735
+[2018-09-18 12:29:37,010:      agent.CAPM_Bot]:     INFO -      ^^^^^^^^^^^^^^^^^^^^^^^  received_order_book  ^^^^^^^^^^^^^^^^^^^^^^^     
+[2018-09-18 12:29:37,044:      agent.CAPM_Bot]:     INFO -      vvvvvvvvvvvvvvvvvvvvvvv  received_order_book  vvvvvvvvvvvvvvvvvvvvvvv     
+[2018-09-18 12:29:37,045:      agent.CAPM_Bot]:     INFO - received order book from 734
