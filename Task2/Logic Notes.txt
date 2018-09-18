@@ -1,0 +1,21 @@
+        for market in self._my_markets.keys():
+            if price of self._my_markets[market]._best_bid improves virtual portfolio performance:
+                reactive order sell 1 unit at price
+                update virtual holdings
+            if price of self._my_markets[market]._best_ask improves virtual portfolio performance:
+                reactive order buy 1 unit at price
+                update virtual holdings
+        
+	if no change in virtual holdings:
+            for market in self._my_markets.keys():
+            	find threshold buy price that improves virtual portfolio performance:
+                    input to market maker function (buy)
+		    update virtual portfolio
+            	find threshold sell price that improves virtual portfolio performance:
+                    input to market maker function (sell)
+		    update virtual portfolio
+
+*Note: if not sufficient cash to buy a security, use get_potential_performance to check if selling notes at market price
+	and buying the asset at market price will improve performance. If yes, then sell note.
+
+*Near end of trading session, begin to buy notes below their expected payoff

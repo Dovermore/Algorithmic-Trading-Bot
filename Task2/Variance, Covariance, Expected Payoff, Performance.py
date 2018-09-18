@@ -1,9 +1,36 @@
+import copy
+import operator
+origin_list = [
+    {"name": "foo", "rank": 0, "rofl": 20000},
+    {"name": "Silly", "rank": 15, "rofl": 1000},
+    {"name": "Baa", "rank": 300, "rofl": 20},
+    {"name": "Zoo", "rank": 10, "rofl": 200},
+    {"name": "Penguin", "rank": -1, "rofl": 10000}
+]
+print(">> Original >>")
+for foo in origin_list:
+    print(foo)
+
+print("\n>> Rofl sort >>")
+print(sorted(origin_list, key=operator.itemgetter("rofl"), reverse=True)[0])
+
+print("\n>> Rank sort >>")
+for foo in sorted(origin_list, key=operator.itemgetter("rank")):
+    print(foo)
+
+
 available_orders = {
-                    250: [[400, 4, 'bid'], [600, 5, 'ask']],  # Stock A
-                    350: [[550, 3, 'bid'], [700, 6, 'ask']],  # Stock B
-                    450: [[450, 5, 'bid'], [550, 2, 'ask']],  # Stock C
-                    550: [[300, 4, 'bid'], [650, 7, 'ask']]   # risk-free
+                    250: {"bid": {"price": 400, "units": 4},
+                          'ask': {"price": 600, "units": 5}},  # Stock A
+                    350: {"bid": {"price": 550, "units": 3},
+                          'ask': {"price": 700, "units": 6}},  # Stock B
+                    450: {"bid": {"price": 450, "units": 5},
+                          'ask': {"price": 550, "units": 2}},  # Stock C
+                    550: {"bid": {"price": 300, "units": 4},
+                          'ask': {"price": 650, "units": 4}},  # risk-free
                     }
+
+cash = 5000
 
 holdings = {
                 250: 10,  # Stock A
@@ -13,10 +40,10 @@ holdings = {
                 }
 
 payoffs = {
-            250: [10, 0, 0, 5],
-            350: [0, 2.5, 7.5, 5],
-            450: [0, 7.5, 2.5, 5],
-            550: [5, 5, 5, 5]
+            250: [1000, 0, 750, 250],
+            350: [0, 250, 750, 1000],
+            450: [0, 750, 250, 1000],
+            550: [500, 500, 500, 500]
             }  # Return table
 
 
@@ -113,22 +140,122 @@ covariances = total_covariance(payoffs)
 print(covariances)
 print('')
 print('total payoff variance')
-tot_payoff_variance = units_payoff_variance(holdings, variances, covariances)
-print(tot_payoff_variance)
+total_payoff_variance = units_payoff_variance(holdings, variances, covariances)
+print(total_payoff_variance)
 
 
-def calculate_performance(holding, b=-0.01):
+def calculate_performance(orders_to_make, b=-0.01):
     """
     Calculates the portfolio performance
-    :param holding: assets held
+    :param orders_to_make: orders to make
     :param b: risk penalty, given -0.01
     :return: performance
     """
-    tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
-    new_expected_return = update_expected_return(holdings, payoffs)
-    expected_payoff = sum(new_expected_return.values())
-    return expected_payoff+b*tot_payoff_variance
+    try:
+        holding = copy.copy(holdings)
+        expected_payoff = cash
 
-print('')
-print('performance')
-print(calculate_performance(holdings))
+        for order in orders_to_make.keys():
+            holding[order] = orders_to_make[order]['units']
+
+            if orders_to_make[order]['side'] == 'buy':
+                expected_payoff -= orders_to_make[order]['units']\
+                                   * orders_to_make[order]['price']
+
+            elif orders_to_make[order]['side'] == 'sell':
+                expected_payoff += orders_to_make[order]['units']\
+                                   * orders_to_make[order]['price']
+
+        tot_payoff_variance = units_payoff_variance(holding, variances, covariances)
+
+        for market in holding:
+            expected_payoff += ini_exp_ret[market]*holding[market]
+
+        return expected_payoff+b*tot_payoff_variance
+
+    except Exception as e:
+        print("Error Happened")
+        print(e)
+
+
+TEMPLATE_TO_MAKE_ORDER = {'price': 0, 'units': 0, 'side': 0}
+
+
+def create_order():
+    """
+    Process best bid and best ask retrieved from market here
+    :return: best combination of order that maximizes performance
+    """
+    orders_to_make = {}
+    virtual_cash = cash        # virtual cash that only exist in the function
+    holding = copy.copy(holdings)  # virtual holding that only exist in the function
+    for market in available_orders.keys():
+        orders_to_make[market] = copy.copy(TEMPLATE_TO_MAKE_ORDER)
+
+    return orders_to_make
+
+
+def check_performance(perform=None, to_compare=None):
+    new_orders = create_order()
+    new_performance = calculate_performance(new_orders)
+
+    if perform is None and to_compare is None:
+        return check_performance(perform=new_performance)
+
+    elif to_compare is None:
+        return check_performance(perform, new_performance)
+
+    else:
+        if perform < new_performance:
+            # TODO make order here based on orders from calculate_performance
+            return "Current best performing order is found!"
+
+        elif perform > new_performance:
+            return 'life'
+
+
+def copy_price(order):
+    pass
+
+
+def make_price(order):
+    pass
+
+
+# check_performance()
+sort_performance = []
+# TEMPLATE_TO_MAKE_ORDER = {'price': 0, 'units': 0, 'side': 0}
+
+
+def best_order(available):
+    options_to_test = []
+    for market in available.keys():
+        m_market = {}
+        for side in available[market].keys():
+            units = available[market][side]['units']
+            price = available[market][side]['price']
+            for i in range(units):
+                create = copy.copy(TEMPLATE_TO_MAKE_ORDER)
+                create['price'] = price
+                create['units'] = i
+                create['side'] = side
+
+
+print(best_order(available_orders))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
