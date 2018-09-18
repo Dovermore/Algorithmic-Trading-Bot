@@ -704,6 +704,7 @@ class CAPMBot(Agent):
         performance = self._calculate_performance(new_cash, holdings)
         return performance
 
+    # TODO where will this be called?
     def _process_order(self):
         """
         Process all order before passing through get_potential_performance
@@ -838,6 +839,7 @@ class CAPMBot(Agent):
         cash = self._virtual_available_cash
         holdings = self._current_holdings
 
+        # TODO what if not enough cash/units to make trade?
         if side == 'buy':
             cash -= price * units
             holdings[market_id] += units
@@ -1016,6 +1018,7 @@ class CAPMBot(Agent):
                                holdings[market]
         return expected_payoff - b*tot_payoff_variance
 
+    # TODO complete
     def is_portfolio_optimal(self):
         """
         Returns true if the current holdings are optimal with respect to
@@ -1064,6 +1067,7 @@ class CAPMBot(Agent):
         self.fn_end()
         pass
 
+    # TODO need to deal with case on not enough cash but lots of notes
     def received_holdings(self, holdings):
         self.fn_start()
 
@@ -1119,6 +1123,9 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
+        # TODO could add a flag here if not enough cash to make order
+        # TODO then start selling notes if gain in performance from
+        # TODO selling note and buy stock is greater than not doing this
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:

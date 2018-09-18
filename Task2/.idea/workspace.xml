@@ -37,12 +37,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="2942" />
+          <entry key="py" value="3136" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="2661" />
+          <entry key="Python" value="2855" />
           <entry key="Scratch" value="281" />
         </counts>
       </usages-collector>
@@ -53,8 +53,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="913" column="4" selection-start-line="913" selection-start-column="4" selection-end-line="913" selection-end-column="4" />
+            <state relative-caret-position="-6529">
+              <caret line="816" lean-forward="true" selection-start-line="816" selection-end-line="816" />
               <folding>
                 <element signature="e#224#245#0" expanded="true" />
               </folding>
@@ -306,8 +306,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="913" column="4" selection-start-line="913" selection-start-column="4" selection-end-line="913" selection-end-column="4" />
+        <state relative-caret-position="-6529">
+          <caret line="816" lean-forward="true" selection-start-line="816" selection-end-line="816" />
           <folding>
             <element signature="e#224#245#0" expanded="true" />
           </folding>
