@@ -725,9 +725,18 @@ class CAPMBot(Agent):
             orders.append(self._formulate_order(order))
 
         performance = self.get_potential_performance(orders)
-        self.inform("Current orders gets potential performance of %s which is "
-                    "higher than prior performance \n SEND ORDER!!"
+        self.inform("Current orders gets potential performance of %s."
                     % performance)
+
+        if performance > prior_performance:
+            self.inform("Performance has improved \n SEND ORDER!!!")
+
+        elif performance == prior_performance:
+            self.inform("Performance stayed the same... Send order anyway..")
+
+        else:
+            self.inform('Performance is not improving... '
+                        'Not going to send order..')
 
         # TODO send all orders
         # self._send_order()
