@@ -683,12 +683,12 @@ class CAPMBot(Agent):
         Returns the portfolio performance if the given list of orders is
         executed.
         :param orders: list of orders
-        :return:
+        :return: performance
         """
         new_holdings = {}
         new_cash = self._cash
         for market in self._my_markets.keys():
-            new_holdings[market] = self._my_markets[market].units
+            new_holdings[market] = self._my_markets[market].virtual_available_units
         for order in orders:
             if order.side == OrderSide.SELL:
                 new_holdings[order.market_id] -= order.units
