@@ -244,8 +244,19 @@ def best_order(available):
 print(best_order(available_orders))
 
 
-
-
+"""
+        new_holdings = {}
+        new_cash = self._cash
+        for market in self._my_markets.keys():
+            new_holdings[market] = self._my_markets[market].virtual_available_units
+        for order in orders:
+            if order.side == OrderSide.SELL:
+                new_holdings[order.market_id] -= order.units
+                new_cash += order.price * order.units
+            else:
+                new_holdings[order.market_id] += order.units
+                new_cash -= order.price * order.units
+"""
 
 
 
