@@ -52,7 +52,6 @@ ORDER_ROLE_TO_CHAR = {
 SEPARATION = "-"  # for most string separation
 
 TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
-                                  "side": None, "market_id": None}
 
 
 # Status of current order if there is any
