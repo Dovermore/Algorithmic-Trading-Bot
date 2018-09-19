@@ -243,7 +243,17 @@ def best_order(available):
 
 print(best_order(available_orders))
 
+x = 5
+for n in range(10):
+    print('N'+str(n))
+    for i in range(10):
+        print("i"+str(i))
 
+        if i == x-1:
+            break
+
+
+print("out")
 
 
 
