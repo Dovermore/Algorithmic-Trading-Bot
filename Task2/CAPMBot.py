@@ -781,7 +781,7 @@ class CAPMBot(Agent):
         new_cash = self._available_cash
         holdings = {}
         for market in self._my_markets.keys():
-            holdings[market] = self._my_markets[market].virtual_available_units
+            holdings[market] = self._my_markets[market].available_units
         if orders is not None:
             for order in orders:
                 if order.side == OrderSide.SELL:
@@ -802,6 +802,18 @@ class CAPMBot(Agent):
         :return: None
         """
         orders = []
+
+        # Calvin logic
+        bid = something
+        some_orders = []
+        for unit in range(bid.units+1):
+            order = copy(bid)
+            order.side = OrderSide.SELL
+            order.units = unit
+            if self._check_order(order):
+                some_orders.append([order, self.get_potential_performance(order)])
+        some_orders = sorted(some_orders, key=lambda x: x[1], reverse=True)
+        send(some_orders[0])
 
         for market in self._market_ids.values():
             self._current_holdings[market] = \
