@@ -104,9 +104,9 @@ class Market:
         self._current_order: MyOrder = None
 
         # Setting up order book
-        self._order_book = None
-        self._best_bid = None
-        self._best_ask = None
+        self._order_book = []
+        self._best_bids = []
+        self._best_asks = []
 
         # Setting up holding information
         self._sync_delay = 0
@@ -254,13 +254,22 @@ class Market:
         buy_orders = sorted([order for order in self._order_book
                              if order.side == OrderSide.BUY],
                             key=self.price_key, reverse=True)
-        self._best_bid = buy_orders[0] if len(buy_orders) > 0 else None
+        self._best_bids = buy_orders
+        if len(buy_orders) == 0:
+            self._best_bids = []
+        else:
+            bid_price = buy_orders[0].price
+            self._best_bids = [order for order in buy_orders if order.price == bid_price]
 
         # Sorted from lease to most to determine Best Ask
         sell_orders = sorted([order for order in self._order_book
                               if order.side == OrderSide.SELL],
                              key=self.price_key)
-        self._best_ask = sell_orders[0] if len(sell_orders) > 0 else None
+        if len(sell_orders) == 0:
+            self._best_asks = []
+        else:
+            ask_price = sell_orders[0].price
+            self._best_asks = [order for order in sell_orders if order.price == ask_price]
 
     @staticmethod
     def price_key(order):
