@@ -1,5 +1,5 @@
 """
-Project Name: Induced Demand-Supply
+Project Name: CAPMBot
 Subject Code and Name: FNCE30010 Algorithmic Trading
 Student Name (ID): Zhuoqun Huang (908525)
                    Nikolai Price (836389)
@@ -899,49 +899,42 @@ class CAPMBot(Agent):
         # TODO what if not enough cash/units to make trade?
         price = bid_ask_list[0].price
         units = sum([order.units for order in bid_ask_list])
-        expected_return = self._my_markets[market_id].expected_return
-        tick = self._my_markets[market_id].tick
         
         order_to_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+        order_to_make["side"] = side
+        order_to_make["market_id"] = market_id
+        order_to_make["price"] = price
 
         if side == OrderSide.BUY:
-            for decrease_price in range(price, expected_return,-tick):
-                for increase_units in range(units):
-                    cash = self._virtual_available_cash
-                    holdings = self._current_holdings
-                
-                    cash -= decrease_price * increase_units
-                    holdings[market_id] += increase_units
-                    
-                    performance = self._calculate_performance(decrease_price, 
-                                                              holdings)
-                    
-                    if performance > order_to_make["performance"]:
-                        order_to_make["performance"] = performance
-                        order_to_make["price"] = decrease_price
-                        order_to_make["units"] = increase_units
-                        order_to_make["side"] = side
-                        order_to_make["market_id"] = market_id
-                    
+            for increase_units in range(units):
+                cash = self._virtual_available_cash
+                holdings = self._current_holdings
+
+                cash -= price * increase_units
+                holdings[market_id] += increase_units
+
+                performance = self._calculate_performance(price,
+                                                          holdings)
+
+                if performance > order_to_make["performance"]:
+                    order_to_make["performance"] = performance
+                    order_to_make["units"] = increase_units
+
         elif side == OrderSide.SELL:
-            for increase_price in range(price, expected_return, tick):
-                for increase_units in range(units):
-                    cash = self._virtual_available_cash
-                    holdings = self._current_holdings
-                
-                    cash += increase_price * increase_units
-                    holdings[market_id] -= increase_units
-                    
-                    performance = self._calculate_performance(increase_price, 
-                                                              holdings)
-                    
-                    if performance > order_to_make["performance"]:
-                        order_to_make["performance"] = performance
-                        order_to_make["price"] = increase_price
-                        order_to_make["units"] = increase_units
-                        order_to_make["side"] = side
-                        order_to_make["market_id"] = market_id
-        
+            for increase_units in range(units):
+                cash = self._virtual_available_cash
+                holdings = self._current_holdings
+
+                cash += price * increase_units
+                holdings[market_id] -= increase_units
+
+                performance = self._calculate_performance(price,
+                                                          holdings)
+
+                if performance > order_to_make["performance"]:
+                    order_to_make["performance"] = performance
+                    order_to_make["units"] = increase_units
+
         return order_to_make
 
     def _make_price(self, side, market_id):
@@ -958,8 +951,11 @@ class CAPMBot(Agent):
             tick = self._my_markets[market_id].tick
             cash = self._virtual_available_cash
             holdings = self._current_holdings
+            expected_return = self._my_markets[market_id].expected_return
 
             if side == OrderSide.BUY:
+                minimum = self._my_markets[market_id].minimum
+                for increase_price in range(0, minimum, tick):
 
 
             # if side == OrderSide.BUY:
