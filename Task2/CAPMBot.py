@@ -849,15 +849,18 @@ class CAPMBot(Agent):
         else:
             self.inform('Performance - Prior Performance = %d' % perform_diff)
 
-    def _formulate_order(self, order):
+    @staticmethod
+    def _formulate_order(order):
         """
         Make order dict into Order type
         :param order: dictionary with order details
         :return: Order type
         """
-
-        return Order(order["price"], order["units"], OrderType.LIMIT, order["side"], order["market_id"])
-
+        price = order["price"]
+        units = order["units"]
+        side = order["side"]
+        market_id = order["market_id"]
+        return Order(price, units,OrderType.LIMIT, side, market_id)
 
     def _make_order(self, market_id):
         """
@@ -944,9 +947,9 @@ class CAPMBot(Agent):
                     holdings = self._current_holdings
 
                     cash += price * increase_units
-                    if holdings[market_id] > 0:
-                        holdings[market_id] -= increase_units
+                    holdings[market_id] -= increase_units
 
+                    if holdings[market_id] >= 0:
                         performance = self._calculate_performance(cash,
                                                                   holdings)
                         if performance > order_to_make["performance"]:
