@@ -256,9 +256,15 @@ for n in range(10):
 print("out")
 
 
+TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
+                                  "side": None, "market_id": None, "type": None}
 
+x = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
 
+x["side"] = 100
 
+print(TEMPLATE_FOR_CHECK_PERFORMANCE)
+print(x)
 
 
 

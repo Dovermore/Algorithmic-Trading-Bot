@@ -53,7 +53,7 @@ ORDER_ROLE_TO_CHAR = {
 SEPARATION = "-"  # for most string separation
 
 TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
-                                  "side": None, "market_id": None, "type":None}
+                                  "side": None, "market_id": None, "type": None}
 
 order_side = [OrderSide.BUY, OrderSide.SELL]
 
@@ -833,9 +833,12 @@ class CAPMBot(Agent):
         prior_performance = self._calculate_performance(self._cash,
                                                         self._current_holdings)
 
-        order = self._make_order(market_id)
+        make_orders = self._make_order(market_id)
+        orders = []
+        for order in make_orders:
+            orders.append(self._formulate_order(order))
 
-        performance = self.get_potential_performance(order)
+        performance = self.get_potential_performance(orders)
         self.inform("Performance = %d" % performance)
         perform_diff = performance - prior_performance
 
@@ -845,6 +848,16 @@ class CAPMBot(Agent):
 
         else:
             self.inform('Performance - Prior Performance = %d' % perform_diff)
+
+    def _formulate_order(self, order):
+        """
+        Make order dict into Order type
+        :param order: dictionary with order details
+        :return: Order type
+        """
+
+        return Order(order["price"], order["units"], OrderType.LIMIT, order["side"], order["market_id"])
+
 
     def _make_order(self, market_id):
         """
@@ -899,7 +912,7 @@ class CAPMBot(Agent):
         # TODO what if not enough cash/units to make trade?
         price = bid_ask_list[0].price
         units = sum([order.units for order in bid_ask_list])
-        
+
         order_to_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
         order_to_make["side"] = side
         order_to_make["market_id"] = market_id
@@ -931,14 +944,15 @@ class CAPMBot(Agent):
                     holdings = self._current_holdings
 
                     cash += price * increase_units
-                    holdings[market_id] -= increase_units
+                    if holdings[market_id] > 0:
+                        holdings[market_id] -= increase_units
 
-                    performance = self._calculate_performance(cash,
-                                                              holdings)
+                        performance = self._calculate_performance(cash,
+                                                                  holdings)
 
-                    if performance > order_to_make["performance"]:
-                        order_to_make["performance"] = performance
-                        order_to_make["units"] = increase_units
+                        if performance > order_to_make["performance"]:
+                            order_to_make["performance"] = performance
+                            order_to_make["units"] = increase_units
                 else:
                     self.inform("not enough units in %d" % market_id)
 
