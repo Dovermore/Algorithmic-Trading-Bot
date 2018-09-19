@@ -53,9 +53,10 @@ ORDER_ROLE_TO_CHAR = {
 SEPARATION = "-"  # for most string separation
 
 TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
-                                  "side": None, "market_id": None, "type": None}
+                                  "side": None, "market_id": None,
+                                  "role": OrderRole.REACTIVE}
 
-order_side = [OrderSide.BUY, OrderSide.SELL]
+order_side_dict = {'BUY': OrderSide.BUY, "SELL": OrderSide.SELL}
 
 
 # Status of current order if there is any
@@ -786,6 +787,7 @@ class CAPMBot(Agent):
         """
         Returns the portfolio performance if the given list of orders is
         executed.
+
         :param orders: list of orders (list of lists)
         :return: performance
         """
@@ -795,12 +797,12 @@ class CAPMBot(Agent):
             holdings[market] = self._my_markets[market].available_units
         if orders is not None:
             for order in orders:
-                if order.side == OrderSide.SELL:
-                    holdings[order.market_id] -= order.units
-                    new_cash += order.price * order.units
+                if order['side'] == "SELL":
+                    holdings[order["market_id"]] -= order['units']
+                    new_cash += order["price"] * order["units"]
                 else:
-                    holdings[order.market_id] += order.units
-                    new_cash -= order.price * order.units
+                    holdings[order['market_id']] += order['units']
+                    new_cash -= order['price'] * order['units']
 
         performance = self._calculate_performance(new_cash, holdings)
         return performance
@@ -813,19 +815,6 @@ class CAPMBot(Agent):
         and finally send order
         :return: Order Made -> bool
         """
-        # Calvin logic ######################################################
-        # bid = something
-        # some_orders = []
-        # for unit in range(bid.units+1):
-        #     order = copy(bid)
-        #     order.side = OrderSide.SELL
-        #     order.units = unit
-        #     if self._check_order(order):
-        #         some_orders.append([order, self.get_potential_performance(order)])
-        # some_orders = sorted(some_orders, key=lambda x: x[1], reverse=True)
-        # send(some_orders[0])
-        # #####################################################################
-
         for market in self._market_ids.values():
             self._current_holdings[market] = \
                 self._my_markets[market].virtual_available_units
@@ -833,34 +822,26 @@ class CAPMBot(Agent):
         prior_performance = self._calculate_performance(self._cash,
                                                         self._current_holdings)
 
-        make_orders = self._make_order(market_id)
-        orders = []
-        for order in make_orders:
-            orders.append(self._formulate_order(order))
+        orders = self._make_order(market_id)
 
         performance = self.get_potential_performance(orders)
+
         self.inform("Performance = %d" % performance)
         perform_diff = performance - prior_performance
 
         if perform_diff >= 0:
             self.inform("Performance - Prior Performance = %d" % perform_diff)
             # TODO send order here
+            for order in orders:
+                price = order["price"]
+                units = order["units"]
+                side = order_side_dict[order["side"]]
+                market_id = order["market_id"]
+                role = order["role"]
+                self._send_order(price, units, OrderType.LIMIT, side, market_id, role)
 
         else:
-            self.inform('Performance - Prior Performance = %d' % perform_diff)
-
-    @staticmethod
-    def _formulate_order(order):
-        """
-        Make order dict into Order type
-        :param order: dictionary with order details
-        :return: Order type
-        """
-        price = order["price"]
-        units = order["units"]
-        side = order["side"]
-        market_id = order["market_id"]
-        return Order(price, units,OrderType.LIMIT, side, market_id)
+            self.inform("decrease performance - no send")
 
     def _make_order(self, market_id):
         """
@@ -885,13 +866,12 @@ class CAPMBot(Agent):
         """
         orders = []
         # to test on the same price first
-
         if len(best_bid) == 0 and len(best_ask) == 0:
-            orders.append(self._make_price(OrderSide.BUY, market_id))
-            orders.append(self._make_price(OrderSide.SELL, market_id))
+            for side in order_side_dict.keys():
+                orders.append(self._make_price(side, market_id))
 
         elif len(best_bid) > 0 and len(best_ask) > 0:
-            for side in order_side:
+            for side in order_side_dict.keys():
                 if side == OrderSide.BUY:
                     orders.append(self._react_price(best_ask, side, market_id))
                 else:
@@ -902,7 +882,6 @@ class CAPMBot(Agent):
 
         elif len(best_ask) == 0:
             orders.append(self._make_price(OrderSide.SELL, market_id))
-
         return orders
 
     def _react_price(self, bid_ask_list, side, market_id):
@@ -917,11 +896,12 @@ class CAPMBot(Agent):
         units = sum([order.units for order in bid_ask_list])
 
         order_to_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+        order_to_make["role"] = OrderRole.REACTIVE
         order_to_make["side"] = side
         order_to_make["market_id"] = market_id
         order_to_make["price"] = price
 
-        if side == OrderSide.BUY:
+        if side == 'BUY':
             for increase_units in range(units+1):
                     cash = self._virtual_available_cash
                     holdings = self._current_holdings
@@ -940,7 +920,7 @@ class CAPMBot(Agent):
                     else:
                         self.inform("not enough cash")
 
-        elif side == OrderSide.SELL:
+        elif side == "SELL":
             for increase_units in range(units+1):
                 if self._my_markets[market_id].examine_units():
                     cash = self._virtual_available_cash
@@ -971,6 +951,7 @@ class CAPMBot(Agent):
         """
         try:
             order_to_make = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+            order_to_make["role"] = OrderRole.MARKET_MAKER
             order_to_make["side"] = side
             order_to_make["market_id"] = market_id
             order_to_make["units"] = 1
@@ -980,10 +961,19 @@ class CAPMBot(Agent):
             holdings = self._current_holdings
             expected_return = self._my_markets[market_id].expected_return
 
-            if side == OrderSide.BUY:
+            if side == 'BUY':
                 price = (expected_return * 0.5)//tick*tick
+                if price > self._my_markets[market_id].maximum:
+                    price = self._my_markets[market_id].maximum
+                elif price < self._my_markets[market_id].minimum:
+                    price = self._my_markets[market_id].minimum
+                else:
+                    price = price
+
                 if cash == 0:
                     self.inform("no cash")
+                    # yields the highest performance based on formula
+                    order_to_make["price"] = 0
                 elif cash > price:
                     order_to_make["price"] = price
                 else:
@@ -991,7 +981,7 @@ class CAPMBot(Agent):
                         if cash > price:
                             order_to_make["price"] = price
 
-            elif side == OrderSide.SELL:
+            elif side == 'SELL':
                 price = (expected_return * 1.5)//tick*tick
                 if holdings[market_id] > 0:
                     holdings[market_id] -= 1
