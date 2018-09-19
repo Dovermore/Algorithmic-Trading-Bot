@@ -9,7 +9,8 @@ Student Name (ID): Zhuoqun Huang (908525)
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
 from fmclient.utils.constants import DATE_FORMAT
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Union
+import random
 import copy
 import time
 import datetime
@@ -113,7 +114,7 @@ class Market:
         self._available_units = self._units
         # update to agent regarding holdings that is made/cancelled
         self._agent._current_holdings[self._market_id] = self._available_units
-        # A virtual holding, simulating condition if order got accepted
+        # A virtual holding, simulating condition as if order got accepted
         self._virtual_available_units = self._available_units
 
         # Record where the completed order has been read to
@@ -188,8 +189,9 @@ class Market:
         :param unit_dict: Standard dictionary containing the units to check
         :return:
         """
-        self._agent.fn_start()
+        self._agent._fn_start()
         assert unit_dict["units"] > 0 and unit_dict["available_units"] > 0
+        self.examine_units()
         self._units = unit_dict["units"]
         self._available_units = unit_dict["available_units"]
         if self._available_units > self._virtual_available_units:
@@ -203,7 +205,7 @@ class Market:
         else:
             self._agent.error("Market" + str(self._market_id) +
                               "Virtual Unit MORE Than available units")
-        self._agent.fn_end()
+        self._agent._fn_end()
 
     @classmethod
     def set_states(cls, states):
@@ -226,7 +228,7 @@ class Market:
                 self._available_units -= order.units
             else:
                 self._available_units += order.units
-
+        self.examine_units()
         self.order_holder.order_accepted(order)
 
     def order_rejected(self, order: Order):
@@ -235,20 +237,42 @@ class Market:
         Market side order rejected processing
         :param order: The order rejected
         """
+        # Only care about units if sell side (buy side in cash part)
         if order.side == OrderSide.SELL:
             if order.type == OrderType.LIMIT:
-                self._available_units += order.units
+                self._virtual_available_units += order.units
             else:
-                self._available_units -= order.units
+                self._virtual_available_units -= order.units
+        self.examine_units()
         self.order_holder.order_rejected(order)
+
+    def _set_bid_ask_price(self):
+        """
+        Update market best bid and ask based on order book holding
+        """
+        # Sorted from most to least to determine Best Bid
+        buy_orders = sorted([order for order in self._order_book
+                             if order.side == OrderSide.BUY],
+                            key=self.price_key, reverse=True)
+        self._best_bid = buy_orders[0] if len(buy_orders) > 0 else None
+
+        # Sorted from lease to most to determine Best Ask
+        sell_orders = sorted([order for order in self._order_book
+                              if order.side == OrderSide.SELL],
+                             key=self.price_key)
+        self._best_ask = sell_orders[0] if len(sell_orders) > 0 else None
+
+    @staticmethod
+    def price_key(order):
+        return order.price
 
     def update_received_order_book(self, order_book):
         """
         ---- Should not be used elsewhere. Need not to read ----
         :param order_book: Order book from market
         """
-        # TODO More logic here, update best_bid, best ask, and order book
         self._order_book = order_book
+        self._set_bid_ask_price()
         self.order_holder.update_received_order_book(order_book)
 
     def update_completed_orders(self, orders):
@@ -263,24 +287,43 @@ class Market:
     def add_order(self, price, units, order_type, order_side, market_id,
                   order_role):
         """
-        :return: Reference to the added order
+        :return: No return value
         """
+        if (self._current_order is not None and
+                self._current_order.order_status == OrderStatus.INACTIVE):
+            self._agent.warning("Current order not sent, then added order")
+            self.order_holder.remove_order(self._current_order)
         order = self.order_holder.add_order(price, units, order_type,
                                             order_side, market_id, order_role)
         self._current_order = order
 
     def send_current_order(self):
         """
-        Send the last added order
+        Send the last added order (Limit order)
         :return: Return True if successful, False Otherwise
         """
         if self._current_order is not None:
             # When selling, reduce virtual units
+            if self._virtual_available_units < self._current_order.order.units:
+                return False
             if self._current_order.order.side == OrderSide.SELL:
                 self._virtual_available_units -= \
                     self._current_order.order.units
             return self._current_order.send()
         return False
+
+    def cancel_order(self, order):
+        my_order = self.order_holder.get_order(order)
+        if my_order is None:
+            return False
+        # Sent the cancel order
+        if my_order.cancel():
+            if my_order.order.side == OrderSide.SELL:
+                self._virtual_available_units += my_order.order.units
+            return True
+        # Didn't sent
+        else:
+            return False
 
     def is_valid_price(self, price: int) -> bool:
         """
@@ -292,9 +335,14 @@ class Market:
         return (self._minimum < price < self.maximum and
                 (price - self._minimum) % self._tick != 0)
 
+    def examine_units(self):
+        self._agent.inform("Total units: " + self._units)
+        self._agent.inform("Available units: " + self._available_units)
+        self._agent.inform("Virtual available units: " +
+                           self._virtual_available_units)
+
 
 class OrderHolder:
-    # TODO implement cancel order logic
     def __init__(self, market_id, agent):
         """
         ---- Should not be used elsewhere. Need not to read ----
@@ -339,6 +387,33 @@ class OrderHolder:
         self._agent.inform([str(order) for order in self._orders])
         return order
 
+    def get_order(self, order):
+        """
+        Get an order based on passed order, the passed order can be either
+        Order or MyOrder object, will return MyOrder object for further
+        processing. WILL only get identical orders (same id or ref)
+        :param order: The order to get
+        :return: MyOrder if found, else None
+        """
+        for my_order in self._orders:
+            if (MyOrder.compare_order(my_order, order)
+                    == OrderCompare.IDENTICAL):
+                return my_order
+        else:
+            return None
+
+    def remove_order(self, order):
+        """
+        Remove the first appearance of given order, order can be either Order
+        or MyOrder object. Will return the removed MyOrder object if successful
+        :param order: The order to be removed
+        :return: Corresponding MyOrder object if found, else None
+        """
+        my_order = self.get_order(order)
+        if my_order:
+            self._orders.remove(my_order)
+        return my_order
+
     def order_accepted(self, order: Order):
         """
         ---- Should not be used elsewhere. Need not to read ----
@@ -347,20 +422,18 @@ class OrderHolder:
         :return: True if added successfully, False otherwise
                  (E.g. Order invalid or no id for order provided)
         """
-        # TODO handle CANCEL order, if order is cancel, remove something
         # Check all orders to find corresponding order, and accept it
-        self._orders = sort_order_by_date(self._orders)
-        for my_order in self._orders:
-            if order.type == OrderType.CANCEL and \
-                    MyOrder.compare_order(my_order.cancel_order, order) == \
-                    OrderCompare.IDENTICAL:
+        my_order = self.get_order(order)
+        if my_order is not None:
+            if order.type == OrderType.CANCEL:
                 self._orders.remove(my_order)
-                break
-            if MyOrder.compare_order(my_order, order) ==\
-                    OrderCompare.IDENTICAL:
+            else:
                 my_order.accepted()
-                break
         # Didn't find matching order
+        # Don't care if it's CANCEL order
+        elif order.type == OrderType.CANCEL:
+            return
+        # Update it to Holdings if it's not CANCEL
         else:
             self._agent.warning(str(order) + ": Didn't find matching order")
             order_role = OrderRole.REACTIVE
@@ -379,16 +452,15 @@ class OrderHolder:
         Handles rejection of orders in order holder
         :param order: The rejected order
         """
-        # TODO handle CANCEL order...
-        self._orders = sort_order_by_date(self._orders)
-        for my_order in self._orders:
-            if MyOrder.compare_order(my_order, order) == \
-                    OrderCompare.IDENTICAL:
-                self._orders.remove(my_order)
-                break
-        # Didn't find matching order
-        else:
+        my_order = self.get_order(order)
+        # Don't care if un-recorded limit order got rejected
+        if my_order is None:
             self._agent.warning(str(order) + ": Didn't find matching order")
+        else:
+            if order.type == OrderType.CANCEL:
+                my_order.order_status = OrderStatus.ACCEPTED
+            else:
+                self._orders.remove(my_order)
 
     def update_received_order_book(self, order_book):
         """
@@ -481,15 +553,26 @@ class MyOrder:
 
     @order.setter
     def order(self, order):
-        self._order = order
+        if isinstance(order, Order):
+            self._order = order
 
     @property
     def cancel_order(self):
-        return copy.copy(self._order)
+        return copy.copy(self._cancel_order)
 
     @cancel_order.setter
     def cancel_order(self, cancel_order):
-        self._cancel_order = cancel_order
+        if isinstance(cancel_order, Order):
+            self._cancel_order = cancel_order
+
+    @property
+    def order_status(self):
+        return self._order_status
+
+    @order_status.setter
+    def order_status(self, status):
+        if isinstance(status, OrderStatus):
+            self._order_status = status
 
     def send(self):
         """
@@ -565,7 +648,8 @@ class MyOrder:
         cls.AGENT: CAPMBot = agent
 
     @staticmethod
-    def compare_order(order1, order2):
+    def compare_order(order1: Union[Order, "MyOrder"],
+                      order2: Union[Order, "MyOrder"]):
         """
         ---- Should not be used elsewhere. Need not to read ----
         Compare if two orders are same, either Order or MyOrder can be passed
@@ -576,10 +660,16 @@ class MyOrder:
                                     not price (thus might be the same order)
                  OrderCompare.DIFFERENT if two orders can't possibly be same
         """
+        # Check if want to match cancel orders
+        limit = True
+        if ((isinstance(order1, Order) and order1.type == OrderType.CANCEL) or
+                (isinstance(order2, Order) and
+                 order2.type == OrderType.CANCEL)):
+            limit = False
         if isinstance(order1, MyOrder):
-            order1 = order1._order
+            order1 = order1._order if limit else order1._cancel_order
         if isinstance(order2, MyOrder):
-            order2 = order2._order
+            order2 = order2._order if limit else order2._cancel_order
         # When side or type different
         if order1.side != order2.side or order1.type != order2.type:
             return OrderCompare.DIFFERENT
@@ -669,7 +759,7 @@ class CAPMBot(Agent):
         collects data regarding the market to be traded in and their
         respective payoff
         """
-        self.fn_start()
+        self._fn_start()
         for market_id, market_dict in self.markets.items():
             self.inform(market_id)
             self.inform(self._str_market(market_dict))
@@ -679,7 +769,7 @@ class CAPMBot(Agent):
         self._build_variance()
         self._build_covariance()
         self.inform("There are %s possible states" % str(Market.states))
-        self.fn_end()
+        self._fn_end()
 
     def get_potential_performance(self, orders=None):
         """
@@ -753,7 +843,7 @@ class CAPMBot(Agent):
         units = order["units"]
         market_id = order["market_id"]
 
-        if order["side"] == 'buy':
+        if order["side"] == OrderSide.BUY:
             side = OrderSide.BUY
         else:
             side = OrderSide.SELL
@@ -787,6 +877,8 @@ class CAPMBot(Agent):
                 best_order = self._process_price(best_bid, best_ask,
                                                  unit, market_id)
 
+            # TODO you NEED a else here, last case not handled.
+
             return best_order
 
         except Exception as e:
@@ -794,10 +886,10 @@ class CAPMBot(Agent):
 
     def _process_price(self, best_bid_price, best_ask_price, unit, market_id):
         sell_same_price = self._same_price(best_bid_price, unit,
-                                           'sell', market_id)
+                                           OrderSide.SELL, market_id)
 
         buy_same_price = self._same_price(best_ask_price, unit,
-                                          'buy', market_id)
+                                          OrderSide.BUY, market_id)
 
         same_price = sorted([sell_same_price, buy_same_price])
 
@@ -807,12 +899,12 @@ class CAPMBot(Agent):
 
         buy_make_price = self._make_price(best_bid_price,
                                           unit, best_ask_price,
-                                          'buy', market_id,
+                                          OrderSide.BUY, market_id,
                                           same_price_best)
 
         sell_make_price = self._make_price(best_ask_price,
                                            unit, best_bid_price,
-                                           'sell', market_id,
+                                           OrderSide.SELL, market_id,
                                            same_price_best)
 
         compare_list = sorted([sell_make_price, sell_same_price,
@@ -840,11 +932,11 @@ class CAPMBot(Agent):
         holdings = self._current_holdings
 
         # TODO what if not enough cash/units to make trade?
-        if side == 'buy':
+        if side == OrderSide.BUY:
             cash -= price * units
             holdings[market_id] += units
 
-        elif side == 'sell':
+        elif side == OrderSide.SELL:
             cash += price * units
             holdings[market_id] -= units
 
@@ -881,7 +973,7 @@ class CAPMBot(Agent):
             new_performance = 0
             make_price = 0
 
-            if side == 'buy':
+            if side == OrderSide.BUY:
                 holdings[market_id] += units
                 if opposite_price - price > tick:
                     for increase_price in range(price, opposite_price, tick):
@@ -894,7 +986,7 @@ class CAPMBot(Agent):
                             new_performance = performance
                             make_price = increase_price
 
-            elif side == 'sell':
+            elif side == OrderSide.SELL:
                 holdings[market_id] -= units
                 if price - opposite_price > tick:
                     lower_bound = opposite_price - \
@@ -1029,61 +1121,74 @@ class CAPMBot(Agent):
         pass
 
     def order_accepted(self, order):
-        self.fn_start()
+        try:
+            self._fn_start()
+            market = self._my_markets[order.market_id]
+            market.order_accepted(order)
 
-        self.inform(order)
-
-        self.fn_end()
-        pass
+            self.inform(order)
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     def order_rejected(self, info, order):
-        pass
+        try:
+            self._fn_start()
+            self.error("order rejected:" + info)
+            market = self._my_markets[order.market_id]
+            market.order_rejected(order)
+
+            self.inform(order)
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     def received_order_book(self, order_book, market_id):
 
-        self.fn_start()
+        self._fn_start()
         self.get_completed_orders(market_id)
         self.inform("received order book from %d" % market_id)
         try:
-            self._my_markets[market_id].update_received_order_book(order_book)
-            self.fn_end()
+            self._update_received_order_book(order_book, market_id)
+
+            # TODO put logic here
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
-
-    # TODO move this to market section
-    # def _get_bid_ask_price(self, orders):
-    #     """
-    #     Get the best bid and best ask price of the market
-    #     :param orders: Orders from the order book
-    #     :return: Best bid and best ask
-    #     """
-    #     pass
+        finally:
+            self._fn_end()
 
     def received_completed_orders(self, orders, market_id=None):
-        self.fn_start()
-        for order in orders:
-            if order.mine:
-                self.inform(order)
-        self.fn_end()
-        pass
+        try:
+            self._fn_start()
+            for order in orders:
+                if order.mine:
+                    self.inform(order)
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     # TODO need to deal with case on not enough cash but lots of notes
     def received_holdings(self, holdings):
-        self.fn_start()
-
-        self.inform(list(holdings.items()))
-        cash = holdings["cash"]
-        self._cash = cash["cash"]
-        self._available_cash = cash["available_cash"]
-
-        for market_id, units in holdings["markets"]:
-            self._my_markets[market_id].update_units(units)
-
-        self.fn_end()
-        pass
+        try:
+            self._fn_start()
+            self.inform(list(holdings.items()))
+            cash = holdings["cash"]
+            self._cash = cash["cash"]
+            self._available_cash = cash["available_cash"]
+            # TODO this could be improveds
+            self._virtual_available_cash = self._available_cash
+            for market_id, units in holdings["markets"]:
+                self._my_markets[market_id].update_units(units)
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     def received_marketplace_info(self, marketplace_info):
-        self.fn_start()
+        self._fn_start()
 
         session_id = marketplace_info["session_id"]
         if marketplace_info["status"]:
@@ -1092,7 +1197,7 @@ class CAPMBot(Agent):
         else:
             self.inform("Marketplace is now closed.")
 
-        self.fn_end()
+        self._fn_end()
 
     # --- ORDER HANDLER section ---
     def _update_received_order_book(self, order_book: List[Order],
@@ -1103,6 +1208,7 @@ class CAPMBot(Agent):
         :param market_id: Id of the market where order_book come from
         """
         self._my_markets[market_id].update_received_order_book(order_book)
+        self._my_markets[market_id]._set_bid_ask_price()
 
     def _update_completed_order(self, orders: List[Order],
                                 market_id: int) -> None:
@@ -1123,24 +1229,42 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
-<<<<<<< HEAD
-        # TODO check multiple orders at once
-=======
+        ## DON'T need FLAG. IF order side is buy/sell, it's cash/units problem ##
         # TODO could add a flag here if not enough cash to make order
         # TODO then start selling notes if gain in performance from
         # TODO selling note and buy stock is greater than not doing this
->>>>>>> c89192862b60d665faf60fb0cb2eec095b2f3c32
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
             market: Market = self.markets[market_id]
-<<<<<<< HEAD
             return (market.is_valid_price(price) and
                     market.virtual_available_units >= units)
-=======
-            return (market.is_valid_price(price)) and \
-                   (market.virtual_available_units >= units)
->>>>>>> c89192862b60d665faf60fb0cb2eec095b2f3c32
+
+    def _check_orders(self, prices, unitss, order_sides, market_ids):
+        """
+        Check if can send all orders the same time
+        :param prices:
+        :param unitss:
+        :param order_sides:
+        :param market_ids:
+        :return:
+        """
+        orders = list(zip(prices, unitss, order_sides, market_ids))
+        buying_orders = [order for order in orders
+                         if order[2] == OrderSide.BUY]
+        cash_expense = sum(buying_order[0] * buying_order[1] for buying_order
+                           in buying_orders)
+        if cash_expense > self._virtual_available_cash:
+            return False
+        for market_id, market in self._my_markets.items():
+            selling_orders = [order for order in orders if
+                              order[3] == OrderSide.SELL and
+                              order[3] == market_id]
+            unit_expense = sum(selling_order[1] for selling_order in
+                               selling_orders)
+            if unit_expense > market.virtual_available_units:
+                return False
+        return True
 
     def _send_order(self, price, units, order_type,
                     order_side, market_id, order_role) -> bool:
@@ -1159,14 +1283,43 @@ class CAPMBot(Agent):
             market: Market = self._my_markets[market_id]
             market.add_order(price, units, order_type, order_side,
                              market_id, order_role)
-            return market.send_current_order()
+            result = market.send_current_order()
+            self._virtual_available_cash -= (price * units if result and
+                                             order_side == OrderSide.BUY
+                                             else 0)
+            return result
         else:
             return False
 
-    def _cancel_order(self):
+    def _send_orders(self, prices, unitss, order_types, order_sides,
+                     market_ids, order_roles) -> List[bool]:
         """
-        cancel some order, not implemented yet (not used right now)
+        Check and send list of orders, all list msut be same length
+        :param prices: price to send order at
+        :param unitss: units to send
+        :param order_types: type of order
+        :param order_sides: side of order
+        :param market_ids:  id of market
+        :param order_roles: role of order (market_maker or reactive)
+        :return: True if successfully sent, false if failed check (in a list)
         """
+        # Same length
+        assert len(set(len(value) for value in locals().values())) == 1
+        if self._check_orders(prices, unitss, order_sides, market_ids) is True:
+            return [self._send_order(*args) for args in
+                    zip(prices, unitss, order_types,
+                        order_sides, market_ids, order_roles)]
+        else:
+            return [False] * len(prices)
+
+    def _cancel_order(self, order: Order) -> bool:
+        """
+        cancel a given order, the order should be an Order object
+        :param order: the order to be cancelled
+        :return: True if successfully sent order, false otherwise
+        """
+        market = self._my_markets[order.market_id]
+        return market.cancel_order(order)
     # ---   END ORDER HANDLER   ---
 
     def run(self):
@@ -1252,14 +1405,14 @@ class CAPMBot(Agent):
         """
         return len(inspect.stack())
 
-    def fn_start(self):
+    def _fn_start(self):
         if not DEBUG_TOGGLE == 1:
             return
         self._line_break_inform(inspect.stack()[1][3], char="v",
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
                                 (self.get_stack_size()-1) * STACK_DIF)
 
-    def fn_end(self):
+    def _fn_end(self):
         if not DEBUG_TOGGLE == 1:
             return
         self._line_break_inform(inspect.stack()[1][3], char="^",
@@ -1286,6 +1439,7 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_JD + [MARKETPLACE_MANUAL]
+    FM_SETTING = [FM_ACCOUNT] + FM_JD
+    FM_SETTING.append(MARKETPLACE_MANUAL)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
