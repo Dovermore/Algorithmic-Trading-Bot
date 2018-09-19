@@ -906,7 +906,7 @@ class CAPMBot(Agent):
         order_to_make["price"] = price
 
         if side == OrderSide.BUY:
-            for increase_units in range(units):
+            for increase_units in range(units+1):
                     cash = self._virtual_available_cash
                     holdings = self._current_holdings
 
@@ -925,20 +925,20 @@ class CAPMBot(Agent):
                         self.inform("not enough cash")
 
         elif side == OrderSide.SELL:
-            for increase_units in range(units):
+            for decrease_units in range(units+1):
                 if self._my_markets[market_id].examine_units():
                     cash = self._virtual_available_cash
                     holdings = self._current_holdings
 
-                    cash += price * increase_units
-                    holdings[market_id] -= increase_units
+                    cash += price * decrease_units
+                    holdings[market_id] -= decrease_units
 
                     performance = self._calculate_performance(cash,
                                                               holdings)
 
                     if performance > order_to_make["performance"]:
                         order_to_make["performance"] = performance
-                        order_to_make["units"] = increase_units
+                        order_to_make["units"] = decrease_units
                 else:
                     self.inform("not enough units in %d" % market_id)
 
