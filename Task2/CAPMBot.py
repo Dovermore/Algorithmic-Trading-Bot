@@ -893,10 +893,9 @@ class CAPMBot(Agent):
                 self._note_orders(market_id)
             # Logic for other secs
             else:
-                orders = []
                 # Find sell performance improving sell orders
-                orders.append(self._compute_orders(self._my_markets[market_id]
-                                                   .best_bids, market_id))
+                orders = self._compute_orders(self._my_markets[market_id]
+                                                   .best_bids, market_id)
                 orders.append(self._compute_orders(self._my_markets[market_id]
                                                    .best_asks, market_id))
                 orders = [order for order in orders if
@@ -911,7 +910,7 @@ class CAPMBot(Agent):
         finally:
             self._fn_end()
 
-    def _compute_orders(self, other_orders, market_id, check_order=False):
+    def _compute_orders(self, other_orders, market_id, check_order=True):
         try:
             orders = []
             if len(other_orders) > 0:
