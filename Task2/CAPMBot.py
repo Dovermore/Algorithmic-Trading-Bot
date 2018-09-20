@@ -205,22 +205,27 @@ class Market:
         :return:
         """
         self._agent._fn_start()
-        assert unit_dict["units"] > 0 and unit_dict["available_units"] > 0
-        self.examine_units()
-        self._units = unit_dict["units"]
-        self._available_units = unit_dict["available_units"]
-        if self._available_units > self._virtual_available_units:
-            self._sync_delay += 1
-            if self._sync_delay >= self.SYNC_MAX_DELAY:
-                self._agent.warning("Market" + str(self._market_id) +
-                                    "Failed to sync virtual units properly")
-            self._virtual_available_units = self._available_units
-        elif self._available_units == self._virtual_available_units:
-            self._sync_delay = 0
-        else:
-            self._agent.error("Market" + str(self._market_id) +
-                              "Virtual Unit MORE Than available units")
-        self._agent._fn_end()
+        try:
+            assert (unit_dict["units"] >= 0 and
+                    unit_dict["available_units"] >= 0), "negative_units"
+            self.examine_units()
+            self._units = unit_dict["units"]
+            self._available_units = unit_dict["available_units"]
+            if self._available_units > self._virtual_available_units:
+                self._sync_delay += 1
+                if self._sync_delay >= self.SYNC_MAX_DELAY:
+                    self._agent.warning("Market" + str(self._market_id) +
+                                        "Failed to sync virtual units properly")
+                self._virtual_available_units = self._available_units
+            elif self._available_units == self._virtual_available_units:
+                self._sync_delay = 0
+            else:
+                self._agent.error("Market" + str(self._market_id) +
+                                  "Virtual Unit MORE Than available units")
+        except Exception as e:
+            self._agent._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._agent._fn_end()
 
     @classmethod
     def set_states(cls, states):
@@ -878,13 +883,13 @@ class CAPMBot(Agent):
             orders = []
             # Find sell performance improving sell orders
             orders.append(self._compute_orders(self._my_markets[market_id]
-                                               .best_bids))
+                                               .best_bids, market_id))
             orders.append(self._compute_orders(self._my_markets[market_id]
-                                               .best_asks))
+                                               .best_asks, market_id))
             orders = [order for order in orders if
                       order[1] > current_performance]
             orders = sorted(orders, key=lambda x: x[1], reverse=True)
-            if orders:
+            if len(orders) > 0:
                 self._send_order(orders[0][0].price, orders[0][0],
                                  orders[0][0].type, orders[0][0].side,
                                  orders[0][0].market_id, OrderRole.REACTIVE)

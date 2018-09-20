@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -11,8 +12,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537431776281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537433134214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537437484739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537437084072" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
     <SUITE FILE_PATH="coverage/FNCE30010Project1$MarketTest.coverage" NAME="MarketTest Coverage Results" MODIFIED="1536850480937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
   </component>
   <component name="DatabaseView">
@@ -55,13 +56,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="29471" />
+          <entry key="py" value="29594" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="29471" />
+          <entry key="Python" value="29594" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -73,11 +74,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="906" column="21" selection-start-line="906" selection-start-column="21" selection-end-line="906" selection-end-column="21" />
+            <state relative-caret-position="424">
+              <caret line="219" column="55" selection-start-line="219" selection-start-column="55" selection-end-line="219" selection-end-column="55" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
-                <marker date="1537436927729" expanded="true" signature="33017:33747" ph="..." />
+                <marker date="1537437479385" expanded="true" signature="33283:34013" ph="..." />
               </folding>
             </state>
           </provider>
@@ -160,9 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>price</find>
-      <find>self._virtual</find>
-      <find>add_order</find>
       <find>OrderSide.BUY</find>
       <find>side ==</find>
       <find>side =</find>
@@ -175,7 +173,6 @@
       <find>send_order</find>
       <find>marketplace</find>
       <find>initialised</find>
-      <find>holdings</find>
       <find>received_order_book</find>
       <find>received_order</find>
       <find>update_rece</find>
@@ -185,11 +182,15 @@
       <find>is_valid_</find>
       <find>is_valid_price</find>
       <find>self.markets</find>
-      <find>process_order</find>
       <find>received</find>
       <find>head</find>
-      <find>received_holdings</find>
       <find>check_order</find>
+      <find>received_holdings</find>
+      <find>update_units</find>
+      <find>received_Order_book</find>
+      <find>process_order</find>
+      <find>holdings</find>
+      <find>assert (u</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -348,7 +349,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test.file">
+  <component name="RunManager" selected="Python.CAPMBot">
     <configuration name="CAPMBot" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="FNCE30010Project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -422,8 +423,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test.file" />
         <item itemvalue="Python.CAPMBot" />
+        <item itemvalue="Python.test.file" />
         <item itemvalue="Python.MarketTest" />
       </list>
     </recent_temporary>
@@ -445,12 +446,12 @@
     <frame x="0" y="22" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.118138425" visible="true" weight="0.21991481" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.88186157" side_tool="true" visible="true" weight="0.21991481" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.118489586" visible="true" weight="0.21991481" />
+      <window_info id="Structure" order="1" sideWeight="0.88151044" side_tool="true" visible="true" weight="0.21991481" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32919255" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.13250518" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20496894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -603,11 +604,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="906" column="21" selection-start-line="906" selection-start-column="21" selection-end-line="906" selection-end-column="21" />
+        <state relative-caret-position="424">
+          <caret line="219" column="55" selection-start-line="219" selection-start-column="55" selection-end-line="219" selection-end-column="55" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
-            <marker date="1537436927729" expanded="true" signature="33017:33747" ph="..." />
+            <marker date="1537437479385" expanded="true" signature="33283:34013" ph="..." />
           </folding>
         </state>
       </provider>
