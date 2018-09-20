@@ -891,7 +891,7 @@ class CAPMBot(Agent):
         bid_price = best_bids.price if len(best_bids) > 0 else
 
         total_asks_units = [ask.units for ask in best_asks]
-        
+
         # to test on the same price first
         if len(best_bids) == 0 and len(best_asks) == 0:
             for side in [OrderSide.BUY, OrderSide.SELL]:
