@@ -1,11 +1,5 @@
-from datetime import datetime, timezone
-import pytz
+orders = []
+current_performance = 0
 
-tz = pytz.timezone("Australia/Melbourne")
-
-now = datetime.now(tz)
-
-timezone.utc
-
-print(now)
-print(timezone.utc)
+orders = [order for order in orders if
+          order[1] > current_performance]

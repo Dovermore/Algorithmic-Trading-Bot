@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/test.file.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/test.file.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,8 +11,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537448140668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537448138312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537438924716" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537438384278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
     <SUITE FILE_PATH="coverage/FNCE30010Project1$MarketTest.coverage" NAME="MarketTest Coverage Results" MODIFIED="1536850480937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
   </component>
   <component name="DatabaseView">
@@ -57,13 +55,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="31065" />
+          <entry key="py" value="30097" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="31065" />
+          <entry key="Python" value="30097" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -75,11 +73,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="1056" column="29" selection-start-line="1056" selection-start-column="29" selection-end-line="1056" selection-end-column="29" />
+            <state relative-caret-position="1198">
+              <caret line="912" column="71" selection-start-line="912" selection-start-column="71" selection-end-line="912" selection-end-column="71" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
-                <marker date="1537448470700" expanded="true" signature="35568:35574" ph="..." />
+                <marker date="1537439127060" expanded="true" signature="33972:34942" ph="..." />
               </folding>
             </state>
           </provider>
@@ -127,11 +125,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Task2/test.file.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="4" column="41" lean-forward="true" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -165,36 +160,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+      <find>initialised</find>
+      <find>received_order</find>
+      <find>update_rece</find>
+      <find>exception_inform</find>
+      <find>&quot;sell</find>
+      <find>order[&quot;side&quot;]</find>
+      <find>is_valid_</find>
+      <find>is_valid_price</find>
+      <find>self.markets</find>
+      <find>received</find>
+      <find>head</find>
+      <find>check_order</find>
+      <find>received_holdings</find>
+      <find>update_units</find>
+      <find>received_Order_book</find>
+      <find>holdings</find>
+      <find>assert (u</find>
+      <find>orders</find>
+      <find>update_received_order_boo</find>
+      <find>received_or</find>
+      <find>update_received</find>
+      <find>self._orders</find>
+      <find>class orderho</find>
+      <find>class OrderHo</find>
       <find>class</find>
       <find>MyOrder</find>
+      <find>received_order_book</find>
+      <find>process_order</find>
       <find>received_mar</find>
       <find>marketplace</find>
-      <find>potential</find>
-      <find>note_id =</find>
-      <find>def market</find>
-      <find>variance</find>
-      <find>note_id</find>
-      <find>note</find>
-      <find>format</find>
-      <find>send_current_order</find>
-      <find>process_order</find>
-      <find>_calculate_performance</find>
-      <find>holdings</find>
-      <find>note_order</find>
-      <find>notes</find>
-      <find>update_units</find>
-      <find>total</find>
-      <find>notes:</find>
-      <find>performance</find>
-      <find>check_order</find>
-      <find>received_order_book</find>
-      <find>compute</find>
-      <find>compute_o</find>
-      <find>check_or</find>
-      <find>time</find>
-      <find>warning</find>
-      <find>now(</find>
-      <find>order_accepted</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -450,12 +445,12 @@
     <frame x="0" y="22" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.118003026" visible="true" weight="0.21991481" />
-      <window_info id="Structure" order="1" sideWeight="0.881997" side_tool="true" visible="true" weight="0.21991481" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.11821975" visible="true" weight="0.21991481" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.88178027" side_tool="true" visible="true" weight="0.21991481" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31573498" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25569358" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -556,6 +551,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Task2/mm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -589,33 +594,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="26" column="17" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Task2/test.file.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="4" column="41" lean-forward="true" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="1056" column="29" selection-start-line="1056" selection-start-column="29" selection-end-line="1056" selection-end-column="29" />
+        <state relative-caret-position="1198">
+          <caret line="912" column="71" selection-start-line="912" selection-start-column="71" selection-end-line="912" selection-end-column="71" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
-            <marker date="1537448470700" expanded="true" signature="35568:35574" ph="..." />
+            <marker date="1537439127060" expanded="true" signature="33972:34942" ph="..." />
           </folding>
         </state>
       </provider>
