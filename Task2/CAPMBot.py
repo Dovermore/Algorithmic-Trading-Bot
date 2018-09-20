@@ -912,10 +912,18 @@ class CAPMBot(Agent):
             # Logic for other secs
             else:
                 # Find sell performance improving sell orders
-                orders = self._compute_orders(self._my_markets[market_id]
-                                              .best_bids, market_id)
-                orders += self._compute_orders(self._my_markets[market_id]
-                                                   .best_asks, market_id)
+                bid_side = self._my_markets[market_id].best_bids
+                ask_side = self._my_markets[market_id].best_asks
+                if len(bid_side) > 0:
+                    orders = self._compute_orders(bid_side, market_id)
+                else:
+                    orders = self._make_price(OrderSide.BUY, market_id)
+
+                if len(ask_side) > 0:
+                    orders += self._compute_orders(ask_side, market_id)
+                else:
+                    orders += self._make_price(OrderSide.SELL, market_id)
+
                 self.inform(orders)
                 orders = sorted(orders, key=lambda x: x[1], reverse=True)
                 if len(orders) > 0 and orders[0][1] > current_performance:
@@ -931,10 +939,10 @@ class CAPMBot(Agent):
         self._fn_start()
         try:
             orders = []
-            side = (OrderSide.BUY if other_orders[0].side ==
-                                     OrderSide.SELL else OrderSide.SELL)
             if len(other_orders) > 0:
                 price = other_orders[0].price
+                side = (OrderSide.BUY if other_orders[0].side ==
+                        OrderSide.SELL else OrderSide.SELL)
                 total_units = sum([order.units for order in other_orders])
                 for units in range(1, total_units + 1):
                     order = Order(price, units, OrderType.LIMIT, side,
@@ -945,8 +953,6 @@ class CAPMBot(Agent):
                     else:
                         if self._check_order(price, units, side, market_id):
                             orders.append([order, performance])
-            else:
-                orders = self._make_price(side, market_id, check_order)
 
             return orders
         except Exception as e:
@@ -954,7 +960,7 @@ class CAPMBot(Agent):
         finally:
             self._fn_end()
 
-    def _make_price(self, side, market_id, check_order):
+    def _make_price(self, side, market_id, check_order=True):
         """
         Create prices that may be profitable
         :param side: order side
@@ -964,19 +970,19 @@ class CAPMBot(Agent):
         try:
             orders = []
             tick = self._my_markets[market_id].tick
-            expected_return = self._my_markets[market_id].expected_return
+            expected_return = int(self._my_markets[market_id]
+                                  .expected_return*100)
             maximum = self._my_markets[market_id].maximum
             minimum = self._my_markets[market_id].minimum
 
             if side == OrderSide.BUY:
-                price = (expected_return * 0.5)//tick*tick
+                price = int((expected_return * 0.5)//tick*tick)
                 if price > maximum:
                     price = maximum
                 elif price < minimum:
                     price = minimum
                 else:
                     price = price
-
                 for units in range(1, 4):
                     if check_order is False:
                         order = Order(price, units, OrderType.LIMIT, side,
@@ -998,14 +1004,13 @@ class CAPMBot(Agent):
                                     orders.append([order, performance])
 
             elif side == OrderSide.SELL:
-                price = (expected_return * 1.5)//tick*tick
+                price = int((expected_return * 1.5)//tick*tick)
                 if price > maximum:
                     price = maximum
                 elif price < minimum:
                     price = minimum
                 else:
                     price = price
-
                 for units in range(1, 4):
                     if check_order is False:
                         order = Order(price, units, OrderType.LIMIT, side,
