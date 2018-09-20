@@ -811,7 +811,7 @@ class CAPMBot(Agent):
                 self._note_id = market
         self._fn_end()
 
-    def get_potential_performance(self, orders=None):
+    def get_potential_performance(self, orders):
         """
         Returns the portfolio performance if the given list of orders is
         executed.
@@ -838,6 +838,7 @@ class CAPMBot(Agent):
         performance = self._calculate_performance(new_cash, holdings)
         return performance
 
+    # TODO need to deal with case of lots of notes at start
     def _note_orders(self, market_id):
         """
         Order management for the note market
@@ -846,7 +847,7 @@ class CAPMBot(Agent):
         """
         self._fn_start()
         try:
-            notes_units = self._my_markets[market_id].available_units
+            notes_units = self._my_markets[market_id]._virtual_available_units
             if self._my_markets[market_id]._best_bids and notes_units > 0:
                 # Best bid in notes market
                 best_bid_price = self._my_markets[market_id]._best_bids[0].price
@@ -866,7 +867,7 @@ class CAPMBot(Agent):
                                             market_id)
                             # Check if selling note and buying sec will increase performance
                             if self.get_potential_performance([sell_note, buy_sec]) > \
-                                    self.get_potential_performance():
+                                    self.get_potential_performance([[]]):
                                 self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                                  market_id, OrderRole.REACTIVE)
         except Exception as e:
@@ -880,6 +881,7 @@ class CAPMBot(Agent):
         and finally send order
         :return: Order Made -> bool
         """
+        # TODO need to add market maker ordering
         self._fn_start()
         try:
             for market in self._market_ids.values():
@@ -1075,7 +1077,6 @@ class CAPMBot(Agent):
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
 
-            # TODO put logic here
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
