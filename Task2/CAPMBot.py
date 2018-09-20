@@ -839,7 +839,6 @@ class CAPMBot(Agent):
                             self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                              market_id, OrderRole.REACTIVE)
 
-    # TODO need to add different logic for notes
     def _process_order(self, market_id):
         """
         Process all order before passing through get_potential_performance
@@ -851,7 +850,7 @@ class CAPMBot(Agent):
                 self._my_markets[market].virtual_available_units
 
         current_performance = self._calculate_performance(self._cash,
-                                                        self._current_holdings)
+                                                          self._current_holdings)
         # Logic for notes
         if market_id == self._note_id:
             self._note_orders(market_id)
@@ -1026,7 +1025,6 @@ class CAPMBot(Agent):
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
 
-            # TODO put logic here
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -1102,10 +1100,6 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
-        ## DON'T need FLAG. IF order side is buy/sell, it's cash/units problem ##
-        # TODO could add a flag here if not enough cash to make order
-        # TODO then start selling notes if gain in performance from
-        # TODO selling note and buy stock is greater than not doing this
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
@@ -1313,6 +1307,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
     FM_SETTING = [FM_ACCOUNT] + FM_JD
-    FM_SETTING.append(MARKETPLACE_MANUAL)
+    FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
