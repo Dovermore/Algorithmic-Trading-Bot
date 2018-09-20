@@ -8,8 +8,9 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-from fmclient.utils.constants import DATE_FORMAT
+from fmclient.utils.constants import DATE_FORMAT, LOCAL_TIMEZONE
 from typing import List, Tuple, Dict, Union
+import pytz
 import random
 import copy
 import time
@@ -219,7 +220,8 @@ class Market:
                 self._sync_delay += 1
                 if self._sync_delay >= self.SYNC_MAX_DELAY:
                     self._agent.warning("Market" + str(self._market_id) +
-                                        "Failed to sync virtual units properly")
+                                        " Failed to sync virtual units "
+                                        "properly")
                 self._virtual_available_units = self._available_units
             elif self._available_units == self._virtual_available_units:
                 self._sync_delay = 0
@@ -425,7 +427,7 @@ class OrderHolder:
         if orig_order:
             order.order = orig_order
         self._orders.append(order)
-        self._agent.inform([str(order) for order in self._orders])
+        self._agent.inform(self._orders)
         return order
 
     def get_order(self, order):
@@ -463,29 +465,38 @@ class OrderHolder:
         :return: True if added successfully, False otherwise
                  (E.g. Order invalid or no id for order provided)
         """
-        # Check all orders to find corresponding order, and accept it
-        my_order = self.get_order(order)
-        if my_order is not None:
-            if order.type == OrderType.CANCEL:
-                self._orders.remove(my_order)
-            else:
-                my_order.accepted()
-        # Didn't find matching order
-        # Don't care if it's CANCEL order
-        elif order.type == OrderType.CANCEL:
-            return
-        # Update it to Holdings if it's not CANCEL
-        else:
-            self._agent.warning(str(order) + ": Didn't find matching order")
-            order_role = OrderRole.REACTIVE
-            if order.ref is not None:
-                if order.ref[-2:] == "MM":
-                    order_role = OrderRole.MARKET_MAKER
+        self._agent._fn_start()
+        try:
+            # Check all orders to find corresponding order, and accept it
+            my_order = self.get_order(order)
+
+            self._agent.inform(my_order)
+
+            if my_order is not None:
+                if order.type == OrderType.CANCEL:
+                    self._orders.remove(my_order)
                 else:
-                    order_role = OrderRole.REACTIVE
-            self.add_order(order.price, order.units, order.type, order.side,
-                           order.market_id, order_role, OrderStatus.ACCEPTED,
-                           order)
+                    my_order.accepted()
+            # Didn't find matching order
+            # Don't care if it's CANCEL order
+            elif order.type == OrderType.CANCEL:
+                return
+            # Update it to Holdings if it's not CANCEL
+            else:
+                self._agent.warning(str(order) + ": Didn't find matching order")
+                order_role = OrderRole.REACTIVE
+                if order.ref is not None:
+                    if order.ref[-2:] == "MM":
+                        order_role = OrderRole.MARKET_MAKER
+                    else:
+                        order_role = OrderRole.REACTIVE
+                self.add_order(order.price, order.units, order.type,
+                               order.side, order.market_id, order_role,
+                               OrderStatus.ACCEPTED, order)
+        except Exception as e:
+            self._agent._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._agent._fn_end()
 
     def order_rejected(self, order: Order):
         """
@@ -621,6 +632,7 @@ class MyOrder:
         Send the order
         :return: True if successfully sent, False otherwise
         """
+        self.AGENT.inform(self)
         if self.AGENT is not None and self._order_status ==\
                 OrderStatus.INACTIVE:
             self.AGENT.send_order(self._order)
@@ -747,7 +759,7 @@ def key(order):
     else:
         date = order.date
     if date is None:
-        date = datetime.datetime.now()
+        date = datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE))
     return date
 
 
@@ -973,7 +985,7 @@ class CAPMBot(Agent):
             self.inform(self._read_variance(market, self._variances[market]))
 
     @staticmethod
-    def _compute_variance(payoff: Tuple[int]) -> float:
+    def _compute_variance(payoff: Tuple[float]) -> float:
         """
         Compute the variance of the market's payoff
         :param payoff: Tuple of the market's payoff
@@ -1097,15 +1109,14 @@ class CAPMBot(Agent):
         finally:
             self._fn_end()
 
-    # TODO need to deal with case on not enough cash but lots of notes
     def received_holdings(self, holdings):
         try:
             self._fn_start()
-            self.inform(list(holdings.items()))
             cash = holdings["cash"]
             self._cash = cash["cash"]
             self._available_cash = cash["available_cash"]
-            # TODO this could be improved
+            if self._virtual_available_cash != self._available_cash:
+                self.inform("virtual_available_cash != available_cash")
             self._virtual_available_cash = self._available_cash
             for market_id, units in holdings["markets"].items():
                 self.inform(market_id)
@@ -1203,7 +1214,6 @@ class CAPMBot(Agent):
         :param order_role: role of order (market_maker or reactive)
         :return: True if successfully sent, false if failed check
         """
-        # TODO virtual holding check
         if self._check_order(price, units, order_side, market_id):
             market: Market = self._my_markets[market_id]
             market.add_order(price, units, order_type, order_side,
@@ -1365,7 +1375,7 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_JD
+    FM_SETTING = [FM_ACCOUNT] + FM_CH
     FM_SETTING.append(MARKETPLACE_MANUAL)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
