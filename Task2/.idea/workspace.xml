@@ -69,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="907" column="78" lean-forward="true" selection-start-line="907" selection-start-column="78" selection-end-line="907" selection-end-column="78" />
+            <state relative-caret-position="-207">
+              <caret line="843" column="69" selection-start-line="843" selection-start-column="69" selection-end-line="843" selection-end-column="69" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
               </folding>
@@ -297,7 +297,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32896653" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1352518" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29064748" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -376,8 +376,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="907" column="78" lean-forward="true" selection-start-line="907" selection-start-column="78" selection-end-line="907" selection-end-column="78" />
+        <state relative-caret-position="-207">
+          <caret line="843" column="69" selection-start-line="843" selection-start-column="69" selection-end-line="843" selection-end-column="69" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
           </folding>

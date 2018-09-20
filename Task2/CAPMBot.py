@@ -8,8 +8,9 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-from fmclient.utils.constants import DATE_FORMAT
+from fmclient.utils.constants import DATE_FORMAT, LOCAL_TIMEZONE
 from typing import List, Tuple, Dict, Union
+import pytz
 import random
 import copy
 import time
@@ -112,7 +113,7 @@ class Market:
         self._best_asks = []
 
         # Setting up holding information
-        self._sync_delay = 0
+        self._sync_delay = 2
         self._units = 0
         self._available_units = self._units
         # update to agent regarding holdings that is made/cancelled
@@ -208,9 +209,9 @@ class Market:
         try:
             assert (unit_dict["units"] >= 0 and
                     unit_dict["available_units"] >= 0), "negative_units"
-            self.examine_units()
             self._units = unit_dict["units"]
             self._available_units = unit_dict["available_units"]
+            self.examine_units()
             if self._available_units > self._virtual_available_units:
                 self._sync_delay += 1
                 if self._sync_delay >= self.SYNC_MAX_DELAY:
@@ -367,8 +368,13 @@ class Market:
         :param price: The price to be checked
         :return: True if valid, else False
         """
+        self._agent.inform("min = %d" % self._minimum)
+        self._agent.inform("max = %d" % self._maximum)
+        self._agent.inform("price = %d" % price)
+        self._agent.inform("tick = %d" % self._tick)
+        self._agent.inform("%d - %d rem %d = %d" % (price, self._minimum, self._tick, (price - self._minimum) % self._tick))
         return (self._minimum < price < self.maximum and
-                (price - self._minimum) % self._tick != 0)
+                (price - self._minimum) % self._tick == 0)
 
     def examine_units(self):
         self._agent.inform("Total units: " + str(self._units))
@@ -741,7 +747,7 @@ def key(order):
     else:
         date = order.date
     if date is None:
-        date = datetime.datetime.now()
+        date = datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE))
     return date
 
 
@@ -847,7 +853,12 @@ class CAPMBot(Agent):
         """
         self._fn_start()
         try:
+<<<<<<< HEAD
             notes_units = self._my_markets[market_id]._virtual_available_units
+=======
+            notes_units = self._my_markets[market_id].available_units
+            self.inform("notes:" + str(notes_units))
+>>>>>>> 2a2152ae4277dd95e37f5c0c19c6f9b92b74bc41
             if self._my_markets[market_id]._best_bids and notes_units > 0:
                 # Best bid in notes market
                 best_bid_price = self._my_markets[market_id]._best_bids[0].price
@@ -856,20 +867,21 @@ class CAPMBot(Agent):
                     self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                      market_id, OrderRole.REACTIVE)
                 # Check each market for whether buying is profitable
-                for market_id in self._market_ids.values():
-                    if self._my_markets[market_id]._best_bids and notes_units > 0:
+                for other_market_id in self._market_ids.values():
+                    if self._my_markets[other_market_id]._best_bids and notes_units > 0:
                         # Best bid in the market
-                        market_best_bid = self._my_markets[market_id]._best_bids[0].price
+                        market_best_bid = self._my_markets[other_market_id]._best_bids[0].price
                         if self._available_cash < market_best_bid:
                             sell_note = Order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                               market_id)
                             buy_sec = Order(market_best_bid, 1, OrderType.LIMIT, OrderSide.BUY,
-                                            market_id)
+                                            other_market_id)
                             # Check if selling note and buying sec will increase performance
                             if self.get_potential_performance([sell_note, buy_sec]) > \
                                     self.get_potential_performance([[]]):
                                 self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                                  market_id, OrderRole.REACTIVE)
+
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -897,13 +909,12 @@ class CAPMBot(Agent):
                 # Find sell performance improving sell orders
                 orders = self._compute_orders(self._my_markets[market_id]
                                                    .best_bids, market_id)
-                orders.append(self._compute_orders(self._my_markets[market_id]
-                                                   .best_asks, market_id))
-                if orders != [[]]:
-                    orders = [order for order in orders if
-                              order[1] > current_performance]
-                    orders = sorted(orders, key=lambda x: x[1], reverse=True)
-                if len(orders) > 0 and orders != [[]]:
+                orders += self._compute_orders(self._my_markets[market_id]
+                                                   .best_asks, market_id)
+                orders = [order for order in orders if
+                          order[1] > current_performance]
+                orders = sorted(orders, key=lambda x: x[1], reverse=True)
+                if len(orders) > 0:
                     self._send_order(orders[0][0].price, orders[0][0].units,
                                      orders[0][0].type, orders[0][0].side,
                                      orders[0][0].market_id, OrderRole.REACTIVE)
@@ -919,6 +930,8 @@ class CAPMBot(Agent):
             if len(other_orders) > 0:
                 price = other_orders[0].price
                 total_units = sum([order.units for order in other_orders])
+                self.inform("price=" + str(price))
+                self.inform("total_units=" + str(total_units))
                 side = (OrderSide.BUY if other_orders[0].side ==
                         OrderSide.SELL else OrderSide.SELL)
                 for units in range(1, total_units + 1):
@@ -930,6 +943,7 @@ class CAPMBot(Agent):
                     else:
                         if self._check_order(price, units, side, market_id):
                             orders.append([order, performance])
+            self.inform(orders)
             return orders
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
@@ -1046,6 +1060,7 @@ class CAPMBot(Agent):
     def order_accepted(self, order):
         try:
             self._fn_start()
+            self.inform(order)
             market = self._my_markets[order.market_id]
             market.order_accepted(order)
 
@@ -1074,9 +1089,13 @@ class CAPMBot(Agent):
         self.get_completed_orders(market_id)
         self.inform("received order book from %d" % market_id)
         try:
+            self.inform("Item:" + str(self._my_markets[market_id].item))
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a2152ae4277dd95e37f5c0c19c6f9b92b74bc41
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -1105,6 +1124,7 @@ class CAPMBot(Agent):
             self._virtual_available_cash = self._available_cash
             for market_id, units in holdings["markets"].items():
                 self.inform(market_id)
+                self.inform(units)
                 self._my_markets[market_id].update_units(units)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
@@ -1155,9 +1175,16 @@ class CAPMBot(Agent):
         :return: True if can send, False if order is null
         """
         if order_side == OrderSide.BUY:
+            self.inform("Buy")
+            self.inform(self._virtual_available_cash)
+            self.inform("%d * %d = %d" % (price, units, price * units))
             return self._virtual_available_cash >= price * units
         else:
+            self.inform("Sell")
             market: Market = self._my_markets[market_id]
+            self.inform(market.is_valid_price(price))
+            self.inform(units)
+            self.inform(market.virtual_available_units)
             return (market.is_valid_price(price) and
                     market.virtual_available_units >= units)
 
