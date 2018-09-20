@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task2/Scratch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task1/Scratch.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task2/Variance, Covariance, Expected Payoff, Performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/Variance, Covariance, Expected Payoff, Performance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/test.file.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/test.file.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,26 +32,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="log" value="2" />
-          <entry key="py" value="19" />
+          <entry key="py" value="20" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="19" />
+          <entry key="Python" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="28203" />
+          <entry key="py" value="28211" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="28203" />
+          <entry key="Python" value="28211" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -62,14 +63,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-76">
-              <caret line="817" column="8" selection-start-line="817" selection-start-column="8" selection-end-line="817" selection-end-column="8" />
+            <state relative-caret-position="386">
+              <caret line="923" column="53" lean-forward="true" selection-start-line="923" selection-start-column="53" selection-end-line="923" selection-end-column="53" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
-                <marker date="1537408248911" expanded="true" signature="46370:47213" ph="..." />
-                <marker date="1537408248911" expanded="true" signature="48441:49295" ph="..." />
+                <marker date="1537431418388" expanded="true" signature="47538:48381" ph="..." />
+                <marker date="1537431418388" expanded="true" signature="49609:50463" ph="..." />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Task2/Scratch.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1794" />
           </provider>
         </entry>
       </file>
@@ -159,7 +167,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_send</find>
       <find>_send_order</find>
       <find>virtual_available_cash</find>
       <find>price</find>
@@ -189,6 +196,7 @@
       <find>self.markets</find>
       <find>process_order</find>
       <find>received</find>
+      <find>head</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -449,12 +457,12 @@
     <frame x="0" y="22" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21991481" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21991481" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3126294" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3126294" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -607,14 +615,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Task2/Scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1794" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
-          <caret line="817" column="8" selection-start-line="817" selection-start-column="8" selection-end-line="817" selection-end-column="8" />
+        <state relative-caret-position="386">
+          <caret line="923" column="53" lean-forward="true" selection-start-line="923" selection-start-column="53" selection-end-line="923" selection-end-column="53" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
-            <marker date="1537408248911" expanded="true" signature="46370:47213" ph="..." />
-            <marker date="1537408248911" expanded="true" signature="48441:49295" ph="..." />
+            <marker date="1537431418388" expanded="true" signature="47538:48381" ph="..." />
+            <marker date="1537431418388" expanded="true" signature="49609:50463" ph="..." />
           </folding>
         </state>
       </provider>

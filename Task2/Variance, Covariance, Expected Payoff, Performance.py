@@ -243,17 +243,26 @@ def best_order(available):
 
 print(best_order(available_orders))
 
-x = 5
+price = 0
+x = 5.5
 for n in range(10):
     print('N'+str(n))
     for i in range(10):
         print("i"+str(i))
+        if x > i:
+            print("i"+str(i))
+            price = i
 
-        if i == x-1:
-            break
+
+print(price)
 
 
-print("out")
+x = [1,2,3,4,5]
+print(x[1:])
+
+
+
+
 
 
 TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
