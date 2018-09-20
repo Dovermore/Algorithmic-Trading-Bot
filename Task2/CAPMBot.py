@@ -762,6 +762,7 @@ class CAPMBot(Agent):
         self._covariances = {}
         self._variances = {}
         self._current_holdings = {}
+        self._note_id = -1
 
         self._cash = 0
         self._available_cash = self._cash
@@ -787,6 +788,10 @@ class CAPMBot(Agent):
         self._build_variance()
         self._build_covariance()
         self.inform("There are %s possible states" % str(Market.states))
+        # Note market
+        for market in self._market_ids.values():
+            if self._variances[market] == 0:
+                self._note_id = market
         self._fn_end()
 
     def get_potential_performance(self, orders=None):
@@ -800,18 +805,46 @@ class CAPMBot(Agent):
         new_cash = self._virtual_available_cash
         holdings = {}
         for market in self._my_markets.keys():
-            holdings[market] = self._my_markets[market].available_units
-        if orders is not None:
-            for order in orders:
-                if order['side'] == "SELL":
-                    holdings[order["market_id"]] -= order['units']
-                    new_cash += order["price"] * order["units"]
-                else:
-                    holdings[order['market_id']] += order['units']
-                    new_cash -= order['price'] * order['units']
-
+            holdings[market] = self._my_markets[market].virtual_available_units
+        for order in orders:
+            if order.side == OrderSide.SELL:
+                holdings[order.market_id] -= order.units
+                new_cash += order.price * order.units
+            else:
+                holdings[order.market_id] += order.units
+                new_cash -= order.price * order.units
         performance = self._calculate_performance(new_cash, holdings)
         return performance
+
+    def _note_orders(self, market_id):
+        """
+        Order management for the note market
+        :param market_id:
+        :return:
+        """
+        notes_units = self._my_markets[market_id].available_units
+        if self._my_markets[market_id]._best_bids and notes_units > 0:
+            # Best bid in notes market
+            best_bid_price = self._my_markets[market_id]._best_bids[0].price
+            # Sell notes for more than their expected return
+            if best_bid_price > self._my_markets[market_id].expected_return:
+                self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
+                                 market_id, OrderRole.REACTIVE)
+            # Check each market for whether buying is profitable
+            for market in self._market_ids.values():
+                if self._my_markets[market]._best_bids and notes_units > 0:
+                    # Best bid in the market
+                    market_best_bid = self._my_markets[market]._best_bids[0].price
+                    if self._available_cash < market_best_bid:
+                        sell_note = Order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
+                                          market_id)
+                        buy_sec = Order(market_best_bid, 1, OrderType.LIMIT, OrderSide.BUY,
+                                        market)
+                        # Check if selling note and buying sec will increase performance
+                        if self.get_potential_performance([sell_note, buy_sec]) > \
+                                self.get_potential_performance():
+                            self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
+                                             market_id, OrderRole.REACTIVE)
 
     def _process_order(self, market_id):
         """
@@ -819,212 +852,45 @@ class CAPMBot(Agent):
         and finally send order
         :return: Order Made -> bool
         """
-        try:
-            self._fn_start()
-            for market in self._market_ids.values():
-                self._current_holdings[market] = \
-                    self._my_markets[market].virtual_available_units
-            prior_performance = self.\
-                _calculate_performance(self._virtual_available_cash,
-                                       self._current_holdings)
+        for market in self._market_ids.values():
+            self._current_holdings[market] = \
+                self._my_markets[market].virtual_available_units
 
-            orders = self._make_order(market_id)
-            print(orders)
-            potential_orders = []
-            if len(orders) > 1:
-                performance = self.get_potential_performance(orders)
-                for order in orders:
-                    if order[0] >= performance:
-                        performance = order[0]
-                        potential_orders = order[1:]
-                    else:
-                        potential_orders.append(order[1:])
-            else:
-                performance = self.get_potential_performance(orders)
-                potential_orders = [orders]
+        current_performance = self._calculate_performance(self._cash,
+                                                          self._current_holdings)
+        # Logic for notes
+        if market_id == self._note_id:
+            self._note_orders(market_id)
+        # Logic for other secs
+        else:
+            orders = []
+            # Find sell performance improving sell orders
+            if self._my_markets[market_id]._best_bids:
+                best_bid_price = self._my_markets[market_id]._best_bids[0].price
+                bid_units = sum([order.units for order in self._my_markets[market_id]._best_bids])
+                for unit in range(1, bid_units+1):
+                    order = Order(best_bid_price, unit, OrderType.LIMIT, OrderSide.SELL, market_id)
+                    if self._check_order(best_bid_price, unit, OrderSide.SELL, market_id):
+                        new_performance = self.get_potential_performance([order])
+                        if new_performance > current_performance:
+                            orders.append([order, new_performance])
 
-            self.inform("Performance = %4d" % performance)
-            perform_diff = performance - prior_performance
+            # Find performance improving buy orders
+            if self._my_markets[market_id]._best_asks:
+                best_ask_price = self._my_markets[market_id]._best_asks[0].price
+                ask_units = sum([order.units for order in self._my_markets[market_id]._best_asks])
+                for unit in range(1, ask_units+1):
+                    order = Order(best_ask_price, unit, OrderType.LIMIT, OrderSide.BUY, market_id)
+                    if self._check_order(best_ask_price, unit, OrderSide.BUY, market_id):
+                        new_performance = self.get_potential_performance([order])
+                        if new_performance > current_performance:
+                            orders.append([order, new_performance])
+            orders = sorted(orders, key=lambda x: x[1], reverse=True)
+            if orders:
+                self._send_order(orders[0][0].price, orders[0][0], orders[0][0].type, orders[0][0].side,
+                                 orders[0][0].market_id, OrderRole.REACTIVE)
 
-            if perform_diff >= 0:
-                self.inform("Performance - Prior Performance = %4d"
-                            % perform_diff)
-                # TODO send order here
-                for order, role in potential_orders:
-                    price = order.price
-                    units = order.units
-                    side = order.side
-                    market_id = order.market_id
-                    self._send_order(price, units, OrderType.LIMIT, side,
-                                     market_id, role)
-                else:
-                    self.inform("decrease performance - no send")
-        except Exception as e:
-            self._exception_inform(e, inspect.stack()[0][3])
-        finally:
-            self._fn_end()
 
-    def _make_order(self, market_id):
-        """
-        Uses best bid and best ask from a market, decide to/ order
-        :param market_id: Market ID
-        :return: best order for that market
-        """
-        best_bids = self._my_markets[market_id]._best_bids
-        best_asks = self._my_markets[market_id]._best_asks
-
-        best_order = self._process_price(best_bids, best_asks, market_id)
-
-        return best_order
-
-    def _process_price(self, best_bid, best_ask, market_id):
-        """
-        get the best_bid and best_ask from market to make orders
-        :param best_bid: list of bid order in order book
-        :param best_ask: list of ask order in order book
-        :param market_id: ID of the market to send order to
-        :return:
-        """
-        orders = []
-        # to test on the same price first
-        if len(best_bid) == 0 and len(best_ask) == 0:
-            for side in [OrderSide.BUY, OrderSide.SELL]:
-                orders.append(self._make_price(side, market_id))
-
-        elif len(best_bid) > 0 and len(best_ask) > 0:
-            for side in [OrderSide.BUY, OrderSide.SELL]:
-                if side == OrderSide.BUY:
-                    orders.append(self._react_price(best_ask, side, market_id))
-                else:
-                    orders.append(self._react_price(best_bid, side, market_id))
-
-        elif len(best_bid) == 0:
-            orders.append(self._react_price(best_ask, OrderSide.BUY, market_id))
-
-        elif len(best_ask) == 0:
-            orders.append(self._react_price(best_bid, OrderSide.SELL, market_id))
-
-        return orders
-
-    def _react_price(self, bid_ask_list, side, market_id):
-        """
-        calculate the performance using price given in best bid or best ask
-        :param bid_ask_list: bid/ask list
-        :return: performance, price, units, side, market id
-        """
-
-        price = bid_ask_list[0].price
-        units = sum([order.units for order in bid_ask_list])
-
-        order_to_make = [0]
-
-        if side == 'BUY':
-            for increase_units in range(units+1):
-                    cash = self._virtual_available_cash
-                    holdings = self._current_holdings
-
-                    cash -= price * increase_units
-
-                    if cash > 0:
-                        holdings[market_id] += increase_units
-
-                        performance = self._calculate_performance(cash,
-                                                                  holdings)
-
-                        if performance > order_to_make[0]:
-                            order_to_make = [performance, OrderRole.REACTIVE,
-                                             Order(price, increase_units,
-                                                   OrderType.LIMIT, side,
-                                                   market_id)]
-                        else:
-                            order_to_make = order_to_make
-                    else:
-                        self.inform("not enough cash")
-
-        elif side == "SELL":
-            for increase_units in range(units+1):
-                if self._my_markets[market_id].examine_units():
-                    cash = self._virtual_available_cash
-                    holdings = self._current_holdings
-
-                    cash += price * increase_units
-                    holdings[market_id] -= increase_units
-
-                    if holdings[market_id] >= 0:
-                        performance = self._calculate_performance(cash,
-                                                                  holdings)
-                        if performance > order_to_make[0]:
-                            order_to_make = [performance, OrderRole.REACTIVE,
-                                             Order(price, increase_units,
-                                                   OrderType.LIMIT, side,
-                                                   market_id)]
-
-                else:
-                    self.inform("not enough units in %d" % market_id)
-
-        return order_to_make
-
-    def _make_price(self, side, market_id):
-        """
-        Create prices that may be profitable
-        :param side: order side
-        :param market_id: market to be traded in
-        :return performance (0 if does not improve) alongside price, units,
-                side, market id
-        """
-        try:
-            tick = self._my_markets[market_id].tick
-            cash = self._virtual_available_cash
-            holdings = self._current_holdings
-            expected_return = self._my_markets[market_id].expected_return
-            order_to_make = [0]
-            if side == OrderSide.BUY:
-                price = (expected_return * 0.5)//tick*tick
-                if price > self._my_markets[market_id].maximum:
-                    price = self._my_markets[market_id].maximum
-                elif price < self._my_markets[market_id].minimum:
-                    price = self._my_markets[market_id].minimum
-                else:
-                    price = price
-
-                if cash == 0:
-                    self.inform("no cash")
-                    order_to_make = [0]
-
-                elif cash > price:
-                    order_to_make = [0, OrderRole.MARKET_MAKER,
-                                     Order(price, 1, OrderType.LIMIT, side,
-                                           market_id)]
-                else:
-                    for decrease in range(price, tick, -tick):
-                        if cash > price:
-                            order_to_make = [0, OrderRole.MARKET_MAKER,
-                                             Order(decrease, 1, OrderType.LIMIT,
-                                                   side, market_id)]
-
-            elif side == OrderSide.SELL:
-                price = (expected_return * 1.5)//tick*tick
-                if price > self._my_markets[market_id].maximum:
-                    price = self._my_markets[market_id].maximum
-                elif price < self._my_markets[market_id].minimum:
-                    price = self._my_markets[market_id].minimum
-                else:
-                    price = price
-
-                if holdings[market_id] > 0:
-                    holdings[market_id] -= 1
-                    order_to_make = [OrderRole.MARKET_MAKER,
-                                     Order(price, 1, OrderType.LIMIT,
-                                           side, market_id)]
-                else:
-                    order_to_make = [0]
-
-            else:
-                self.inform("None buy sell type")
-            return order_to_make
-
-        except Exception as e:
-            self._exception_inform(e, inspect.stack()[0][3])
 
     def _build_covariance(self) -> None:
         """
@@ -1456,6 +1322,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
     FM_SETTING = [FM_ACCOUNT] + FM_JD
-    FM_SETTING.append(MARKETPLACE_MANUAL)
+    FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
