@@ -1,2 +1,5 @@
-a = []
-print(sum([i.d for i in a]))
+orders = []
+current_performance = 0
+
+orders = [order for order in orders if
+          order[1] > current_performance]
