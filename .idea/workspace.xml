@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/Scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/Scratch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/test.file.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/test.file.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,13 +55,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="28563" />
+          <entry key="py" value="29471" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="28563" />
+          <entry key="Python" value="29471" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -76,23 +73,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="893" column="8" lean-forward="true" selection-start-line="893" selection-start-column="8" selection-end-line="893" selection-end-column="8" />
+            <state relative-caret-position="445">
+              <caret line="906" column="21" selection-start-line="906" selection-start-column="21" selection-end-line="906" selection-end-column="21" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
-                <marker date="1537433341614" expanded="true" signature="5200:5206" ph="..." />
-                <marker date="1537433341614" expanded="true" signature="47512:48355" ph="..." />
-                <marker date="1537433341614" expanded="true" signature="49583:50437" ph="..." />
+                <marker date="1537436927729" expanded="true" signature="33017:33747" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Task2/Scratch.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5830">
-              <caret line="1162" column="25" selection-start-line="1162" selection-start-column="8" selection-end-line="1162" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -110,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/constants.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="690">
-              <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+              <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -174,7 +160,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>virtual_available_cash</find>
       <find>price</find>
       <find>self._virtual</find>
       <find>add_order</find>
@@ -204,6 +189,7 @@
       <find>received</find>
       <find>head</find>
       <find>received_holdings</find>
+      <find>check_order</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -257,12 +243,6 @@
               <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
               <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
               <item name="Task2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FNCE30010Project1" type="462c0819:PsiDirectoryNode" />
-              <item name="Task2" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FNCE30010Project1" type="b2602c69:ProjectViewProjectNode" />
@@ -465,12 +445,12 @@
     <frame x="0" y="22" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.07281554" visible="true" weight="0.21991481" />
-      <window_info id="Structure" order="1" sideWeight="0.92718446" side_tool="true" visible="true" weight="0.21991481" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.118138425" visible="true" weight="0.21991481" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.88186157" side_tool="true" visible="true" weight="0.21991481" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36024845" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.13250518" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -511,9 +491,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
           <caret line="306" column="23" selection-start-line="306" selection-start-column="20" selection-end-line="306" selection-end-column="23" />
-          <folding>
-            <element signature="e#224#245#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -528,13 +505,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="1706" column="101" selection-start-line="1706" selection-start-column="90" selection-end-line="1706" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Task2/logs/z.huang51@student.unimelb.edu.au-387-bot.log" />
     <entry file="file://$PROJECT_DIR$/Task1/logs/j.lee161@student.unimelb.edu.au-260-bot.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -569,7 +540,7 @@
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/utils/constants.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
-          <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -632,13 +603,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="893" column="8" lean-forward="true" selection-start-line="893" selection-start-column="8" selection-end-line="893" selection-end-column="8" />
+        <state relative-caret-position="445">
+          <caret line="906" column="21" selection-start-line="906" selection-start-column="21" selection-end-line="906" selection-end-column="21" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
-            <marker date="1537433341614" expanded="true" signature="5200:5206" ph="..." />
-            <marker date="1537433341614" expanded="true" signature="47512:48355" ph="..." />
-            <marker date="1537433341614" expanded="true" signature="49583:50437" ph="..." />
+            <marker date="1537436927729" expanded="true" signature="33017:33747" ph="..." />
           </folding>
         </state>
       </provider>

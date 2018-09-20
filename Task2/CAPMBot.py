@@ -877,32 +877,34 @@ class CAPMBot(Agent):
         else:
             orders = []
             # Find sell performance improving sell orders
-            if self._my_markets[market_id]._best_bids:
-                best_bid_price = self._my_markets[market_id]._best_bids[0].price
-                bid_units = sum([order.units for order in self._my_markets[market_id]._best_bids])
-                for unit in range(1, bid_units+1):
-                    order = Order(best_bid_price, unit, OrderType.LIMIT, OrderSide.SELL, market_id)
-                    if self._check_order(best_bid_price, unit, OrderSide.SELL, market_id):
-                        new_performance = self.get_potential_performance([order])
-                        if new_performance > current_performance:
-                            orders.append([order, new_performance])
-
-            # Find performance improving buy orders
-            if self._my_markets[market_id]._best_asks:
-                best_ask_price = self._my_markets[market_id]._best_asks[0].price
-                ask_units = sum([order.units for order in self._my_markets[market_id]._best_asks])
-                for unit in range(1, ask_units+1):
-                    order = Order(best_ask_price, unit, OrderType.LIMIT, OrderSide.BUY, market_id)
-                    if self._check_order(best_ask_price, unit, OrderSide.BUY, market_id):
-                        new_performance = self.get_potential_performance([order])
-                        if new_performance > current_performance:
-                            orders.append([order, new_performance])
+            orders.append(self._compute_orders(self._my_markets[market_id]
+                                               .best_bids))
+            orders.append(self._compute_orders(self._my_markets[market_id]
+                                               .best_asks))
+            orders = [order for order in orders if
+                      order[1] > current_performance]
             orders = sorted(orders, key=lambda x: x[1], reverse=True)
             if orders:
-                self._send_order(orders[0][0].price, orders[0][0], orders[0][0].type, orders[0][0].side,
+                self._send_order(orders[0][0].price, orders[0][0],
+                                 orders[0][0].type, orders[0][0].side,
                                  orders[0][0].market_id, OrderRole.REACTIVE)
 
-
+    def _compute_orders(self, other_orders, market_id, check_order=False):
+        orders = []
+        if len(orders) > 0:
+            price = other_orders[0].price
+            total_units = sum([order.units for order in other_orders])
+            side = (OrderSide.BUY if orders[0].side ==
+                    OrderSide.SELL else OrderSide.SELL)
+            for units in range(1, total_units + 1):
+                order = Order(price, units, OrderType.LIMIT, side, market_id)
+                performance = self.get_potential_performance(order)
+                if check_order is False:
+                    orders.append([order, performance])
+                else:
+                    if self._check_order(price, units, side, market_id):
+                        orders.append([order, performance])
+        return orders
 
     def _build_covariance(self) -> None:
         """
@@ -1122,10 +1124,6 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
-        # DON'T need FLAG. IF order side is buy/sell, it's cash/units problem #
-        # TODO could add a flag here if not enough cash to make order
-        # TODO then start selling notes if gain in performance from
-        # TODO selling note and buy stock is greater than not doing this
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
