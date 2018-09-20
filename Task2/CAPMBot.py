@@ -283,9 +283,15 @@ class Market:
         ---- Should not be used elsewhere. Need not to read ----
         :param order_book: Order book from market
         """
-        self._order_book = order_book
-        self._set_bid_ask_price()
-        self.order_holder.update_received_order_book(order_book)
+        try:
+            self._agent._fn_start()
+            self._order_book = order_book
+            self._set_bid_ask_price()
+            self.order_holder.update_received_order_book(order_book)
+        except Exception as e:
+            self._agent._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._agent._fn_end()
 
     def update_completed_orders(self, orders):
         """
@@ -815,33 +821,40 @@ class CAPMBot(Agent):
         and finally send order
         :return: Order Made -> bool
         """
-        for market in self._market_ids.values():
-            self._current_holdings[market] = \
-                self._my_markets[market].virtual_available_units
+        try:
+            self._fn_start()
+            for market in self._market_ids.values():
+                self._current_holdings[market] = \
+                    self._my_markets[market].virtual_available_units
 
-        prior_performance = self._calculate_performance(self._cash,
-                                                        self._current_holdings)
+            prior_performance = self._calculate_performance(self._cash,
+                                                            self._current_holdings)
 
-        orders = self._make_order(market_id)
+            orders = self._make_order(market_id)
 
-        performance = self.get_potential_performance(orders)
+            performance = self.get_potential_performance(orders)
 
-        self.inform("Performance = %d" % performance)
-        perform_diff = performance - prior_performance
+            self.inform("Performance = %d" % performance)
+            perform_diff = performance - prior_performance
 
-        if perform_diff >= 0:
-            self.inform("Performance - Prior Performance = %d" % perform_diff)
-            # TODO send order here
-            for order in orders:
-                price = order["price"]
-                units = order["units"]
-                side = order_side_dict[order["side"]]
-                market_id = order["market_id"]
-                role = order["role"]
-                self._send_order(price, units, OrderType.LIMIT, side, market_id, role)
+            if perform_diff >= 0:
+                self.inform("Performance - Prior Performance = %d" % perform_diff)
+                # TODO send order here
+                for order in orders:
+                    price = order["price"]
+                    units = order["units"]
+                    side = order_side_dict[order["side"]]
+                    market_id = order["market_id"]
+                    role = order["role"]
+                    self._send_order(price, units, OrderType.LIMIT, side,
+                                     market_id, role)
 
-        else:
-            self.inform("decrease performance - no send")
+            else:
+                self.inform("decrease performance - no send")
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     def _make_order(self, market_id):
         """
@@ -1160,7 +1173,8 @@ class CAPMBot(Agent):
             self._available_cash = cash["available_cash"]
             # TODO this could be improved
             self._virtual_available_cash = self._available_cash
-            for market_id, units in holdings["markets"]:
+            for market_id, units in holdings["markets"].items():
+                self.inform(market_id)
                 self._my_markets[market_id].update_units(units)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
@@ -1216,7 +1230,7 @@ class CAPMBot(Agent):
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
-            market: Market = self.markets[market_id]
+            market: Market = self._my_markets[market_id]
             return (market.is_valid_price(price) and
                     market.virtual_available_units >= units)
 
@@ -1328,7 +1342,8 @@ class CAPMBot(Agent):
         self.inform(" " * space_left + "".join([char] * char_left) +
                     msg + "".join([char] * char_right) + " " * space_right)
 
-    def _exception_inform(self, msg, fn_name, addition=""):
+    def _exception_inform(self, msg, fn_name,
+                          addition=""):
         """
         Show the exception message with function name
         :param msg: exception to inform

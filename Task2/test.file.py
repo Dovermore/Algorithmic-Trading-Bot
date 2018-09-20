@@ -1,3 +1,7 @@
-d = {"a":(1,2,3), "b":(4,5,6), "c":(7,8,9, 10)}
+import enum
+class OrderSide(enum):
+    a = 1
+    b = 2
 
-print(set(len(value) for value in d.values()))
+for i in OrderSide.:
+    print(i)
