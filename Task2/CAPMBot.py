@@ -821,8 +821,13 @@ class CAPMBot(Agent):
         """
         new_cash = self._virtual_available_cash
         holdings = {}
-        for market in self._my_markets.keys():
-            holdings[market] = self._my_markets[market].virtual_available_units
+        for market_id in self._my_markets.keys():
+            holdings[market_id] = \
+                self._my_markets[market_id].virtual_available_units
+        if isinstance(orders, Order):
+            orders = [orders]
+        elif orders is None:
+            orders = []
         for order in orders:
             if order.side == OrderSide.SELL:
                 holdings[order.market_id] -= order.units
@@ -1107,7 +1112,7 @@ class CAPMBot(Agent):
 
     def received_marketplace_info(self, marketplace_info):
         self._fn_start()
-
+        self.inform(marketplace_info)
         session_id = marketplace_info["session_id"]
         if marketplace_info["status"]:
             self.inform("Marketplace is now open with session id "
