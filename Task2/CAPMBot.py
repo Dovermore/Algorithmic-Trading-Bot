@@ -183,6 +183,18 @@ class Market:
     def virtual_available_units(self, virtual_available_units):
         self._virtual_available_units = virtual_available_units
 
+    @property
+    def best_bids(self):
+        return self._best_bids
+
+    @property
+    def best_asks(self):
+        return self._best_asks
+
+    @property
+    def order_book(self):
+        return self._order_book
+
     def update_units(self, unit_dict):
         """
         ---- Should not be used elsewhere. Need not to read ----
@@ -828,7 +840,7 @@ class CAPMBot(Agent):
                 _calculate_performance(self._virtual_available_cash,
                                        self._current_holdings)
 
-            orders = self._make_order(market_id)
+            orders = self._process_price(market_id)
             print(orders)
             potential_orders = []
             if len(orders) > 1:
@@ -864,45 +876,39 @@ class CAPMBot(Agent):
         finally:
             self._fn_end()
 
-    def _make_order(self, market_id):
-        """
-        Uses best bid and best ask from a market, decide to/ order
-        :param market_id: Market ID
-        :return: best order for that market
-        """
-        best_bids = self._my_markets[market_id]._best_bids
-        best_asks = self._my_markets[market_id]._best_asks
-
-        best_order = self._process_price(best_bids, best_asks, market_id)
-
-        return best_order
-
-    def _process_price(self, best_bid, best_ask, market_id):
+    def _process_price(self, market_id):
         """
         get the best_bid and best_ask from market to make orders
-        :param best_bid: list of bid order in order book
-        :param best_ask: list of ask order in order book
         :param market_id: ID of the market to send order to
         :return:
         """
+        best_bids = self._my_markets[market_id].best_bids
+        best_asks = self._my_markets[market_id].best_asks
+
         orders = []
+
+        total_bid_units = [bid.units for bid in best_bids]
+        bid_price = best_bids.price if len(best_bids) > 0 else
+
+        total_asks_units = [ask.units for ask in best_asks]
+        
         # to test on the same price first
-        if len(best_bid) == 0 and len(best_ask) == 0:
+        if len(best_bids) == 0 and len(best_asks) == 0:
             for side in [OrderSide.BUY, OrderSide.SELL]:
                 orders.append(self._make_price(side, market_id))
 
-        elif len(best_bid) > 0 and len(best_ask) > 0:
+        elif len(best_bids) > 0 and len(best_asks) > 0:
             for side in [OrderSide.BUY, OrderSide.SELL]:
                 if side == OrderSide.BUY:
-                    orders.append(self._react_price(best_ask, side, market_id))
+                    orders.append(self._react_price(best_asks, side, market_id))
                 else:
-                    orders.append(self._react_price(best_bid, side, market_id))
+                    orders.append(self._react_price(best_bids, side, market_id))
 
-        elif len(best_bid) == 0:
-            orders.append(self._react_price(best_ask, OrderSide.BUY, market_id))
+        elif len(best_bids) == 0:
+            orders.append(self._react_price(best_asks, OrderSide.BUY, market_id))
 
-        elif len(best_ask) == 0:
-            orders.append(self._react_price(best_bid, OrderSide.SELL, market_id))
+        elif len(best_asks) == 0:
+            orders.append(self._react_price(best_bids, OrderSide.SELL, market_id))
 
         return orders
 

@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b254100a-c696-478f-ae3d-edb0d5aa4390" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Task2/Scratch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task1/Scratch.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/CAPMBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/CAPMBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/Variance, Covariance, Expected Payoff, Performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/Variance, Covariance, Expected Payoff, Performance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task2/Scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/Scratch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/logs/j.lee161@student.unimelb.edu.au-387-bot.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task2/test.file.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task2/test.file.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,9 +14,23 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537408250697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
-    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537408079700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$CAPMBot.coverage" NAME="CAPMBot Coverage Results" MODIFIED="1537431776281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+    <SUITE FILE_PATH="coverage/FNCE30010Project1$test_file.coverage" NAME="test.file Coverage Results" MODIFIED="1537433134214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
     <SUITE FILE_PATH="coverage/FNCE30010Project1$MarketTest.coverage" NAME="MarketTest Coverage Results" MODIFIED="1536850480937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Task2" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1519608379">
@@ -32,26 +45,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="log" value="2" />
-          <entry key="py" value="20" />
+          <entry key="py" value="21" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="20" />
+          <entry key="Python" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="28211" />
+          <entry key="py" value="28563" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="28211" />
+          <entry key="Python" value="28563" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -63,12 +76,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="923" column="53" lean-forward="true" selection-start-line="923" selection-start-column="53" selection-end-line="923" selection-end-column="53" />
+            <state relative-caret-position="276">
+              <caret line="893" column="8" lean-forward="true" selection-start-line="893" selection-start-column="8" selection-end-line="893" selection-end-column="8" />
               <folding>
                 <element signature="e#210#231#0" expanded="true" />
-                <marker date="1537431418388" expanded="true" signature="47538:48381" ph="..." />
-                <marker date="1537431418388" expanded="true" signature="49609:50463" ph="..." />
+                <marker date="1537433341614" expanded="true" signature="5200:5206" ph="..." />
+                <marker date="1537433341614" expanded="true" signature="47512:48355" ph="..." />
+                <marker date="1537433341614" expanded="true" signature="49583:50437" ph="..." />
               </folding>
             </state>
           </provider>
@@ -77,7 +91,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Task2/Scratch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1794" />
+            <state relative-caret-position="5830">
+              <caret line="1162" column="25" selection-start-line="1162" selection-start-column="8" selection-end-line="1162" selection-end-column="25" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -123,17 +139,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Task2/test.file.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+            <state relative-caret-position="15">
+              <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -167,7 +174,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_send_order</find>
       <find>virtual_available_cash</find>
       <find>price</find>
       <find>self._virtual</find>
@@ -197,6 +203,7 @@
       <find>process_order</find>
       <find>received</find>
       <find>head</find>
+      <find>received_holdings</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient</dir>
@@ -211,6 +218,7 @@
         <option value="$PROJECT_DIR$/Task2/MarketTest.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/fmclient/base/agent.py" />
         <option value="$PROJECT_DIR$/Task2/mm.py" />
+        <option value="$PROJECT_DIR$/Task2/Scratch.py" />
         <option value="$PROJECT_DIR$/Task2/test.file.py" />
         <option value="$PROJECT_DIR$/Task2/CAPMBot.py" />
       </list>
@@ -360,7 +368,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CAPMBot">
+  <component name="RunManager" selected="Python.test.file">
     <configuration name="CAPMBot" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="FNCE30010Project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -434,8 +442,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.CAPMBot" />
         <item itemvalue="Python.test.file" />
+        <item itemvalue="Python.CAPMBot" />
         <item itemvalue="Python.MarketTest" />
       </list>
     </recent_temporary>
@@ -457,12 +465,12 @@
     <frame x="0" y="22" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21991481" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.07281554" visible="true" weight="0.21991481" />
+      <window_info id="Structure" order="1" sideWeight="0.92718446" side_tool="true" visible="true" weight="0.21991481" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32919255" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3126294" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36024845" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39958593" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -476,8 +484,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24973376" />
-      <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32960597" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32960597" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -582,13 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.2/python_stubs/630672339/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="5723" column="6" selection-start-line="5723" selection-start-column="6" selection-end-line="5723" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Task2/mm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -608,26 +609,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Task2/test.file.py">
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.2/python_stubs/630672339/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        <state relative-caret-position="213">
+          <caret line="767" column="8" selection-start-line="767" selection-start-column="8" selection-end-line="767" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/Scratch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1794" />
+        <state relative-caret-position="5830">
+          <caret line="1162" column="25" selection-start-line="1162" selection-start-column="8" selection-end-line="1162" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task2/test.file.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Task2/CAPMBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="923" column="53" lean-forward="true" selection-start-line="923" selection-start-column="53" selection-end-line="923" selection-end-column="53" />
+        <state relative-caret-position="276">
+          <caret line="893" column="8" lean-forward="true" selection-start-line="893" selection-start-column="8" selection-end-line="893" selection-end-column="8" />
           <folding>
             <element signature="e#210#231#0" expanded="true" />
-            <marker date="1537431418388" expanded="true" signature="47538:48381" ph="..." />
-            <marker date="1537431418388" expanded="true" signature="49609:50463" ph="..." />
+            <marker date="1537433341614" expanded="true" signature="5200:5206" ph="..." />
+            <marker date="1537433341614" expanded="true" signature="47512:48355" ph="..." />
+            <marker date="1537433341614" expanded="true" signature="49583:50437" ph="..." />
           </folding>
         </state>
       </provider>

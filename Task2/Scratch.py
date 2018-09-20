@@ -1218,10 +1218,6 @@ class CAPMBot(Agent):
         :param market_id:  id of market
         :return: True if can send, False if order is null
         """
-        ## DON'T need FLAG. IF order side is buy/sell, it's cash/units problem ##
-        # TODO could add a flag here if not enough cash to make order
-        # TODO then start selling notes if gain in performance from
-        # TODO selling note and buy stock is greater than not doing this
         if order_side == OrderSide.BUY:
             return self._virtual_available_cash >= price * units
         else:
