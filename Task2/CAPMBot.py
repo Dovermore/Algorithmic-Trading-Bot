@@ -53,13 +53,6 @@ ORDER_ROLE_TO_CHAR = {
 }
 SEPARATION = "-"  # for most string separation
 
-TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
-                                  "side": None, "market_id": None,
-                                  "role": OrderRole.REACTIVE}
-
-order_side_dict = {'BUY': OrderSide.BUY, "SELL": OrderSide.SELL}
-
-
 # Status of current order if there is any
 class OrderStatus(Enum):
     CANCEL = -1        # Cancelled, turns INACTIVE when accepted
@@ -789,9 +782,9 @@ class CAPMBot(Agent):
         super().__init__(account, email, password, marketplace_id,
                          name="CAPM_Bot")
         self._session_time = session_time
-
+        self._to_change_behaviour = datetime.datetime.now() + \
+                                    datetime.timedelta(minutes=(session_time-1))
         self._risk_penalty = risk_penalty
-
         self._my_markets: Dict[int, Market] = {}
         self._market_ids = {}
         self._covariances = {}
@@ -914,10 +907,16 @@ class CAPMBot(Agent):
                 # Find sell performance improving sell orders
                 bid_side = self._my_markets[market_id].best_bids
                 ask_side = self._my_markets[market_id].best_asks
+                orders = []
+                if len(bid_side) > 0 and len(ask_side) > 0 and \
+                        datetime.datetime.now() > self._to_change_behaviour:
+                    # TODO change behaviour of bot when time is almost ending
+                    orders += self._creep_bid_ask_spread(bid_side, ask_side,
+                                                         market_id)
                 if len(bid_side) > 0:
-                    orders = self._compute_orders(bid_side, market_id)
+                    orders += self._compute_orders(bid_side, market_id)
                 else:
-                    orders = self._make_price(OrderSide.BUY, market_id)
+                    orders += self._make_price(OrderSide.BUY, market_id)
 
                 if len(ask_side) > 0:
                     orders += self._compute_orders(ask_side, market_id)
@@ -980,7 +979,7 @@ class CAPMBot(Agent):
                 if price > maximum:
                     price = maximum
                 elif price < minimum:
-                    price = minimum
+                    price = minimum + tick
                 else:
                     price = price
                 for units in range(1, 4):
@@ -998,8 +997,8 @@ class CAPMBot(Agent):
                         else:
                             for decrease in range(price, tick, -tick):
                                 if self._check_order(decrease, units, side, market_id):
-                                    order = Order(price, units, OrderType.LIMIT, side,
-                                                  market_id)
+                                    order = Order(price, units, OrderType.LIMIT,
+                                                  side, market_id)
                                     performance = self.get_potential_performance([order])
                                     orders.append([order, performance])
 
@@ -1008,7 +1007,7 @@ class CAPMBot(Agent):
                 if price > maximum:
                     price = maximum
                 elif price < minimum:
-                    price = minimum
+                    price = minimum + tick
                 else:
                     price = price
                 for units in range(1, 4):
@@ -1035,6 +1034,33 @@ class CAPMBot(Agent):
 
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
+
+    def _creep_bid_ask_spread(self, bid, ask, market_id):
+        """
+        Creep between the bid ask spread (to be called when approaching 20 mins)
+        But only if spread is bigger than 3 ticks, else trade as normal
+        :param market_id: Market ID
+        :return: orders
+        """
+        best_bid_price = bid[0].price
+        best_ask_price = ask[0].price
+        bid_ask_spread = best_bid_price - best_ask_price
+        tick = self._my_markets[market_id].tick
+        orders = []
+        if bid_ask_spread > 3*tick:
+            bid_price = best_bid_price + tick
+            for units in range(1, 3):
+                order = Order(bid_price, units, OrderType.LIMIT, OrderSide.BUY, market_id)
+                performance = self.get_potential_performance([order])
+                orders.append([order, performance])
+
+            ask_price = best_ask_price - tick
+            for units in range(1, 3):
+                order = Order(ask_price, units, OrderType.LIMIT, OrderSide.SELL, market_id)
+                performance = self.get_potential_performance([order])
+                orders.append([order, performance])
+
+        return orders
 
     def _build_covariance(self) -> None:
         """

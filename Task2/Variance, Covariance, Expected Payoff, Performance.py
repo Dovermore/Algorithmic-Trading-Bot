@@ -258,29 +258,37 @@ print(price)
 
 
 x = [1,2,3,4,5]
-print(x[1:])
 
-
-
-
-
-
-TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
-                                  "side": None, "market_id": None, "type": None}
-
-x = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
-
-x["side"] = 100
-
-print(TEMPLATE_FOR_CHECK_PERFORMANCE)
-print(x)
-
-
-
-
-
-
-
-
-
-
+import time
+import datetime
+t = time.time()
+print(t)
+dt = datetime.datetime.now()
+print(dt)
+dt20 = datetime.timedelta(minutes=20)
+print(dt20)
+if
+#
+#
+#
+#
+#
+# TEMPLATE_FOR_CHECK_PERFORMANCE = {"performance": 0, "price": 0, "units": 0,
+#                                   "side": None, "market_id": None, "type": None}
+#
+# x = copy.copy(TEMPLATE_FOR_CHECK_PERFORMANCE)
+#
+# x["side"] = 100
+#
+# print(TEMPLATE_FOR_CHECK_PERFORMANCE)
+# print(x)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
