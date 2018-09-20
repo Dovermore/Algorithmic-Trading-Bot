@@ -78,6 +78,9 @@ class OrderCompare(Enum):
 
 # ----- Start of Helper classes -----
 
+def to_dollar(cents):
+    return cents / 100
+
 
 class Market:
     """
@@ -97,7 +100,8 @@ class Market:
         self._name = market_dict["name"]
         self._item = market_dict["item"]
         self._description = market_dict["description"]
-        self._payoffs = tuple(int(a) for a in self._description.split(","))
+        self._payoffs = tuple(to_dollar(int(a)) for a in
+                              self._description.split(","))
         if self.states == -1:
             self.set_states(len(self._payoffs))
         else:
@@ -340,11 +344,13 @@ class Market:
         """
         if self._current_order is not None:
             # When selling, reduce virtual units
-            if self._virtual_available_units < self._current_order.order.units:
-                return False
             if self._current_order.order.side == OrderSide.SELL:
-                self._virtual_available_units -= \
-                    self._current_order.order.units
+                if (self._virtual_available_units <
+                        self._current_order.order.units):
+                    return False
+                else:
+                    self._virtual_available_units -= \
+                        self._current_order.order.units
             return self._current_order.send()
         return False
 
@@ -368,11 +374,6 @@ class Market:
         :param price: The price to be checked
         :return: True if valid, else False
         """
-        self._agent.inform("min = %d" % self._minimum)
-        self._agent.inform("max = %d" % self._maximum)
-        self._agent.inform("price = %d" % price)
-        self._agent.inform("tick = %d" % self._tick)
-        self._agent.inform("%d - %d rem %d = %d" % (price, self._minimum, self._tick, (price - self._minimum) % self._tick))
         return (self._minimum < price < self.maximum and
                 (price - self._minimum) % self._tick == 0)
 
@@ -859,8 +860,8 @@ class CAPMBot(Agent):
                 best_bid_price = self._my_markets[market_id]._best_bids[0].price
                 # Sell notes for more than their expected return
                 if best_bid_price >= self._my_markets[market_id].expected_return:
-                    self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
-                                     market_id, OrderRole.REACTIVE)
+                    result = self._send_order(best_bid_price, 1, OrderType.LIMIT,
+                                     OrderSide.SELL, market_id, OrderRole.REACTIVE)
                 # Check each market for whether buying is profitable
                 for other_market_id in self._market_ids.values():
                     if self._my_markets[other_market_id]._best_bids and notes_units > 0:
@@ -893,8 +894,9 @@ class CAPMBot(Agent):
             for market in self._market_ids.values():
                 self._current_holdings[market] = \
                     self._my_markets[market].virtual_available_units
-            current_performance = self._calculate_performance(self._cash,
-                                                              self._current_holdings)
+            current_performance = self.\
+                _calculate_performance(self._cash, self._current_holdings)
+            self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
             if market_id == self._note_id:
                 self._note_orders(market_id)
@@ -905,6 +907,7 @@ class CAPMBot(Agent):
                                               .best_bids, market_id)
                 orders += self._compute_orders(self._my_markets[market_id]
                                                    .best_asks, market_id)
+                self.inform(orders)
                 orders = sorted(orders, key=lambda x: x[1], reverse=True)
                 if len(orders) > 0 and orders[0][1] > current_performance:
                     self._send_order(orders[0][0].price, orders[0][0].units,
@@ -922,8 +925,6 @@ class CAPMBot(Agent):
             if len(other_orders) > 0:
                 price = other_orders[0].price
                 total_units = sum([order.units for order in other_orders])
-                self.inform("price=" + str(price))
-                self.inform("total_units=" + str(total_units))
                 side = (OrderSide.BUY if other_orders[0].side ==
                         OrderSide.SELL else OrderSide.SELL)
                 for units in range(1, total_units + 1):
@@ -935,7 +936,6 @@ class CAPMBot(Agent):
                     else:
                         if self._check_order(price, units, side, market_id):
                             orders.append([order, performance])
-            self.inform(orders)
             return orders
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
@@ -1032,7 +1032,7 @@ class CAPMBot(Agent):
         :return: performance
         """
         b = self._risk_penalty
-        expected_payoff = cash
+        expected_payoff = to_dollar(cash)
         tot_payoff_variance = self._units_payoff_variance(holdings)
         for market in holdings.keys():
             expected_payoff += self._my_markets[market].expected_return * \
@@ -1163,16 +1163,9 @@ class CAPMBot(Agent):
         :return: True if can send, False if order is null
         """
         if order_side == OrderSide.BUY:
-            self.inform("Buy")
-            self.inform(self._virtual_available_cash)
-            self.inform("%d * %d = %d" % (price, units, price * units))
             return self._virtual_available_cash >= price * units
         else:
-            self.inform("Sell")
             market: Market = self._my_markets[market_id]
-            self.inform(market.is_valid_price(price))
-            self.inform(units)
-            self.inform(market.virtual_available_units)
             return (market.is_valid_price(price) and
                     market.virtual_available_units >= units)
 
