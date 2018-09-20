@@ -902,13 +902,11 @@ class CAPMBot(Agent):
             else:
                 # Find sell performance improving sell orders
                 orders = self._compute_orders(self._my_markets[market_id]
-                                                   .best_bids, market_id)
+                                              .best_bids, market_id)
                 orders += self._compute_orders(self._my_markets[market_id]
                                                    .best_asks, market_id)
-                orders = [order for order in orders if
-                          order[1] > current_performance]
                 orders = sorted(orders, key=lambda x: x[1], reverse=True)
-                if len(orders) > 0:
+                if len(orders) > 0 and orders[0][1] > current_performance:
                     self._send_order(orders[0][0].price, orders[0][0].units,
                                      orders[0][0].type, orders[0][0].side,
                                      orders[0][0].market_id, OrderRole.REACTIVE)
@@ -1379,6 +1377,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
     FM_SETTING = [FM_ACCOUNT] + FM_JD
-    FM_SETTING.append(MARKETPLACE_ID1)
+    FM_SETTING.append(MARKETPLACE_MANUAL)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
