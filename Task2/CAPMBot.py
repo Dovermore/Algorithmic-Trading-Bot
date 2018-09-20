@@ -851,7 +851,7 @@ class CAPMBot(Agent):
                 # Best bid in notes market
                 best_bid_price = self._my_markets[market_id]._best_bids[0].price
                 # Sell notes for more than their expected return
-                if best_bid_price > self._my_markets[market_id].expected_return:
+                if best_bid_price >= self._my_markets[market_id].expected_return:
                     self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                      market_id, OrderRole.REACTIVE)
                 # Check each market for whether buying is profitable
@@ -882,10 +882,9 @@ class CAPMBot(Agent):
         """
         self._fn_start()
         try:
-            for market_id in self._market_ids.values():
-                self._current_holdings[market_id] = \
-                    self._my_markets[market_id].virtual_available_units
-
+            for market in self._market_ids.values():
+                self._current_holdings[market] = \
+                    self._my_markets[market].virtual_available_units
             current_performance = self._calculate_performance(self._cash,
                                                               self._current_holdings)
             # Logic for notes
@@ -898,10 +897,11 @@ class CAPMBot(Agent):
                                                    .best_bids, market_id)
                 orders.append(self._compute_orders(self._my_markets[market_id]
                                                    .best_asks, market_id))
-                orders = [order for order in orders if
-                          order[1] > current_performance]
-                orders = sorted(orders, key=lambda x: x[1], reverse=True)
-                if len(orders) > 0:
+                if orders != [[]]:
+                    orders = [order for order in orders if
+                              order[1] > current_performance]
+                    orders = sorted(orders, key=lambda x: x[1], reverse=True)
+                if len(orders) > 0 and orders != [[]]:
                     self._send_order(orders[0][0].price, orders[0][0].units,
                                      orders[0][0].type, orders[0][0].side,
                                      orders[0][0].market_id, OrderRole.REACTIVE)
@@ -911,6 +911,7 @@ class CAPMBot(Agent):
             self._fn_end()
 
     def _compute_orders(self, other_orders, market_id, check_order=True):
+        self._fn_start()
         try:
             orders = []
             if len(other_orders) > 0:
