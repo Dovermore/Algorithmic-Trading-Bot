@@ -211,7 +211,6 @@ class Market:
         try:
             assert (unit_dict["units"] >= 0 and
                     unit_dict["available_units"] >= 0), "negative_units"
-            self.examine_units()
             self._units = unit_dict["units"]
             self._available_units = unit_dict["available_units"]
             if self._available_units > self._virtual_available_units:
@@ -220,7 +219,7 @@ class Market:
                     self._agent.warning("Market" + str(self._market_id) +
                                         " Failed to sync virtual units "
                                         "properly")
-                self._virtual_available_units = self._available_units
+                    self._virtual_available_units = self._available_units
             elif self._available_units == self._virtual_available_units:
                 self._sync_delay = 0
             else:
@@ -374,7 +373,7 @@ class Market:
         :return: True if valid, else False
         """
         return (self._minimum < price < self.maximum and
-                (price - self._minimum) % self._tick != 0)
+                (price - self._minimum) % self._tick == 0)
 
     def examine_units(self):
         self._agent.inform("Total units: " + str(self._units))
@@ -871,15 +870,15 @@ class CAPMBot(Agent):
                     self._send_order(best_bid_price, 1, OrderType.LIMIT,
                                      OrderSide.SELL, market_id, OrderRole.REACTIVE)
                 # Check each market for whether buying is profitable
-                for market in self._market_ids.values():
-                    if self._my_markets[market]._best_bids and notes_units > 0:
+                for other_market_id in self._market_ids.values():
+                    if self._my_markets[other_market_id]._best_bids and notes_units > 0:
                         # Best bid in the market
-                        market_best_bid = self._my_markets[market]._best_bids[0].price
+                        market_best_bid = self._my_markets[other_market_id]._best_bids[0].price
                         if self._available_cash < market_best_bid:
                             sell_note = Order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                               market_id)
                             buy_sec = Order(market_best_bid, 1, OrderType.LIMIT, OrderSide.BUY,
-                                            market)
+                                            other_market_id)
                             # Check if selling note and buying sec will increase performance
                             if self.get_potential_performance([sell_note, buy_sec]) > \
                                     self.get_potential_performance():
@@ -913,33 +912,32 @@ class CAPMBot(Agent):
                 bid_side = self._my_markets[market_id].best_bids
                 ask_side = self._my_markets[market_id].best_asks
                 orders = []
+                orders += self._compute_reactive_orders(bid_side, market_id)
+                orders += self._compute_reactive_orders(ask_side, market_id)
+                self.inform(orders)
+                orders = sorted(orders, key=lambda x: x[1], reverse=True)
+                if len(orders) > 0 and orders[0][1] > current_performance:
+                    return self._send_order(orders[0][0].price,
+                                            orders[0][0].units,
+                                            orders[0][0].type,
+                                            orders[0][0].side,
+                                            orders[0][0].market_id,
+                                            OrderRole.REACTIVE)
+
+                orders = self._compute_mm_orders()
+
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
                         datetime.datetime.now() > self._to_change_behaviour:
                     # TODO change behaviour of bot when time is almost ending
                     orders += self._creep_bid_ask_spread(bid_side, ask_side,
                                                          market_id)
-                if len(bid_side) > 0:
-                    orders += self._compute_orders(bid_side, market_id)
-                else:
-                    orders += self._make_price(OrderSide.BUY, market_id)
-
-                if len(ask_side) > 0:
-                    orders += self._compute_orders(ask_side, market_id)
-                else:
-                    orders += self._make_price(OrderSide.SELL, market_id)
-
-                self.inform(orders)
-                orders = sorted(orders, key=lambda x: x[1], reverse=True)
-                if len(orders) > 0 and orders[0][1] > current_performance:
-                    self._send_order(orders[0][0].price, orders[0][0].units,
-                                     orders[0][0].type, orders[0][0].side,
-                                     orders[0][0].market_id, OrderRole.REACTIVE)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
             self._fn_end()
 
-    def _compute_orders(self, other_orders, market_id, check_order=True):
+    def _compute_reactive_orders(self, other_orders, market_id,
+                                 check_order=True):
         self._fn_start()
         try:
             orders = []
@@ -964,77 +962,41 @@ class CAPMBot(Agent):
         finally:
             self._fn_end()
 
-    def _make_price(self, side, market_id, check_order=True):
+    def _compute_mm_orders(self, market_id, baseline_performance,
+                           check_order=True):
         """
         Create prices that may be profitable
-        :param side: order side
         :param market_id: market to be traded in
+        :param baseline_performance: order side
+        :param check_order: should order be checked validity
         :return performance with order
         """
         try:
             orders = []
             tick = self._my_markets[market_id].tick
-            expected_return = int(self._my_markets[market_id]
-                                  .expected_return*100)
-            maximum = self._my_markets[market_id].maximum
-            minimum = self._my_markets[market_id].minimum
+            min_over_tick = (random.randint(1, 10) + tick) // tick
+            best_bid = self._my_markets[market_id].best_bids
+            best_bid_price = best_bid.price
+            best_ask = self._my_markets[market_id].best_asks
+            best_ask_price = best_ask.price
 
-            if side == OrderSide.BUY:
-                price = int((expected_return * 0.5)//tick*tick)
-                if price > maximum:
-                    price = maximum
-                elif price < minimum:
-                    price = minimum + tick
-                else:
-                    price = price
-                for units in range(1, 4):
-                    if check_order is False:
-                        order = Order(price, units, OrderType.LIMIT, side,
-                                      market_id)
-                        performance = self.get_potential_performance([order])
-                        orders.append([order, performance])
-                    else:
-                        if self._check_order(price, units, side, market_id):
-                            order = Order(price, units, OrderType.LIMIT, side,
-                                          market_id)
-                            performance = self.get_potential_performance([order])
+            for price in range(best_bid_price + tick, best_ask_price, tick):
+                if price <= best_ask_price - min_over_tick * tick:
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL)
+                    if check_order is False or\
+                            self._check_order(price, 1,
+                                              OrderSide.SELL, market_id):
+                        performance = self.get_potential_performance(order)
+                        if performance > baseline_performance:
                             orders.append([order, performance])
-                        else:
-                            for decrease in range(price, tick, -tick):
-                                if self._check_order(decrease, units, side, market_id):
-                                    order = Order(price, units, OrderType.LIMIT,
-                                                  side, market_id)
-                                    performance = self.get_potential_performance([order])
-                                    orders.append([order, performance])
-
-            elif side == OrderSide.SELL:
-                price = int((expected_return * 1.5)//tick*tick)
-                if price > maximum:
-                    price = maximum
-                elif price < minimum:
-                    price = minimum + tick
-                else:
-                    price = price
-                for units in range(1, 4):
-                    if check_order is False:
-                        order = Order(price, units, OrderType.LIMIT, side,
-                                      market_id)
-                        performance = self.get_potential_performance([order])
-                        orders.append([order, performance])
-                    else:
-                        if self._check_order(price, units, side, market_id):
-                            order = Order(price, units, OrderType.LIMIT, side,
-                                          market_id)
-                            performance = self.get_potential_performance([order])
+                if price >= best_bid_price + min_over_tick * tick:
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.BUY)
+                    if check_order is False or \
+                            self._check_order(price, 1,
+                                              OrderSide.BUY, market_id):
+                        performance = self.get_potential_performance(order)
+                        if performance > baseline_performance:
                             orders.append([order, performance])
-                        else:
-                            for decrease in range(price, expected_return, tick):
-                                if self._check_order(decrease, units, side, market_id):
-                                    order = Order(price, units, OrderType.LIMIT, side,
-                                                  market_id)
-                                    performance = self.get_potential_performance([order])
-                                    orders.append([order, performance])
-
             return orders
 
         except Exception as e:
@@ -1235,6 +1197,7 @@ class CAPMBot(Agent):
             for market_id, units in holdings["markets"].items():
                 self.inform(market_id)
                 self._my_markets[market_id].update_units(units)
+                self._my_markets[market_id].examine_units()
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
