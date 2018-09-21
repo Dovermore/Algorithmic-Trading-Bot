@@ -813,6 +813,7 @@ class CAPMBot(Agent):
         super().__init__(account, email, password, marketplace_id,
                          name="CAPM_Bot")
         self._session_time = session_time
+        self._start_time = datetime.datetime.now()
         self._to_change_behaviour = datetime.datetime.now() + \
                                     datetime.timedelta(minutes=(session_time-1))
         self._risk_penalty = risk_penalty
@@ -1243,6 +1244,8 @@ class CAPMBot(Agent):
         self._fn_start()
         self.get_completed_orders(market_id)
         self.inform("received order book from %d" % market_id)
+        elapsed_time = (datetime.datetime.now() - self._start_time)/datetime.timedelta(minutes=1)
+        self.inform("time elapsed %.3f minutes" % elapsed_time)
         try:
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
@@ -1293,6 +1296,10 @@ class CAPMBot(Agent):
         if marketplace_info["status"]:
             self.inform("Marketplace is now open with session id "
                         + str(session_id))
+            self._start_time = datetime.datetime.now()
+            self._to_change_behaviour = datetime.datetime.now() + \
+                                        datetime.timedelta(minutes=
+                                                           (self._session_time-1))
         else:
             self.inform("Marketplace is now closed.")
 
@@ -1544,7 +1551,7 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_CH
+    FM_SETTING = [FM_ACCOUNT] + FM_JD
     FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
