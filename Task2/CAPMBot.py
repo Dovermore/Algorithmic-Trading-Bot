@@ -8,7 +8,8 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-from fmclient.utils.constants import DATE_FORMAT, LOCAL_TIMEZONE
+# from fmclient.utils.constants import DATE_FORMAT
+from fmclient.utils.constants import LOCAL_TIMEZONE
 from typing import List, Tuple, Dict, Union
 import pytz
 import random
@@ -69,7 +70,10 @@ class OrderCompare(Enum):
     SAME_PRICE = 2
     DIFFERENT = -1
 
+
 # ----- Start of Helper classes -----
+DATE_FORMAT = "%Y-%m-%d%H:%M:%S.%f"
+
 
 def to_dollar(cents):
     return cents / 100
@@ -1202,8 +1206,6 @@ class CAPMBot(Agent):
         try:
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
-
-            # TODO put logic here
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -1327,9 +1329,12 @@ class CAPMBot(Agent):
         """
         if self._check_order(price, units, order_side, market_id):
             market: Market = self._my_markets[market_id]
+
             market.add_order(price, units, order_type, order_side,
                              market_id, order_role)
+            self.inform("added order")
             result = market.send_current_order()
+            self.inform("sent order")
             self._virtual_available_cash -= (price * units if result and
                                              order_side == OrderSide.BUY
                                              else 0)
@@ -1487,6 +1492,6 @@ if __name__ == "__main__":
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
     FM_SETTING = [FM_ACCOUNT] + FM_CH
-    FM_SETTING.append(MARKETPLACE_MANUAL)
+    FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
