@@ -1005,7 +1005,7 @@ class CAPMBot(Agent):
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.SELL, market_id):
-                        performance = self.get_potential_performance(order)
+                        performance = self.get_potential_performance([order])
                         if performance > baseline_performance:
                             orders.append([order, performance])
                 if price >= best_bid_price + min_over_tick * tick:
@@ -1014,7 +1014,7 @@ class CAPMBot(Agent):
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.BUY, market_id):
-                        performance = self.get_potential_performance(order)
+                        performance = self.get_potential_performance([order])
                         if performance > baseline_performance:
                             orders.append([order, performance])
             return orders
