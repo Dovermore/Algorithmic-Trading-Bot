@@ -925,12 +925,19 @@ class CAPMBot(Agent):
                                             OrderRole.REACTIVE)
 
                 orders = self._compute_mm_orders()
-
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
                         datetime.datetime.now() > self._to_change_behaviour:
                     # TODO change behaviour of bot when time is almost ending
                     orders += self._creep_bid_ask_spread(bid_side, ask_side,
                                                          market_id)
+                orders = sorted(orders, key=lambda x: x[1], reverse=True)
+                if len(orders) > 0 and orders[0][1] > current_performance:
+                    return self._send_order(orders[0][0].price,
+                                            orders[0][0].units,
+                                            orders[0][0].type,
+                                            orders[0][0].side,
+                                            orders[0][0].market_id,
+                                            OrderRole.REACTIVE)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
