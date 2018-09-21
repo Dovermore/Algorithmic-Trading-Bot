@@ -52,6 +52,7 @@ ORDER_ROLE_TO_CHAR = {
 }
 SEPARATION = "-"  # for most string separation
 
+
 # Status of current order if there is any
 class OrderStatus(Enum):
     CANCEL = -1        # Cancelled, turns INACTIVE when accepted
@@ -915,7 +916,7 @@ class CAPMBot(Agent):
                 self._current_holdings[market] = \
                     self._my_markets[market].virtual_available_units
             current_performance = self. \
-                _calculate_performance(self._cash, self._current_holdings)
+                _calculate_performance(self._virtual_available_cash, self._current_holdings)
             self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
             if market_id == self._note_id:
@@ -1031,7 +1032,7 @@ class CAPMBot(Agent):
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
-    def _creep_bid_ask_spread(self, bid, ask, market_id):
+    def _creep_bid_ask_spread(self, bid, ask, market_id, check_order=True):
         """
         Creep between the bid ask spread (to be called when approaching 20 mins)
         But only if spread is bigger than 3 ticks, else trade as normal
@@ -1045,16 +1046,24 @@ class CAPMBot(Agent):
         orders = []
         if bid_ask_spread > 3*tick:
             bid_price = best_bid_price + tick
-            for units in range(1, 3):
-                order = Order(bid_price, units, OrderType.LIMIT, OrderSide.BUY, market_id)
-                performance = self.get_potential_performance([order])
-                orders.append([order, performance])
+            for units in range(1, 5):
+                if check_order is False or \
+                        self._check_order(bid_price, units, OrderSide.BUY,
+                                          market_id):
+                    order = Order(bid_price, units, OrderType.LIMIT,
+                                  OrderSide.BUY, market_id)
+                    performance = self.get_potential_performance([order])
+                    orders.append([order, performance])
 
             ask_price = best_ask_price - tick
-            for units in range(1, 3):
-                order = Order(ask_price, units, OrderType.LIMIT, OrderSide.SELL, market_id)
-                performance = self.get_potential_performance([order])
-                orders.append([order, performance])
+            for units in range(1, 5):
+                if check_order is False or \
+                        self._check_order(ask_price, units, OrderSide.SELL,
+                                          market_id):
+                    order = Order(ask_price, units, OrderType.LIMIT,
+                                  OrderSide.SELL, market_id)
+                    performance = self.get_potential_performance([order])
+                    orders.append([order, performance])
 
         return orders
 
@@ -1308,33 +1317,7 @@ class CAPMBot(Agent):
         else:
             market: Market = self._my_markets[market_id]
             return (market.is_valid_price(price) and
-                    market.virtual_available_units >= units)
-
-    def _check_orders(self, prices, unitss, order_sides, market_ids):
-        """
-        Check if can send all orders the same time
-        :param prices:
-        :param unitss:
-        :param order_sides:
-        :param market_ids:
-        :return:
-        """
-        orders = list(zip(prices, unitss, order_sides, market_ids))
-        buying_orders = [order for order in orders
-                         if order[2] == OrderSide.BUY]
-        cash_expense = sum(buying_order[0] * buying_order[1] for buying_order
-                           in buying_orders)
-        if cash_expense > self._virtual_available_cash:
-            return False
-        for market_id, market in self._my_markets.items():
-            selling_orders = [order for order in orders if
-                              order[3] == OrderSide.SELL and
-                              order[3] == market_id]
-            unit_expense = sum(selling_order[1] for selling_order in
-                               selling_orders)
-            if unit_expense > market.virtual_available_units:
-                return False
-        return True
+                    market._virtual_available_units >= units)
 
     def _send_order(self, price, units, order_type,
                     order_side, market_id, order_role) -> bool:
@@ -1367,27 +1350,6 @@ class CAPMBot(Agent):
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
             self._fn_end()
-
-    def _send_orders(self, prices, unitss, order_types, order_sides,
-                     market_ids, order_roles) -> List[bool]:
-        """
-        Check and send list of orders, all list msut be same length
-        :param prices: price to send order at
-        :param unitss: units to send
-        :param order_types: type of order
-        :param order_sides: side of order
-        :param market_ids:  id of market
-        :param order_roles: role of order (market_maker or reactive)
-        :return: True if successfully sent, false if failed check (in a list)
-        """
-        # Same length
-        assert len(set(len(value) for value in locals().values())) == 1
-        if self._check_orders(prices, unitss, order_sides, market_ids) is True:
-            return [self._send_order(*args) for args in
-                    zip(prices, unitss, order_types,
-                        order_sides, market_ids, order_roles)]
-        else:
-            return [False] * len(prices)
 
     def _cancel_order(self, order: Order) -> bool:
         """
