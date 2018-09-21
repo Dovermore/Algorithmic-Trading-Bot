@@ -888,11 +888,11 @@ class CAPMBot(Agent):
         :param orders: list of orders (list of lists)
         :return: performance
         """
-        new_cash = self._virtual_available_cash
+        new_cash = self._cash
         holdings = {}
         for market_id in self._my_markets.keys():
             holdings[market_id] = \
-                self._my_markets[market_id].virtual_available_units
+                self._my_markets[market_id].units
         if isinstance(orders, Order):
             orders = [orders]
         elif orders is None:
@@ -960,9 +960,9 @@ class CAPMBot(Agent):
         try:
             for market in self._market_ids.values():
                 self._current_holdings[market] = \
-                    self._my_markets[market].virtual_available_units
+                    self._my_markets[market].units
             current_performance = self. \
-                _calculate_performance(self._virtual_available_cash,
+                _calculate_performance(self._cash,
                                        self._current_holdings)
             self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
@@ -1224,9 +1224,9 @@ class CAPMBot(Agent):
         """
         for market in self._market_ids.values():
             self._current_holdings[market] = \
-                self._my_markets[market].virtual_available_units
+                self._my_markets[market].units
         current_performance = self. \
-            _calculate_performance(self._virtual_available_cash,
+            _calculate_performance(self._cash,
                                    self._current_holdings)
 
         for market in self._market_ids.values():
