@@ -77,6 +77,10 @@ def to_dollar(cents):
     return cents / 100
 
 
+def to_cents(dollar):
+    return dollar * 100
+
+
 class Market:
     """
     Holding market state and all corresponding information of a market,
@@ -322,6 +326,9 @@ class Market:
         # TODO More logic here
         self.order_holder. \
             update_completed_orders(orders[self._completed_order_index:])
+        self._agent.inform([order for order in
+                            orders[self._completed_order_index:]
+                            if order.mine])
         self._completed_order_index = len(orders)
 
     def add_order(self, price, units, order_type, order_side, market_id,
@@ -529,15 +536,18 @@ class OrderHolder:
         mine_orders = [order for order in order_book if order.mine is True]
         self._orders = sort_order_by_date(self._orders)
         for order in mine_orders:
-            for my_order in self._orders:
-                compare = MyOrder.compare_order(my_order, order)
-                # Identical order, update its delay indicator
-                # Partially traded orders will be updated by completed orders
-                # Don't need to update it here
-                if compare == OrderCompare.IDENTICAL:
-                    if my_order.delayed():
-                        my_order.cancel()
-                    break
+            my_order = self.get_order(order)
+            # Identical order, update its delay indicator
+            # Partially traded orders will be updated by completed orders
+            # Don't need to update it here
+            if my_order is not None:
+                if my_order.order_status != OrderStatus.ACCEPTED:
+                    self._agent.warning(str(order) + " state "
+                                        + my_order.order_status)
+                    my_order.order_status = OrderStatus.ACCEPTED
+                if my_order.delayed():
+                    my_order.cancel()
+                break
             # Didn't find order in all kept orders
             else:
                 self._agent.warning(str(order) +
@@ -695,9 +705,11 @@ class MyOrder:
         """
         if self._order_role == OrderRole.MARKET_MAKER and \
                 self._order_delay >= self.MM_ORDER_MAX_DELAY:
+            self.AGENT.inform("reactive delay = %d " % self._order_delay)
             return True
         elif self._order_role == OrderRole.REACTIVE and \
                 self._order_delay >= self.REACTIVE_ORDER_MAX_DELAY:
+            self.AGENT.inform("mm delay = %d " % self._order_delay)
             return True
         else:
             return False
@@ -897,6 +909,13 @@ class CAPMBot(Agent):
                                     self.get_potential_performance():
                                 self._send_order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                                  market_id, OrderRole.REACTIVE)
+                    else:
+                        self.\
+                            _send_order(
+                                        to_cents(self._my_markets\
+                                                     [market_id].payoffs),
+                                        1, OrderType.LIMIT, OrderSide.SELL,
+                                        market_id, OrderRole.MARKET_MAKER)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -936,7 +955,7 @@ class CAPMBot(Agent):
                                             orders[0][0].side,
                                             orders[0][0].market_id,
                                             OrderRole.REACTIVE)
-                
+
                 orders = self._compute_mm_orders(market_id,
                                                  current_performance)
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
@@ -962,6 +981,8 @@ class CAPMBot(Agent):
         self._fn_start()
         try:
             orders = []
+            other_orders = [order for order in other_orders
+                            if order.mine is False]
             if len(other_orders) > 0:
                 price = other_orders[0].price
                 side = (OrderSide.BUY if other_orders[0].side ==
@@ -1203,6 +1224,9 @@ class CAPMBot(Agent):
         try:
             self._fn_start()
             self.error("order rejected:" + str(info))
+            self.inform(self._cash)
+            self.inform(self._available_cash)
+            self.inform(self._virtual_available_cash)
             market = self._my_markets[order.market_id]
             market.order_rejected(order)
 
@@ -1239,8 +1263,15 @@ class CAPMBot(Agent):
         try:
             self._fn_start()
             cash = holdings["cash"]
+            self.inform(self._cash)
+            self.inform(self._available_cash)
+            self.inform(self._virtual_available_cash)
             self._cash = cash["cash"]
             self._available_cash = cash["available_cash"]
+            self._line_break_inform()
+            self.inform(self._cash)
+            self.inform(self._available_cash)
+            self.inform(self._virtual_available_cash)
             if self._virtual_available_cash != self._available_cash:
                 self.inform("virtual_available_cash != available_cash")
             self._virtual_available_cash = self._available_cash
@@ -1262,6 +1293,7 @@ class CAPMBot(Agent):
                         + str(session_id))
         else:
             self.inform("Marketplace is now closed.")
+
 
         self._fn_end()
 
