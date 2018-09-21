@@ -267,7 +267,16 @@ dt = datetime.datetime.now()
 print(dt)
 dt20 = datetime.timedelta(minutes=20)
 print(dt20)
-if
+
+maximum = 1000
+minimum = 0
+
+price = 1500
+
+price = price if price < maximum else maximum
+
+print(price)
+
 #
 #
 #
