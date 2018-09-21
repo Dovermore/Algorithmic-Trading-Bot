@@ -840,7 +840,7 @@ class CAPMBot(Agent):
             now(tz=pytz.timezone(LOCAL_TIMEZONE))
         self._to_change_behaviour = \
             datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE)) + \
-            datetime.timedelta(minutes=(session_time-1))
+            datetime.timedelta(minutes=(session_time-2))
         self._risk_penalty = risk_penalty
         self._my_markets: Dict[int, Market] = {}
         self._market_ids = {}
@@ -1342,7 +1342,7 @@ class CAPMBot(Agent):
                                                      timezone(LOCAL_TIMEZONE))
             self._to_change_behaviour = \
                 datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE)) + \
-                datetime.timedelta(minutes=self._session_time-1)
+                datetime.timedelta(minutes=self._session_time-2)
         else:
             self.inform("Marketplace is now closed.")
 
