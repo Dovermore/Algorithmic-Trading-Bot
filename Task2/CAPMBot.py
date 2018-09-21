@@ -16,7 +16,6 @@ import random
 import copy
 import time
 import datetime
-import operator
 
 # <For debugging only>
 import inspect
@@ -120,7 +119,7 @@ class Market:
         # update to agent regarding holdings that is made/cancelled
         self._agent._current_holdings[self._market_id] = self._available_units
         # A virtual holding, simulating condition as if order got accepted
-        self._virtual_available_units = self._available_units
+        self._virtual_available_units = -1
 
         # Record where the completed order has been read to
         self._completed_order_index = 0
@@ -213,7 +212,9 @@ class Market:
                     unit_dict["available_units"] >= 0), "negative_units"
             self._units = unit_dict["units"]
             self._available_units = unit_dict["available_units"]
-            if self._available_units > self._virtual_available_units:
+            if self._virtual_available_units == -1:
+                self._virtual_available_units = self._available_units
+            elif self._available_units > self._virtual_available_units:
                 self._sync_delay += 1
                 if self._sync_delay >= self.SYNC_MAX_DELAY:
                     self._agent.warning("Market" + str(self._market_id) +
@@ -247,6 +248,7 @@ class Market:
         Market side order accepted processing, update available units
         :param order: The order accepted
         """
+        self.examine_units()
         if order.side == OrderSide.SELL:
             if order.type == OrderType.LIMIT:
                 self._available_units -= order.units
@@ -341,6 +343,7 @@ class Market:
         Send the last added order (Limit order)
         :return: Return True if successful, False Otherwise
         """
+        self.examine_units()
         if self._current_order is not None:
             # When selling, reduce virtual units
             if self._current_order.order.side == OrderSide.SELL:
@@ -350,6 +353,8 @@ class Market:
                 else:
                     self._virtual_available_units -= \
                         self._current_order.order.units
+            self._agent.inform(self._current_order.order)
+            self.examine_units()
             return self._current_order.send()
         return False
 
@@ -377,6 +382,7 @@ class Market:
                 (price - self._minimum) % self._tick == 0)
 
     def examine_units(self):
+        self._agent.inform("Market Id: " + str(self._market_id))
         self._agent.inform("Total units: " + str(self._units))
         self._agent.inform("Available units: " + str(self._available_units))
         self._agent.inform("Virtual available units: " +
@@ -475,7 +481,7 @@ class OrderHolder:
                 if order.type == OrderType.CANCEL:
                     self._orders.remove(my_order)
                 else:
-                    my_order.accepted()
+                    my_order.accepted(order)
             # Didn't find matching order
             # Don't care if it's CANCEL order
             elif order.type == OrderType.CANCEL:
@@ -509,6 +515,7 @@ class OrderHolder:
         # Don't care if un-recorded limit order got rejected
         if my_order is None:
             self._agent.warning(str(order) + ": Didn't find matching order")
+            self._agent.inform([order.order for order in self._orders])
         else:
             if order.type == OrderType.CANCEL:
                 my_order.order_status = OrderStatus.ACCEPTED
@@ -536,6 +543,7 @@ class OrderHolder:
             else:
                 self._agent.warning(str(order) +
                                     ": Didn't find matching order")
+                self._agent.inform([order.order for order in self._orders])
                 # Treat it as if it's reactive order if didn't find record
                 self.add_order(order.price, order.units, order.type,
                                order.side, order.market_id, OrderRole.REACTIVE,
@@ -654,7 +662,8 @@ class MyOrder:
             return True
         return False
 
-    def accepted(self):
+    def accepted(self, order):
+        self._order = order
         self._order_status = OrderStatus.ACCEPTED
 
     def delayed(self, times=1):
@@ -943,7 +952,7 @@ class CAPMBot(Agent):
                                             orders[0][0].type,
                                             orders[0][0].side,
                                             orders[0][0].market_id,
-                                            OrderRole.REACTIVE)
+                                            OrderRole.MARKET_MAKER)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -957,7 +966,7 @@ class CAPMBot(Agent):
             if len(other_orders) > 0:
                 price = other_orders[0].price
                 side = (OrderSide.BUY if other_orders[0].side ==
-                                         OrderSide.SELL else OrderSide.SELL)
+                        OrderSide.SELL else OrderSide.SELL)
                 total_units = sum([order.units for order in other_orders])
                 for units in range(1, total_units + 1):
                     order = Order(price, units, OrderType.LIMIT, side,
@@ -1173,7 +1182,7 @@ class CAPMBot(Agent):
     def order_rejected(self, info, order):
         try:
             self._fn_start()
-            self.error("order rejected:" + info)
+            self.error("order rejected:" + str(info))
             market = self._my_markets[order.market_id]
             market.order_rejected(order)
 
@@ -1199,9 +1208,8 @@ class CAPMBot(Agent):
     def received_completed_orders(self, orders, market_id=None):
         try:
             self._fn_start()
-            for order in orders:
-                if order.mine:
-                    self.inform(order)
+            if market_id is not None:
+                self._my_markets[market_id].update_completed_orders(orders)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -1314,14 +1322,14 @@ class CAPMBot(Agent):
         :return: True if successfully sent, false if failed check
         """
         try:
+            self.inform("--Sending order--")
             if self._check_order(price, units, order_side, market_id):
                 market: Market = self._my_markets[market_id]
 
                 market.add_order(price, units, order_type, order_side,
                                  market_id, order_role)
-                self.inform("added order")
+                self.inform(market._current_order.order)
                 result = market.send_current_order()
-                self.inform("sent order")
                 self._virtual_available_cash -= (price * units if result and
                                                  order_side == OrderSide.BUY
                                                  else 0)
