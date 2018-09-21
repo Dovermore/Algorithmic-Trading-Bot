@@ -52,6 +52,7 @@ ORDER_ROLE_TO_CHAR = {
 }
 SEPARATION = "-"  # for most string separation
 
+
 # Status of current order if there is any
 class OrderStatus(Enum):
     CANCEL = -1        # Cancelled, turns INACTIVE when accepted
@@ -439,6 +440,7 @@ class OrderHolder:
         if orig_order:
             order.order = orig_order
         self._orders.append(order)
+        self.inform("added order: %s" % str(order.order))
         # self._agent.inform([order.order for order in self._orders])
         # self._agent.inform([order.cancel_order for order in self._orders])
         return order
@@ -936,7 +938,7 @@ class CAPMBot(Agent):
                 self._current_holdings[market] = \
                     self._my_markets[market].virtual_available_units
             current_performance = self. \
-                _calculate_performance(self._cash, self._current_holdings)
+                _calculate_performance(self._virtual_available_cash, self._current_holdings)
             self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
             if market_id == self._note_id:
@@ -1054,7 +1056,7 @@ class CAPMBot(Agent):
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
 
-    def _creep_bid_ask_spread(self, bid, ask, market_id):
+    def _creep_bid_ask_spread(self, bid, ask, market_id, check_order=True):
         """
         Creep between the bid ask spread (to be called when approaching 20 mins)
         But only if spread is bigger than 3 ticks, else trade as normal
@@ -1068,16 +1070,24 @@ class CAPMBot(Agent):
         orders = []
         if bid_ask_spread > 3*tick:
             bid_price = best_bid_price + tick
-            for units in range(1, 3):
-                order = Order(bid_price, units, OrderType.LIMIT, OrderSide.BUY, market_id)
-                performance = self.get_potential_performance([order])
-                orders.append([order, performance])
+            for units in range(1, 5):
+                if check_order is False or \
+                        self._check_order(bid_price, units, OrderSide.BUY,
+                                          market_id):
+                    order = Order(bid_price, units, OrderType.LIMIT,
+                                  OrderSide.BUY, market_id)
+                    performance = self.get_potential_performance([order])
+                    orders.append([order, performance])
 
             ask_price = best_ask_price - tick
-            for units in range(1, 3):
-                order = Order(ask_price, units, OrderType.LIMIT, OrderSide.SELL, market_id)
-                performance = self.get_potential_performance([order])
-                orders.append([order, performance])
+            for units in range(1, 5):
+                if check_order is False or \
+                        self._check_order(ask_price, units, OrderSide.SELL,
+                                          market_id):
+                    order = Order(ask_price, units, OrderType.LIMIT,
+                                  OrderSide.SELL, market_id)
+                    performance = self.get_potential_performance([order])
+                    orders.append([order, performance])
 
         return orders
 
