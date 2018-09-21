@@ -8,8 +8,7 @@ Student Name (ID): Zhuoqun Huang (908525)
 
 from enum import Enum
 from fmclient import Agent, OrderSide, Order, OrderType
-# from fmclient.utils.constants import DATE_FORMAT
-from fmclient.utils.constants import LOCAL_TIMEZONE
+from fmclient.utils.constants import LOCAL_TIMEZONE, DATE_FORMAT
 from typing import List, Tuple, Dict, Union
 import pytz
 import random
@@ -71,7 +70,7 @@ class OrderCompare(Enum):
 
 
 # ----- Start of Helper classes -----
-DATE_FORMAT = "%Y-%m-%d%H:%M:%S.%f"
+DATE_FORMAT = DATE_FORMAT[:-3]
 
 
 def to_dollar(cents):
