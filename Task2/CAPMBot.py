@@ -936,7 +936,7 @@ class CAPMBot(Agent):
                                             orders[0][0].side,
                                             orders[0][0].market_id,
                                             OrderRole.REACTIVE)
-
+                
                 orders = self._compute_mm_orders(market_id,
                                                  current_performance)
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
@@ -1154,7 +1154,6 @@ class CAPMBot(Agent):
                                holdings[market]
         return expected_payoff - b*tot_payoff_variance
 
-    # TODO complete
     def is_portfolio_optimal(self):
         """
         Returns true if the current holdings are optimal with respect to
@@ -1162,7 +1161,29 @@ class CAPMBot(Agent):
         false otherwise.
         :return:
         """
-        pass
+        for market in self._market_ids.values():
+            self._current_holdings[market] = \
+                self._my_markets[market].virtual_available_units
+        current_performance = self. \
+            _calculate_performance(self._cash, self._current_holdings)
+
+        for market in self._market_ids.values():
+            if self._my_markets[market].best_bids:
+                best_bid = self._my_markets[market].best_bids[0].price
+                sell_order = Order(best_bid, 1, OrderType.LIMIT, OrderSide.SELL,
+                                   market)
+                if self.get_potential_performance([sell_order]) > \
+                        current_performance:
+                    return False
+
+            if self._my_markets[market].best_asks:
+                best_ask = self._my_markets[market].best_asks[0].price
+                buy_order = Order(best_ask, 1, OrderType.LIMIT, OrderSide.BUY,
+                                  market)
+                if self.get_potential_performance([buy_order]) > \
+                        current_performance:
+                    return False
+        return True
 
     def order_accepted(self, order):
         try:
