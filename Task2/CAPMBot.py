@@ -488,10 +488,13 @@ class OrderHolder:
             # Check all orders to find corresponding order, and accept it
             my_order = self.get_order(order)
 
-            self._agent.inform(my_order)
+            if order.type == OrderType.CANCEL:
+                self._agent.inform("cancel order accepted: %s" % order)
+                self._agent.inform([order.order for order in self._orders])
 
             if my_order is not None:
                 if order.type == OrderType.CANCEL:
+                    self._agent.inform("cancel order found: %s" % order)
                     self._agent.inform("remove order: %s" % my_order.order)
                     self._orders.remove(my_order)
                 else:
@@ -556,7 +559,6 @@ class OrderHolder:
                     my_order.order_status = OrderStatus.ACCEPTED
                 if my_order.delayed():
                     my_order.cancel()
-                break
             # Didn't find order in all kept orders
             else:
                 self._agent.warning(str(order) +
@@ -588,7 +590,8 @@ class OrderHolder:
                 # Partially traded order
                 elif compare == OrderCompare.SAME_PRICE and \
                         my_order.order.units > order.units:
-                    my_order.partial_traded(order)
+                    if my_order.partial_traded(order):
+                        my_order.cancel()
 
 
 class MyOrder:
@@ -679,6 +682,14 @@ class MyOrder:
                 OrderStatus.ACCEPTED:
             self._cancel_order = copy.copy(self._order)
             self._cancel_order.type = OrderType.CANCEL
+            self._cancel_order.ref = \
+                self._make_order_ref(self._cancel_order.price,
+                                     self._cancel_order.units,
+                                     self._cancel_order.type,
+                                     self._cancel_order.side,
+                                     self._cancel_order.market_id,
+                                     self._order_role)
+            self.AGENT.inform("send cancel order: %s" % self._order)
             self.AGENT.send_order(self._cancel_order)
             return True
         return False
@@ -695,6 +706,8 @@ class MyOrder:
         :return: True if exceeded max delay, false otherwise
         """
         self._order_delay += times
+        self.AGENT.inform("order %s" % self._order)
+        self.AGENT.inform("delay %d" % self._order_delay)
         return self._should_cancel()
 
     def partial_traded(self, order):
@@ -704,6 +717,7 @@ class MyOrder:
         should be cancelled, if not reset the order delay
         :param order: The order in completed orders
         """
+        self.AGENT.inform("partial traded order: %s" % order)
         if self._order_role == OrderRole.REACTIVE:
             return True
         self._order_delay = 0
@@ -718,11 +732,11 @@ class MyOrder:
         """
         if self._order_role == OrderRole.MARKET_MAKER and \
                 self._order_delay >= self.MM_ORDER_MAX_DELAY:
-            self.AGENT.inform("reactive delay = %d " % self._order_delay)
+            self.AGENT.inform("mm delay = %d " % self._order_delay)
             return True
         elif self._order_role == OrderRole.REACTIVE and \
                 self._order_delay >= self.REACTIVE_ORDER_MAX_DELAY:
-            self.AGENT.inform("mm delay = %d " % self._order_delay)
+            self.AGENT.inform("reactive delay = %d " % self._order_delay)
             return True
         else:
             return False
@@ -1330,8 +1344,8 @@ class CAPMBot(Agent):
             self._start_time = datetime.datetime.now(tz=pytz.
                                                      timezone(LOCAL_TIMEZONE))
             self._to_change_behaviour = \
-                datetime.datetime.now() + \
-                datetime.timedelta(minutes= self._session_time-1)
+                datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE)) + \
+                datetime.timedelta(minutes=self._session_time-1)
         else:
             self.inform("Marketplace is now closed.")
 
