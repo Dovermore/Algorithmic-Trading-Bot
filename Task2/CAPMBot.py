@@ -219,6 +219,7 @@ class Market:
                     self._agent.warning("Market" + str(self._market_id) +
                                         " Failed to sync virtual units "
                                         "properly")
+                    self.examine_units()
                     self._virtual_available_units = self._available_units
             elif self._available_units == self._virtual_available_units:
                 self._sync_delay = 0
@@ -424,7 +425,8 @@ class OrderHolder:
         if orig_order:
             order.order = orig_order
         self._orders.append(order)
-        self._agent.inform(self._orders)
+        # self._agent.inform([order.order for order in self._orders])
+        # self._agent.inform([order.cancel_order for order in self._orders])
         return order
 
     def get_order(self, order):
@@ -480,7 +482,9 @@ class OrderHolder:
                 return
             # Update it to Holdings if it's not CANCEL
             else:
-                self._agent.warning(str(order) + ": Didn't find matching order")
+                self._agent.warning(str(order) + ": Didn't find "
+                                                 "matching order")
+                self._agent.inform([order.order for order in self._orders])
                 order_role = OrderRole.REACTIVE
                 if order.ref is not None:
                     if order.ref[-2:] == "MM":
@@ -721,7 +725,8 @@ class MyOrder:
         if isinstance(order2, MyOrder):
             order2 = order2._order if limit else order2._cancel_order
         # When side or type different
-        if order1.side != order2.side or order1.type != order2.type:
+        if order1 is None or order2 is None or\
+                order1.side != order2.side or order1.type != order2.type:
             return OrderCompare.DIFFERENT
         # Handles accepted_order() and rejected order()
         elif (order1.ref is not None and order2.ref is not None
@@ -924,7 +929,8 @@ class CAPMBot(Agent):
                                             orders[0][0].market_id,
                                             OrderRole.REACTIVE)
 
-                orders = self._compute_mm_orders()
+                orders = self._compute_mm_orders(market_id,
+                                                 current_performance)
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
                         datetime.datetime.now() > self._to_change_behaviour:
                     # TODO change behaviour of bot when time is almost ending
@@ -994,7 +1000,8 @@ class CAPMBot(Agent):
 
             for price in range(best_bid_price + tick, best_ask_price, tick):
                 if price <= best_ask_price - min_over_tick * tick:
-                    order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL)
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL,
+                                  market_id)
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.SELL, market_id):
@@ -1002,7 +1009,8 @@ class CAPMBot(Agent):
                         if performance > baseline_performance:
                             orders.append([order, performance])
                 if price >= best_bid_price + min_over_tick * tick:
-                    order = Order(price, 1, OrderType.LIMIT, OrderSide.BUY)
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.BUY,
+                                  market_id)
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.BUY, market_id):
@@ -1151,6 +1159,8 @@ class CAPMBot(Agent):
     def order_accepted(self, order):
         try:
             self._fn_start()
+            if order is None:
+                self.error("order_accepted: None Order")
             market = self._my_markets[order.market_id]
             market.order_accepted(order)
 
@@ -1303,20 +1313,25 @@ class CAPMBot(Agent):
         :param order_role: role of order (market_maker or reactive)
         :return: True if successfully sent, false if failed check
         """
-        if self._check_order(price, units, order_side, market_id):
-            market: Market = self._my_markets[market_id]
+        try:
+            if self._check_order(price, units, order_side, market_id):
+                market: Market = self._my_markets[market_id]
 
-            market.add_order(price, units, order_type, order_side,
-                             market_id, order_role)
-            self.inform("added order")
-            result = market.send_current_order()
-            self.inform("sent order")
-            self._virtual_available_cash -= (price * units if result and
-                                                              order_side == OrderSide.BUY
-                                             else 0)
-            return result
-        else:
-            return False
+                market.add_order(price, units, order_type, order_side,
+                                 market_id, order_role)
+                self.inform("added order")
+                result = market.send_current_order()
+                self.inform("sent order")
+                self._virtual_available_cash -= (price * units if result and
+                                                 order_side == OrderSide.BUY
+                                                 else 0)
+                return result
+            else:
+                return False
+        except Exception as e:
+            self._exception_inform(e, inspect.stack()[0][3])
+        finally:
+            self._fn_end()
 
     def _send_orders(self, prices, unitss, order_types, order_sides,
                      market_ids, order_roles) -> List[bool]:
