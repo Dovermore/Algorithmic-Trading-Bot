@@ -994,19 +994,21 @@ class CAPMBot(Agent):
 
             for price in range(best_bid_price + tick, best_ask_price, tick):
                 if price <= best_ask_price - min_over_tick * tick:
-                    order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL)
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL,
+                                  market_id)
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.SELL, market_id):
-                        performance = self.get_potential_performance(order)
+                        performance = self.get_potential_performance([order])
                         if performance > baseline_performance:
                             orders.append([order, performance])
                 if price >= best_bid_price + min_over_tick * tick:
-                    order = Order(price, 1, OrderType.LIMIT, OrderSide.BUY)
+                    order = Order(price, 1, OrderType.LIMIT, OrderSide.BUY,
+                                  market_id)
                     if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.BUY, market_id):
-                        performance = self.get_potential_performance(order)
+                        performance = self.get_potential_performance([order])
                         if performance > baseline_performance:
                             orders.append([order, performance])
             return orders
