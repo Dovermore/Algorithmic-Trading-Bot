@@ -924,7 +924,7 @@ class CAPMBot(Agent):
                                             orders[0][0].market_id,
                                             OrderRole.REACTIVE)
 
-                orders = self._compute_mm_orders()
+                orders = self._compute_mm_orders(market_id, current_performance)
                 if len(bid_side) > 0 and len(ask_side) > 0 and \
                         datetime.datetime.now() > self._to_change_behaviour:
                     # TODO change behaviour of bot when time is almost ending
