@@ -221,9 +221,8 @@ class Market:
             elif self._available_units > self._virtual_available_units:
                 self._sync_delay += 1
                 if self._sync_delay >= self.SYNC_MAX_DELAY:
-                    self._agent.warning("Market" + str(self._market_id) +
-                                        " Failed to sync virtual units "
-                                        "properly")
+                    self._agent.inform("Market" + str(self._market_id) +
+                                       " re-syncing")
                     self.examine_units()
                     self._virtual_available_units = self._available_units
                     self._sync_delay = 0
@@ -824,6 +823,8 @@ def sort_order_by_date(orders, reverse=False):
 
 
 class CAPMBot(Agent):
+    MAX_SYNC_DELAY = 2
+
     def __init__(self, account, email, password, marketplace_id,
                  risk_penalty=0.01, session_time=20):
         """
@@ -854,6 +855,7 @@ class CAPMBot(Agent):
         self._cash = 0
         self._available_cash = self._cash
         # A virtual holding, simulating condition if order got accepted
+        self._sync_delay = -1
         self._virtual_available_cash = self._available_cash
 
         # Set up agent for Order sender
@@ -942,8 +944,8 @@ class CAPMBot(Agent):
                     else:
                         self.\
                             _send_order(
-                                        to_cents(self._my_markets\
-                                                     [market_id].payoffs),
+                                        to_cents(self._my_markets
+                                                 [market_id].payoffs[0]),
                                         1, OrderType.LIMIT, OrderSide.SELL,
                                         market_id, OrderRole.MARKET_MAKER)
         except Exception as e:
@@ -1266,9 +1268,7 @@ class CAPMBot(Agent):
         try:
             self._fn_start()
             self.error("order rejected:" + str(info))
-            self.inform(self._cash)
-            self.inform(self._available_cash)
-            self.inform(self._virtual_available_cash)
+            self.examine_cash()
             market = self._my_markets[order.market_id]
             market.order_rejected(order)
 
@@ -1313,18 +1313,21 @@ class CAPMBot(Agent):
         try:
             self._fn_start()
             cash = holdings["cash"]
-            self.inform(self._cash)
-            self.inform(self._available_cash)
-            self.inform(self._virtual_available_cash)
             self._cash = cash["cash"]
             self._available_cash = cash["available_cash"]
             self._line_break_inform()
-            self.inform(self._cash)
-            self.inform(self._available_cash)
-            self.inform(self._virtual_available_cash)
-            if self._virtual_available_cash != self._available_cash:
-                self.inform("virtual_available_cash != available_cash")
-            self._virtual_available_cash = self._available_cash
+            self.examine_cash()
+            if self._virtual_available_cash > self._available_cash:
+                self._virtual_available_cash = self._available_cash
+            elif self._virtual_available_cash < self._available_cash:
+                if self._sync_delay == -1 or\
+                        self._sync_delay >= self.MAX_SYNC_DELAY:
+                    self.inform("Virtual cash re-syncing")
+                    self._virtual_available_cash = self._available_cash
+                    self._sync_delay = 0
+                else:
+                    self._sync_delay += 1
+
             for market_id, units in holdings["markets"].items():
                 self.inform(market_id)
                 self._my_markets[market_id].update_units(units)
@@ -1411,6 +1414,7 @@ class CAPMBot(Agent):
                                  market_id, order_role)
                 self.inform(market._current_order.order)
                 result = market.send_current_order()
+                self.examine_cash()
                 self._virtual_available_cash -= (price * units if result and
                                                  order_side == OrderSide.BUY
                                                  else 0)
@@ -1471,6 +1475,12 @@ class CAPMBot(Agent):
         self.warning("^^^Exception in function %s^^^:"
                      "msg: %s%s" % (fn_name, str(msg), addition)
                      )
+
+    def examine_cash(self):
+        self.inform("Total cash: " + str(self._cash))
+        self.inform("Available cash: " + str(self._available_cash))
+        self.inform("Virtual available cash: " +
+                    str(self._virtual_available_cash))
 
     @staticmethod
     def _str_market(market):
