@@ -472,6 +472,7 @@ class OrderHolder:
         my_order = self.get_order(order)
         if my_order:
             self._orders.remove(my_order)
+            self._agent.inform("remove order: %s" % my_order.order)
         return my_order
 
     def order_accepted(self, order: Order):
@@ -491,6 +492,7 @@ class OrderHolder:
 
             if my_order is not None:
                 if order.type == OrderType.CANCEL:
+                    self._agent.inform("remove order: %s" % my_order.order)
                     self._orders.remove(my_order)
                 else:
                     my_order.accepted(order)
@@ -532,6 +534,7 @@ class OrderHolder:
             if order.type == OrderType.CANCEL:
                 my_order.order_status = OrderStatus.ACCEPTED
             else:
+                self._agent.inform("remove order: %s" % my_order.order)
                 self._orders.remove(my_order)
 
     def update_received_order_book(self, order_book):
@@ -579,6 +582,7 @@ class OrderHolder:
                 compare = MyOrder.compare_order(my_order, order)
                 # Identical order, fully traded, remove it
                 if compare == OrderCompare.SAME_ORDER:
+                    self._agent.inform("remove order: %s" % my_order.order)
                     self._orders.remove(my_order)
                     break
                 # Partially traded order
@@ -704,6 +708,7 @@ class MyOrder:
             return True
         self._order_delay = 0
         self._order.units = self._order.units - order.units
+        self._order = order
         return False
 
     def _should_cancel(self):
