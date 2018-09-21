@@ -554,7 +554,7 @@ class OrderHolder:
             if my_order is not None:
                 if my_order.order_status != OrderStatus.ACCEPTED:
                     self._agent.warning(str(order) + " state "
-                                        + my_order.order_status)
+                                        + str(my_order.order_status))
                     my_order.order_status = OrderStatus.ACCEPTED
                 if my_order.delayed():
                     my_order.cancel()
@@ -1346,7 +1346,6 @@ class CAPMBot(Agent):
         else:
             self.inform("Marketplace is now closed.")
 
-
         self._fn_end()
 
     # --- ORDER HANDLER section ---
@@ -1554,7 +1553,7 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_CH
+    FM_SETTING = [FM_ACCOUNT] + FM_JD
     FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
