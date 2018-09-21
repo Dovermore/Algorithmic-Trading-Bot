@@ -223,7 +223,7 @@ class Market:
                 if self._sync_delay >= self.SYNC_MAX_DELAY:
                     self._agent.inform("Market" + str(self._market_id) +
                                        " re-syncing")
-                    self.examine_units()
+                    # self.examine_units()
                     self._virtual_available_units = self._available_units
                     self._sync_delay = 0
             elif self._available_units == self._virtual_available_units:
@@ -254,13 +254,13 @@ class Market:
         Market side order accepted processing, update available units
         :param order: The order accepted
         """
-        self.examine_units()
+        # self.examine_units()
         if order.side == OrderSide.SELL:
             if order.type == OrderType.LIMIT:
                 self._available_units -= order.units
             else:
                 self._available_units += order.units
-        self.examine_units()
+        # self.examine_units()
         self.order_holder.order_accepted(order)
 
     def order_rejected(self, order: Order):
@@ -275,7 +275,7 @@ class Market:
                 self._virtual_available_units += order.units
             else:
                 self._virtual_available_units -= order.units
-        self.examine_units()
+        # self.examine_units()
         self.order_holder.order_rejected(order)
 
     def _set_bid_ask_price(self):
@@ -353,7 +353,7 @@ class Market:
         Send the last added order (Limit order)
         :return: Return True if successful, False Otherwise
         """
-        self.examine_units()
+        # self.examine_units()
         if self._current_order is not None:
             # When selling, reduce virtual units
             if self._current_order.order.side == OrderSide.SELL:
@@ -364,7 +364,7 @@ class Market:
                     self._virtual_available_units -= \
                         self._current_order.order.units
             self._agent.inform(self._current_order.order)
-            self.examine_units()
+            # self.examine_units()
             return self._current_order.send()
         return False
 
@@ -688,7 +688,6 @@ class MyOrder:
                                      self._cancel_order.side,
                                      self._cancel_order.market_id,
                                      self._order_role)
-            self.AGENT.inform("send cancel order: %s" % self._order)
             self.AGENT.send_order(self._cancel_order)
             return True
         return False
@@ -705,8 +704,6 @@ class MyOrder:
         :return: True if exceeded max delay, false otherwise
         """
         self._order_delay += times
-        self.AGENT.inform("order %s" % self._order)
-        self.AGENT.inform("delay %d" % self._order_delay)
         return self._should_cancel()
 
     def partial_traded(self, order):
@@ -914,7 +911,7 @@ class CAPMBot(Agent):
         """
         Order management for the note market
         :param market_id:
-        :return:
+        :return: list of order option that is viable
         """
         self._fn_start()
         try:
@@ -1268,7 +1265,7 @@ class CAPMBot(Agent):
         try:
             self._fn_start()
             self.error("order rejected:" + str(info))
-            self.examine_cash()
+            # self.examine_cash()
             market = self._my_markets[order.market_id]
             market.order_rejected(order)
 
@@ -1292,8 +1289,6 @@ class CAPMBot(Agent):
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
-            self.inform([order.order for order in
-                         self._my_markets[market_id].order_holder.orders])
             self._fn_end()
 
     def received_completed_orders(self, orders, market_id=None):
@@ -1304,9 +1299,6 @@ class CAPMBot(Agent):
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
-            if market_id is not None:
-                self.inform([order.order for order in
-                             self._my_markets[market_id].order_holder.orders])
             self._fn_end()
 
     def received_holdings(self, holdings):
@@ -1316,7 +1308,7 @@ class CAPMBot(Agent):
             self._cash = cash["cash"]
             self._available_cash = cash["available_cash"]
             self._line_break_inform()
-            self.examine_cash()
+            # self.examine_cash()
             if self._virtual_available_cash > self._available_cash:
                 self._virtual_available_cash = self._available_cash
             elif self._virtual_available_cash < self._available_cash:
@@ -1332,6 +1324,8 @@ class CAPMBot(Agent):
                 self.inform(market_id)
                 self._my_markets[market_id].update_units(units)
                 self._my_markets[market_id].examine_units()
+            if self.is_portfolio_optimal():
+                self.inform("portfolio give market optimal")
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
@@ -1414,7 +1408,7 @@ class CAPMBot(Agent):
                                  market_id, order_role)
                 self.inform(market._current_order.order)
                 result = market.send_current_order()
-                self.examine_cash()
+                # self.examine_cash()
                 self._virtual_available_cash -= (price * units if result and
                                                  order_side == OrderSide.BUY
                                                  else 0)
