@@ -277,6 +277,9 @@ price = price if price < maximum else maximum
 
 print(price)
 
+x = 1.333333333333333333
+print("x is %.3f" % x)
+
 #
 #
 #
