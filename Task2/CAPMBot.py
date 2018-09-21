@@ -206,6 +206,7 @@ class Market:
         :param unit_dict: Standard dictionary containing the units to check
         :return:
         """
+
         self._agent._fn_start()
         try:
             assert (unit_dict["units"] >= 0 and
@@ -867,18 +868,18 @@ class CAPMBot(Agent):
                 best_bid_price = self._my_markets[market_id]._best_bids[0].price
                 # Sell notes for more than their expected return
                 if best_bid_price >= self._my_markets[market_id].expected_return:
-                    result = self._send_order(best_bid_price, 1, OrderType.LIMIT,
+                    self._send_order(best_bid_price, 1, OrderType.LIMIT,
                                      OrderSide.SELL, market_id, OrderRole.REACTIVE)
                 # Check each market for whether buying is profitable
-                for market_id in self._market_ids.values():
-                    if self._my_markets[market_id]._best_bids and notes_units > 0:
+                for market in self._market_ids.values():
+                    if self._my_markets[market]._best_bids and notes_units > 0:
                         # Best bid in the market
-                        market_best_bid = self._my_markets[market_id]._best_bids[0].price
+                        market_best_bid = self._my_markets[market]._best_bids[0].price
                         if self._available_cash < market_best_bid:
                             sell_note = Order(best_bid_price, 1, OrderType.LIMIT, OrderSide.SELL,
                                               market_id)
                             buy_sec = Order(market_best_bid, 1, OrderType.LIMIT, OrderSide.BUY,
-                                            market_id)
+                                            market)
                             # Check if selling note and buying sec will increase performance
                             if self.get_potential_performance([sell_note, buy_sec]) > \
                                     self.get_potential_performance():
