@@ -983,13 +983,14 @@ class CAPMBot(Agent):
             tick = self._my_markets[market_id].tick
             minimum = self._my_markets[market_id].minimum
             maximum = self._my_markets[market_id].maximum
-            min_over_tick = (random.randint(1, 10) + tick) // tick
             best_bids = self._my_markets[market_id].best_bids
             best_bid_price = best_bids[0].price if \
                 len(best_bids) > 0 else minimum
             best_asks = self._my_markets[market_id].best_asks
             best_ask_price = best_asks[0].price if \
-                len(best_asks) > 0 else maximum 
+                len(best_asks) > 0 else maximum
+            spread = best_ask_price - best_bid_price
+            min_over_tick = (random.randint(1, spread // 3) + tick) // tick
 
             for price in range(best_bid_price + tick, best_ask_price, tick):
                 if price <= best_ask_price - min_over_tick * tick:
