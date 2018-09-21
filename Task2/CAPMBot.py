@@ -226,11 +226,12 @@ class Market:
                                         "properly")
                     self.examine_units()
                     self._virtual_available_units = self._available_units
+                    self._sync_delay = 0
             elif self._available_units == self._virtual_available_units:
                 self._sync_delay = 0
             else:
                 self._agent.error("Market" + str(self._market_id) +
-                                  "Virtual Unit MORE Than available units")
+                                  " Virtual Unit MORE Than available units")
                 self._virtual_available_units = self._available_units
                 self._sync_delay = 0
         except Exception as e:
@@ -331,7 +332,8 @@ class Market:
             update_completed_orders(orders[self._completed_order_index:])
         self._agent.inform([order for order in
                             orders[self._completed_order_index:]
-                            if order.mine])
+                            if order.mine and order.date >
+                            self._agent._start_time])
         self._completed_order_index = len(orders)
 
     def add_order(self, price, units, order_type, order_side, market_id,
@@ -440,7 +442,7 @@ class OrderHolder:
         if orig_order:
             order.order = orig_order
         self._orders.append(order)
-        self.inform("added order: %s" % str(order.order))
+        self._agent.inform("added order: %s" % str(order.order))
         # self._agent.inform([order.order for order in self._orders])
         # self._agent.inform([order.cancel_order for order in self._orders])
         return order
@@ -568,7 +570,9 @@ class OrderHolder:
         Update orders based on completed orders
         """
         mine_orders = sort_order_by_date([order for order in
-                                          orders if order.mine is True])
+                                          orders if order.mine is True
+                                          and order.date >
+                                          self._agent._start_time])
         self._orders = sort_order_by_date(self._orders)
         for order in mine_orders:
             for my_order in self._orders:
@@ -815,9 +819,11 @@ class CAPMBot(Agent):
         super().__init__(account, email, password, marketplace_id,
                          name="CAPM_Bot")
         self._session_time = session_time
-        self._start_time = datetime.datetime.now()
-        self._to_change_behaviour = datetime.datetime.now() + \
-                                    datetime.timedelta(minutes=(session_time-1))
+        self._start_time = datetime.datetime.\
+            now(tz=pytz.timezone(LOCAL_TIMEZONE))
+        self._to_change_behaviour = \
+            datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE)) + \
+            datetime.timedelta(minutes=(session_time-1))
         self._risk_penalty = risk_penalty
         self._my_markets: Dict[int, Market] = {}
         self._market_ids = {}
@@ -938,7 +944,8 @@ class CAPMBot(Agent):
                 self._current_holdings[market] = \
                     self._my_markets[market].virtual_available_units
             current_performance = self. \
-                _calculate_performance(self._virtual_available_cash, self._current_holdings)
+                _calculate_performance(self._virtual_available_cash,
+                                       self._current_holdings)
             self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
             if market_id == self._note_id:
@@ -963,8 +970,10 @@ class CAPMBot(Agent):
 
                 orders = self._compute_mm_orders(market_id,
                                                  current_performance)
-                if len(bid_side) > 0 and len(ask_side) > 0 and \
-                        datetime.datetime.now() > self._to_change_behaviour:
+                if len(bid_side) > 0 and len(ask_side) > 0 \
+                        and datetime.\
+                        datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE)) \
+                        > self._to_change_behaviour:
                     # TODO change behaviour of bot when time is almost ending
                     orders += self._creep_bid_ask_spread(bid_side, ask_side,
                                                          market_id)
@@ -1199,7 +1208,8 @@ class CAPMBot(Agent):
             self._current_holdings[market] = \
                 self._my_markets[market].virtual_available_units
         current_performance = self. \
-            _calculate_performance(self._cash, self._current_holdings)
+            _calculate_performance(self._virtual_available_cash,
+                                   self._current_holdings)
 
         for market in self._market_ids.values():
             if self._my_markets[market].best_bids:
@@ -1252,16 +1262,19 @@ class CAPMBot(Agent):
     def received_order_book(self, order_book, market_id):
 
         self._fn_start()
-        self.get_completed_orders(market_id)
-        self.inform("received order book from %d" % market_id)
-        elapsed_time = (datetime.datetime.now() - self._start_time)/datetime.timedelta(minutes=1)
-        self.inform("time elapsed %.3f minutes" % elapsed_time)
         try:
+            self.get_completed_orders(market_id)
+            self.inform("received order book from %d" % market_id)
+            elapsed_time = (datetime.datetime.now(tz=pytz.timezone(LOCAL_TIMEZONE))
+                            - self._start_time)/datetime.timedelta(minutes=1)
+            self.inform("time elapsed %.3f minutes" % elapsed_time)
             self._update_received_order_book(order_book, market_id)
             self._process_order(market_id)
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
+            self.inform([order.order for order in
+                         self._my_markets[market_id].order_holder.orders])
             self._fn_end()
 
     def received_completed_orders(self, orders, market_id=None):
@@ -1272,6 +1285,9 @@ class CAPMBot(Agent):
         except Exception as e:
             self._exception_inform(e, inspect.stack()[0][3])
         finally:
+            if market_id is not None:
+                self.inform([order.order for order in
+                             self._my_markets[market_id].order_holder.orders])
             self._fn_end()
 
     def received_holdings(self, holdings):
@@ -1306,10 +1322,11 @@ class CAPMBot(Agent):
         if marketplace_info["status"]:
             self.inform("Marketplace is now open with session id "
                         + str(session_id))
-            self._start_time = datetime.datetime.now()
-            self._to_change_behaviour = datetime.datetime.now() + \
-                                        datetime.timedelta(minutes=
-                                                           (self._session_time-1))
+            self._start_time = datetime.datetime.now(tz=pytz.
+                                                     timezone(LOCAL_TIMEZONE))
+            self._to_change_behaviour = \
+                datetime.datetime.now() + \
+                datetime.timedelta(minutes= self._session_time-1)
         else:
             self.inform("Marketplace is now closed.")
 
@@ -1514,7 +1531,7 @@ if __name__ == "__main__":
     MARKETPLACE_ID1 = 372   # 3 risky 1 risk-free
     MARKETPLACE_ID2 = 363   # 2 risky 1 risk-free
 
-    FM_SETTING = [FM_ACCOUNT] + FM_JD
+    FM_SETTING = [FM_ACCOUNT] + FM_CH
     FM_SETTING.append(MARKETPLACE_ID1)
     bot = CAPMBot(*FM_SETTING)
     bot.run()
