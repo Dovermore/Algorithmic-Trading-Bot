@@ -230,6 +230,8 @@ class Market:
             else:
                 self._agent.error("Market" + str(self._market_id) +
                                   "Virtual Unit MORE Than available units")
+                self._virtual_available_units = self._available_units
+                self._sync_delay = 0
         except Exception as e:
             self._agent._exception_inform(e, inspect.stack()[0][3])
         finally:
