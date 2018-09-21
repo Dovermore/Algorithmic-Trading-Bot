@@ -318,7 +318,7 @@ class Market:
         ---- Should not be used elsewhere. Need not to read ----
         """
         # TODO More logic here
-        self.order_holder.\
+        self.order_holder. \
             update_completed_orders(orders[self._completed_order_index:])
         self._completed_order_index = len(orders)
 
@@ -630,7 +630,7 @@ class MyOrder:
         :return: True if successfully sent, False otherwise
         """
         self.AGENT.inform(self)
-        if self.AGENT is not None and self._order_status ==\
+        if self.AGENT is not None and self._order_status == \
                 OrderStatus.INACTIVE:
             self.AGENT.send_order(self._order)
             self._order_status = OrderStatus.PENDING
@@ -642,7 +642,7 @@ class MyOrder:
         Cancel this order
         :return: True if cancel success, False otherwise
         """
-        if self.AGENT is not None and self._order_status ==\
+        if self.AGENT is not None and self._order_status == \
                 OrderStatus.ACCEPTED:
             self._cancel_order = copy.copy(self._order)
             self._cancel_order.type = OrderType.CANCEL
@@ -900,7 +900,7 @@ class CAPMBot(Agent):
             for market in self._market_ids.values():
                 self._current_holdings[market] = \
                     self._my_markets[market].virtual_available_units
-            current_performance = self.\
+            current_performance = self. \
                 _calculate_performance(self._cash, self._current_holdings)
             self.inform("current_performance=%.3f" % current_performance)
             # Logic for notes
@@ -951,7 +951,7 @@ class CAPMBot(Agent):
             if len(other_orders) > 0:
                 price = other_orders[0].price
                 side = (OrderSide.BUY if other_orders[0].side ==
-                        OrderSide.SELL else OrderSide.SELL)
+                                         OrderSide.SELL else OrderSide.SELL)
                 total_units = sum([order.units for order in other_orders])
                 for units in range(1, total_units + 1):
                     order = Order(price, units, OrderType.LIMIT, side,
@@ -990,7 +990,7 @@ class CAPMBot(Agent):
             for price in range(best_bid_price + tick, best_ask_price, tick):
                 if price <= best_ask_price - min_over_tick * tick:
                     order = Order(price, 1, OrderType.LIMIT, OrderSide.SELL)
-                    if check_order is False or\
+                    if check_order is False or \
                             self._check_order(price, 1,
                                               OrderSide.SELL, market_id):
                         performance = self.get_potential_performance(order)
@@ -1051,10 +1051,10 @@ class CAPMBot(Agent):
                         key_for_dict not in self._covariances:
                     self._covariances[key_for_dict] = \
                         self._compute_covariance(
-                        self._my_markets[first_iter_market].payoffs,
-                        self._my_markets[second_iter_market].payoffs,
-                        self._my_markets[first_iter_market].expected_return,
-                        self._my_markets[second_iter_market].expected_return)
+                            self._my_markets[first_iter_market].payoffs,
+                            self._my_markets[second_iter_market].payoffs,
+                            self._my_markets[first_iter_market].expected_return,
+                            self._my_markets[second_iter_market].expected_return)
                     self.inform(self._read_covariance
                                 (market_id1, market_id2,
                                  self._covariances[key_for_dict]))
@@ -1133,6 +1133,7 @@ class CAPMBot(Agent):
                                holdings[market]
         return expected_payoff - b*tot_payoff_variance
 
+    # TODO complete
     def is_portfolio_optimal(self):
         """
         Returns true if the current holdings are optimal with respect to
@@ -1140,29 +1141,7 @@ class CAPMBot(Agent):
         false otherwise.
         :return:
         """
-        for market in self._market_ids.values():
-            self._current_holdings[market] = \
-                self._my_markets[market].virtual_available_units
-        current_performance = self. \
-            _calculate_performance(self._cash, self._current_holdings)
-
-        for market in self._market_ids.values():
-            if self._my_markets[market].best_bids:
-                best_bid = self._my_markets[market].best_bids[0].price
-                sell_order = Order(best_bid, 1, OrderType.LIMIT, OrderSide.SELL,
-                                   market)
-                if self.get_potential_performance([sell_order]) > \
-                        current_performance:
-                    return False
-
-            if self._my_markets[market].best_asks:
-                best_ask = self._my_markets[market].best_asks[0].price
-                buy_order = Order(best_ask, 1, OrderType.LIMIT, OrderSide.BUY,
-                                   market)
-                if self.get_potential_performance([buy_order]) > \
-                        current_performance:
-                    return False
-        return True
+        pass
 
     def order_accepted(self, order):
         try:
@@ -1328,7 +1307,7 @@ class CAPMBot(Agent):
             result = market.send_current_order()
             self.inform("sent order")
             self._virtual_available_cash -= (price * units if result and
-                                             order_side == OrderSide.BUY
+                                                              order_side == OrderSide.BUY
                                              else 0)
             return result
         else:
@@ -1454,14 +1433,14 @@ class CAPMBot(Agent):
             return
         self._line_break_inform(inspect.stack()[1][3], char="v",
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                (self.get_stack_size()-1) * STACK_DIF)
+                                       (self.get_stack_size()-1) * STACK_DIF)
 
     def _fn_end(self):
         if not DEBUG_TOGGLE == 1:
             return
         self._line_break_inform(inspect.stack()[1][3], char="^",
                                 length=BASE_LEN + INIT_STACK * STACK_DIF -
-                                (self.get_stack_size()-1) * STACK_DIF)
+                                       (self.get_stack_size()-1) * STACK_DIF)
 
 
 if __name__ == "__main__":
