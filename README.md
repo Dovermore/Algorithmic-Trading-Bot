@@ -3,7 +3,7 @@ This is the private repo for FNCE30010 Algorithmic Trading __project 1__
 
 ---
 
-<pre>- Repo owner      Calvin Zhuoqun Huang
+- Repo owner      Calvin Zhuoqun Huang
 - Licence         MIT Licence
 - File Name       README.md
 - Space for Tab   YES
@@ -14,6 +14,6 @@ This is the private repo for FNCE30010 Algorithmic Trading __project 1__
 - Brief:
    - _Copy right reserved by owner_
    
-- It's __NOT__ supposed to be shared without permission of author.</pre>
+- It's __NOT__ supposed to be shared without permission of author.
 
 ---
